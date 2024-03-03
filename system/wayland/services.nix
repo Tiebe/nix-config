@@ -20,7 +20,7 @@
       settings = rec {
         initial_session = {
           command = "Hyprland";
-          user = "sioodmy";
+          user = "tiebe";
         };
         default_session = initial_session;
       };

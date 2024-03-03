@@ -30,6 +30,7 @@ in {
     wl-clipboard
     pngquant
     cliphist
+    foot
   ];
 
   wayland.windowManager.hyprland = {

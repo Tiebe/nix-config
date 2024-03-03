@@ -60,6 +60,7 @@
     firefox
     vscode
     gh
+    kitty
   ];
 
   # Enable home-manager and git
