@@ -21,8 +21,7 @@
     # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
-    ./hardware-configuration.nix
-    ../system/wayland
+    ../../system/wayland
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -72,16 +71,7 @@
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
   };
-
-  networking.hostName = "jupiter";
-
-  # TODO
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -159,7 +149,7 @@
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
     users = {
-      tiebe = import ../home-manager/home.nix;
+      tiebe = import ../../home-manager/home.nix;
     };
   };
 

@@ -64,10 +64,12 @@
     nixosConfigurations = {
       jupiter = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [
-          # > Our main nixos configuration file <
-          ./nixos/configuration.nix
-        ];
+        modules = [ ./hosts/jupiter ];
+      };
+
+      pluto = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [ ./hosts/pluto ];
       };
     };
   };

@@ -62,6 +62,7 @@
     gh
     kitty
     wofi
+    discord
   ];
 
   # Enable home-manager and git
