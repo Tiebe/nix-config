@@ -61,6 +61,7 @@
     vscode
     gh
     kitty
+    wofi
   ];
 
   # Enable home-manager and git
