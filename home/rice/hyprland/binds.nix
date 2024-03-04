@@ -25,6 +25,7 @@ in {
       [
         ''${mod},RETURN,exec,foot${lib.optionalString config.programs.foot.server.enable "client"}''
 
+        "${mod},W,exec,pkill wofi || wofi --show drun"
         "${mod},SPACE,exec,run-as-service $(tofi-drun)"
         "${mod},MINUS,killactive"
         "${mod},P,pseudo"
