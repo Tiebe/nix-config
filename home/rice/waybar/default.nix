@@ -47,16 +47,16 @@ in {
           format = "{icon}";
           active-only = false;
           format-icons = {
-            "1" = "一";
-            "2" = "二";
-            "3" = "三";
-            "4" = "四";
-            "5" = "五";
-            "6" = "六";
-            "7" = "七";
-            "8" = "八";
-            "9" = "九";
-            "10" = "十";
+            "1" = "1";
+            "2" = "2";
+            "3" = "3";
+            "4" = "4";
+            "5" = "5";
+            "6" = "6";
+            "7" = "7";
+            "8" = "8";
+            "9" = "9";
+            "10" = "10";
           };
 
           persistent_workspaces = {
@@ -101,7 +101,7 @@ in {
         battery = {
           states = {
             warning = 30;
-            critical = 15;
+            critical = 10;
           };
           format = "{icon}";
           format-charging = "{icon}\n󰚥";

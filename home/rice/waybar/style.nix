@@ -1,7 +1,7 @@
 ''
   * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Material Design Icons, Iosevka Nerd Font;
+    font-family: Material Design Icons;
   }
 
   window#waybar {
@@ -89,7 +89,7 @@
     padding-right: 6px;
   }
   #custom-search {
-    background-image: url("${./sakura.png}");
+    background-image: url("${./nixos.svg}");
     background-size: 60%;
     background-position: center;
     background-repeat: no-repeat;
