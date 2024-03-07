@@ -23,7 +23,19 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ../../system/wayland
     inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
   ];
+
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    age = { 
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+  };
+
+  sops.secrets.user_pwd = {};
 
   nixpkgs = {
     # You can add overlays here

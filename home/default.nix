@@ -1,5 +1,7 @@
 { ... }: {
   imports = [
     ./rice
+    ./services
+    ./programs
   ];
 }

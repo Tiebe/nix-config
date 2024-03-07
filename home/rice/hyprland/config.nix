@@ -63,23 +63,23 @@ in {
         "col.shadow" = "rgba(292c3cee)";
      };
 
-    #   misc = {
-    #     # disable redundant renders
-    #     disable_splash_rendering = true;
-    #     force_default_wallpaper = 0;
-    #     disable_hyprland_logo = true;
+      misc = {
+        # disable redundant renders
+        disable_splash_rendering = true;
+        force_default_wallpaper = 0;
+        disable_hyprland_logo = true;
 
-    #     vfr = true;
+        vfr = true;
 
-    #     # window swallowing
-    #     enable_swallow = true; # hide windows that spawn other windows
-    #     swallow_regex = "^(foot)$";
+        # window swallowing
+        enable_swallow = true; # hide windows that spawn other windows
+        swallow_regex = "^(foot)$";
 
-    #     # dpms
-    #     mouse_move_enables_dpms = true; # enable dpms on mouse/touchpad action
-    #     key_press_enables_dpms = true; # enable dpms on keyboard action
-    #     disable_autoreload = true; # autoreload is unnecessary on nixos, because the config is readonly anyway
-    #   };
+        # dpms
+        mouse_move_enables_dpms = true; # enable dpms on mouse/touchpad action
+        key_press_enables_dpms = true; # enable dpms on keyboard action
+        disable_autoreload = true; # autoreload is unnecessary on nixos, because the config is readonly anyway
+      };
 
       animations = {
         enabled = true;
