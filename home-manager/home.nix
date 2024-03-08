@@ -43,6 +43,8 @@
     sops
     gnupg
     wget
+    jetbrains.idea-ultimate
+    jetbrains.clion
   ];
 
   programs.home-manager.enable = true;

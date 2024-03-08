@@ -25,7 +25,6 @@ in {
     hyprpicker
     swappy
     grimblast
-    hyprpicker
     wl-clip-persist
     wl-clipboard
     pngquant
@@ -36,6 +35,7 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.default;
+    xwayland.enable = true;
     systemd = {
       variables = ["--all"];
       extraCommands = [
