@@ -72,8 +72,8 @@ in {
         vfr = true;
 
         # window swallowing
-        enable_swallow = true; # hide windows that spawn other windows
-        swallow_regex = "^(foot)$";
+        # enable_swallow = true; # hide windows that spawn other windows
+        # swallow_regex = "^(foot)$";
 
         # dpms
         mouse_move_enables_dpms = true; # enable dpms on mouse/touchpad action
@@ -102,7 +102,7 @@ in {
         ];
       };
 
-    #   dwindle = {
+    #    = {
     #     pseudotile = false;
     #     preserve_split = "yes";
     #     no_gaps_when_only = false;

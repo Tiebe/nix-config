@@ -38,7 +38,6 @@
     bluetuith
     grim
     slurp
-    spotify-tui
     warp-terminal
     sops
     gnupg

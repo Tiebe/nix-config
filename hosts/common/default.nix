@@ -36,6 +36,8 @@
   };
 
   sops.secrets.user_pwd = {};
+  sops.secrets."spotify/client_id" = {};
+  sops.secrets."spotify/client_secret" = {};
 
   nixpkgs = {
     # You can add overlays here
@@ -159,7 +161,9 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs outputs;};
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     users = {
       tiebe = import ../../home-manager/home.nix;
     };
