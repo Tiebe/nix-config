@@ -44,6 +44,8 @@
     wget
     jetbrains.idea-ultimate
     jetbrains.clion
+    parsec-bin
+    tailscale
   ];
 
   programs.home-manager.enable = true;
