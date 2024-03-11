@@ -35,9 +35,11 @@
     };
   };
 
-  sops.secrets.user_pwd = {};
-  sops.secrets."spotify/client_id" = {};
-  sops.secrets."spotify/client_secret" = {};
+  sops.secrets.user_pwd.neededForUsers = true;
+  sops.secrets."spotify/client_id".neededForUsers = true;
+  sops.secrets."spotify/client_secret".neededForUsers = true;
+  sops.secrets."spotify/email".neededForUsers = true;
+  sops.secrets."spotify/password".neededForUsers = true;
 
   nixpkgs = {
     # You can add overlays here
