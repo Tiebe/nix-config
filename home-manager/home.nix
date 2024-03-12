@@ -30,7 +30,6 @@
 
   home.packages = with pkgs; [
     vscode
-    gh
     kitty
     wofi
     discord
@@ -49,7 +48,13 @@
   ];
 
   programs.home-manager.enable = true;
-  programs.git.enable = true;
+  programs.git = {
+      enable = true;
+      userName = "Tiebe Groosman";
+      userEmail = "tiebe.groosman@gmail.com";
+  };
+
+  programs.gh.enable = true;
 
   systemd.user.startServices = "sd-switch";
 

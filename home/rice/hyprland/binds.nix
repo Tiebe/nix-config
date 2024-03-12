@@ -23,7 +23,7 @@ in {
   wayland.windowManager.hyprland.settings = {
     bind =
       [
-        "${mod},RETURN,exec,warp-terminal"
+        "${mod},RETURN,exec,kitty"
 
         "${mod},W,exec,pkill wofi || wofi --show drun"
         "${mod},MINUS,killactive"
