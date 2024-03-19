@@ -33,12 +33,11 @@
     gh
     kitty
     wofi
-    discord
+    vesktop
     hashcat
     bluetuith
     grim
     slurp
-    warp-terminal
     sops
     gnupg
     wget

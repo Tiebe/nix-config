@@ -21,7 +21,7 @@
     # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
-    ../../system/wayland
+    #../../system/wayland
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
   ];
@@ -111,10 +111,14 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  #services.xserver.desktopManager.gnome.enable = true;
-
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    plasma-browser-integration
+    konsole
+  ];
+  
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -166,6 +170,9 @@
     extraSpecialArgs = {
       inherit inputs outputs;
     };
+    sharedModules = [
+      inputs.plasma-manager.homeManagerModules.plasma-manager
+    ];
     users = {
       tiebe = import ../../home-manager/home.nix;
     };

@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
-    ./rice
+    #./rice
+    ./rice/plasma
     ./services
     ./programs
   ];
