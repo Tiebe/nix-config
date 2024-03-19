@@ -23,14 +23,9 @@
       "idleinhibit focus,class:foot"
       "idleinhibit fullscreen, class:^(firefox)$"
 
-      "float, title:^(Picture-in-Picture)$"
-      "pin, title:^(Picture-in-Picture)$"
-
-      "float,class:udiskie"
-
       "workspace special silent,class:^(pavucontrol)$"
 
-      "float, class:^(imv)$"
+#      "float, class:^(imv)$"
 
       # throw sharing indicators away
       "workspace special silent, title:^(Firefox — Sharing Indicator)$"
