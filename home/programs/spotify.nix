@@ -8,11 +8,5 @@ let
     spotify-tui
   ];
 
-  home.file."${config.home.homeDirectory}/.config/spotify-tui/client.yml".text = ''
----
-client_id: ""
-client_secret: ""
-device_id: ~
-port: 8888
-  '';
+  home.file."${config.home.homeDirectory}/.config/spotify-tui/client.yml".source = config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.spotifytui.path;
 }

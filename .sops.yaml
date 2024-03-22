@@ -3,7 +3,7 @@ keys:
   - &jupiter age1dnpl9h8mznl9d7pslmpv5upzah4nlwz8v085xprtxvrx7vvskpfsexuspt
 
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets/[^/]+$
     key_groups:
     - age:
       - *tiebe

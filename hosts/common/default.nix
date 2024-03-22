@@ -41,6 +41,11 @@
   };
 
   sops.secrets.user_pwd.neededForUsers = true;
+  sops.secrets.spotifytui = {
+    format = "binary";
+    sopsFile = ../../secrets/spotify;
+    owner = "tiebe";
+  };
   sops.secrets."spotify/client_id".neededForUsers = true;
   sops.secrets."spotify/client_secret".neededForUsers = true;
   sops.secrets."spotify/email".neededForUsers = true;
@@ -151,12 +156,11 @@
   };
 
 
-  # TODO: This is just an example, be sure to use whatever bootloader you prefer
   boot.loader.systemd-boot.enable = true;
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  programs.adb.enable = true;
+
   users.users = {
-    # FIXME: Replace with your username
     tiebe = {
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
@@ -167,7 +171,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel"];
+      extraGroups = ["wheel" "adbusers"];
     };
   };
 

@@ -225,9 +225,15 @@
       "plasmashell"."toggle do not disturb" = [ ];
     };
     configFile = {
+      "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
+      "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
       "kactivitymanagerdrc"."activities"."2903de61-3d4a-4b4f-bc64-c400afdb965e" = "Default";
       "kactivitymanagerdrc"."main"."currentActivity" = "2903de61-3d4a-4b4f-bc64-c400afdb965e";
+      "kcminputrc"."Libinput.1133.50504.Logitech USB Receiver Mouse"."PointerAccelerationProfile" = 2;
+      "kcminputrc"."Libinput.1133.50504.Logitech USB Receiver Mouse"."ScrollFactor" = 3;
       "kded5rc"."Module-device_automounter"."autoload" = false;
+      "kdeglobals"."General"."AllowKDEAppsToRememberWindowPositions" = true;
+      "kdeglobals"."KDE"."SingleClick" = true;
       "kdeglobals"."WM"."activeBackground" = "49,54,59";
       "kdeglobals"."WM"."activeBlend" = "252,252,252";
       "kdeglobals"."WM"."activeForeground" = "252,252,252";
