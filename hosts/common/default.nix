@@ -46,10 +46,11 @@
     sopsFile = ../../secrets/spotify;
     owner = "tiebe";
   };
-  sops.secrets."spotify/client_id".neededForUsers = true;
-  sops.secrets."spotify/client_secret".neededForUsers = true;
-  sops.secrets."spotify/email".neededForUsers = true;
-  sops.secrets."spotify/password".neededForUsers = true;
+
+  sops.secrets."spotify/email".owner = "tiebe";
+  sops.secrets."spotify/password".owner = "tiebe";
+
+  sops.secrets."tailscale_key" = {};
 
   nixpkgs = {
     # You can add overlays here
@@ -100,6 +101,13 @@
   
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.nameservers = [
+    "100.100.100.100"
+    "8.8.8.8"
+    "1.1.1.1"
+    "2001:4860:4860::8888"
+    "2606:4700:4700::1111"
+  ];
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -147,6 +155,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -197,6 +206,12 @@
       # Use keys only. Remove if you want to SSH using password (not recommended)
       PasswordAuthentication = false;
     };
+  };
+
+  services.tailscale = {
+    enable = true;
+    #useRoutingFeatures = "client";
+    authKeyFile = config.sops.secrets."tailscale_key".path;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

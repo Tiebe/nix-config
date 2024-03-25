@@ -43,7 +43,8 @@
     jetbrains.idea-ultimate
     jetbrains.clion
     parsec-bin
-    tailscale
+    onlyoffice-bin
+    prismlauncher-qt5
   ];
 
   programs.home-manager.enable = true;
@@ -56,6 +57,8 @@
   programs.gh.enable = true;
 
   systemd.user.startServices = "sd-switch";
+
+  services.arrpc.enable = true;
 
   home.stateVersion = "23.11";
 }
