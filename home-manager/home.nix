@@ -53,6 +53,9 @@
     vital
     qpwgraph
     distrobox
+    chntpw
+    spotify
+    tidal-hifi
   ];
 
   programs.home-manager.enable = true;
