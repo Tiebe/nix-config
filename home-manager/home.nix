@@ -45,6 +45,9 @@
     parsec-bin
     onlyoffice-bin
     prismlauncher-qt5
+    chntpw
+    spotify
+    tidal-hifi
   ];
 
   programs.home-manager.enable = true;

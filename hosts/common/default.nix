@@ -78,19 +78,12 @@
   };
 
   # This will add each flake input as a registry
-  # To make nix3 commands consistent with your flake
+  # To m ake nix3 commands consistent with your flake
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!
   nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
 
   nix.settings = {
     # Enable flakes and new 'nix' command
@@ -168,6 +161,23 @@
   boot.loader.systemd-boot.enable = true;
 
   programs.adb.enable = true;
+  programs.java.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    jdk21
+  ];
+
+  environment.etc = with pkgs; {
+      "jdk21".source = jdk21;
+  };
+
+  nixpkgs.config = {
+    jdk21 = {
+      enableJavaFx = true;
+    };
+  };
+  
+  virtualisation.docker.enable = true;
 
   users.users = {
     tiebe = {
@@ -180,7 +190,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel" "adbusers"];
+      extraGroups = ["wheel" "adbusers" "docker"];
     };
   };
 
@@ -209,7 +219,7 @@
   };
 
   services.tailscale = {
-    enable = true;
+    enable = false;
     #useRoutingFeatures = "client";
     authKeyFile = config.sops.secrets."tailscale_key".path;
   };
