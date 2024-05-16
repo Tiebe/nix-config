@@ -178,8 +178,6 @@
     };
   };
   
-  virtualisation.docker.enable = true;
-
   users.users = {
     tiebe = {
       # TODO: You can set an initial password for your user.
