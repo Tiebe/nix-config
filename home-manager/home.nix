@@ -45,6 +45,14 @@
     parsec-bin
     onlyoffice-bin
     prismlauncher-qt5
+    spotify
+    wine
+    bottles
+    vlc
+    desktop-file-utils
+    vital
+    qpwgraph
+    distrobox
   ];
 
   programs.home-manager.enable = true;

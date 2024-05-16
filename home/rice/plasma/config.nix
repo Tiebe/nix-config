@@ -229,8 +229,6 @@
       "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 22;
       "kactivitymanagerdrc"."activities"."2903de61-3d4a-4b4f-bc64-c400afdb965e" = "Default";
       "kactivitymanagerdrc"."main"."currentActivity" = "2903de61-3d4a-4b4f-bc64-c400afdb965e";
-      "kcminputrc"."Libinput"."1133"."50504"."Logitech USB Receiver Mouse"."PointerAccelerationProfile" = 2;
-      "kcminputrc"."Libinput"."1133"."50504"."Logitech USB Receiver Mouse"."ScrollFactor" = 3;
       "kded5rc"."Module-device_automounter"."autoload" = false;
       "kdeglobals"."DirSelect Dialog"."DirSelectDialog Size" = "818,584";
       "kdeglobals"."General"."AllowKDEAppsToRememberWindowPositions" = true;
@@ -274,8 +272,6 @@
       "kwinrc"."Desktops"."Number" = 1;
       "kwinrc"."Desktops"."Rows" = 1;
       "kwinrc"."Tiling"."padding" = 4;
-      "kwinrc"."Tiling"."e7a69807-95ef-5e29-97e2-4e599221ca8c"."tiles" = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.25},{\"width\":0.5},{\"width\":0.25}]}";
-      "kwinrc"."Tiling"."f2eb3bcc-ef63-5f98-bf93-6af048d79822"."tiles" = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.25},{\"width\":0.5},{\"width\":0.25}]}";
       "kwinrc"."Xwayland"."Scale" = 1;
       "plasma-localerc"."Formats"."LANG" = "en_US.UTF-8";
       "plasmarc"."Theme"."name" = "default";

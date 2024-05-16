@@ -29,6 +29,7 @@ in {
     wl-clipboard
     pngquant
     cliphist
+    flutter
   ];
 
   wayland.windowManager.hyprland = {
