@@ -59,12 +59,21 @@
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
             installation_mode = "force_installed";
           };
+          # StudyTools
+          "studytools@qkeleq10.dev" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/studytools/latest.xpi";
+            installation_mode = "force_installed";
+          };
+          # I don't care about cookies
+          "jid1-KKzOGWgsW3Ao4Q@jetpack" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/i-dont-care-about-cookies/latest.xpi";
+            installation_mode = "force_installed";
+          };
         };
   
         /* ---- PREFERENCES ---- */
         # Check about:config for options.
         Preferences = { 
-          "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
           "extensions.pocket.enabled" = lock-false;
           "extensions.screenshots.disabled" = lock-true;
           "browser.topsites.contile.enabled" = lock-false;
