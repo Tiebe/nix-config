@@ -10,19 +10,6 @@
     ../home
   ];
 
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-    ];
-
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
-
   home = {
     username = "tiebe";
     homeDirectory = "/home/tiebe";
@@ -42,6 +29,7 @@
     wget
     jetbrains.idea-ultimate
     jetbrains.clion
+    jetbrains-toolbox
     parsec-bin
     onlyoffice-bin
     prismlauncher-qt5
@@ -56,6 +44,12 @@
     chntpw
     spotify
     tidal-hifi
+    #busybox
+  #  rquickshare
+    verilator
+    gnumake
+    gcc
+    verilog
   ];
 
   programs.home-manager.enable = true;

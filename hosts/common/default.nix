@@ -31,6 +31,18 @@
     inputs.sops-nix.nixosModules.sops
   ];
 
+  # This will additionally add your inputs to the system's legacy channels
+  # Making legacy nix commands consistent as well, awesome!
+  nix.nixPath = ["/etc/nix/path"];
+  environment.etc =
+    lib.mapAttrs'
+    (name: value: {
+      name = "nix/path/${name}";
+      value.source = value.flake;
+    })
+    config.nix.registry;
+
+
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
     age = { 
@@ -80,10 +92,6 @@
   # This will add each flake input as a registry
   # To m ake nix3 commands consistent with your flake
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-
-  # This will additionally add your inputs to the system's legacy channels
-  # Making legacy nix commands consistent as well, awesome!
-  nix.nixPath = ["/etc/nix/path"];
 
   nix.settings = {
     # Enable flakes and new 'nix' command
@@ -166,11 +174,13 @@
 
   environment.systemPackages = with pkgs; [
     jdk21
+    gtkmm3
+    #inputs.nixpkgs.rquickshare
   ];
 
-  environment.etc = with pkgs; {
-      "jdk21".source = jdk21;
-  };
+#  environment.etc = with pkgs; {
+#      "jdk21".source = jdk21;
+#  };
 
   nixpkgs.config = {
     jdk21 = {
@@ -200,6 +210,8 @@
     sharedModules = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
     ];
+    useGlobalPkgs = true;
+    useUserPackages = true;
     users = {
       tiebe = import ../../home-manager/home.nix;
     };
