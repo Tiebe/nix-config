@@ -33,6 +33,7 @@
     spotify
     shellify
     direnv
+    fzf
   ];
 
   services.lorri.enable = true;
