@@ -37,9 +37,10 @@
   };
 
   hardware = {
-    opengl.enable = true;
     pulseaudio.support32Bit = true;
   };
+  hardware.graphics.enable = true;
+
 
   xdg.portal = {
     enable = true;

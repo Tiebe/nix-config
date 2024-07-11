@@ -32,7 +32,10 @@
     desktop-file-utils
     spotify
     shellify
+    direnv
   ];
+
+  services.lorri.enable = true;
 
   programs.home-manager.enable = true;
   programs.git = {
@@ -42,6 +45,41 @@
       extraConfig = {
         "url \"ssh://git@github.com/\"" = { insteadOf = https://github.com/; };
       };
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+
+    shellAliases = {
+      update = "sudo nixos-rebuild switch --flake";
+      compose = "sudo docker compose";
+      wolpc = "wakeonlan D8:5E:D3:A8:B1:0";
+      capture-config = "nix run github:pjones/plasma-manager > ~/nix-config/home-manager/plasma.nix";
+      reboot-to-windows = "sudo efibootmgr -n 0000";
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "zsh-interactive-cd"
+        "python"
+        "git-auto-fetch"
+        "wd"
+        "direnv"
+      ];
+      #custom = "/home/horseman/nix-config/pkgs/zsh/";
+      theme = "jonathan";
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      format = "$username$hostname$nix_shell$git_branch$git_commit$git_state$git_status$directory$jobs$cmd_duration$character";
+    };
   };
 
   programs.gh.enable = true;

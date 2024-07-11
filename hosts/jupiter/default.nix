@@ -24,10 +24,5 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  hardware.opengl = {
-    # Mesa
-    enable = true;
-    # Vulkan
-    driSupport = true;
-  };
+  hardware.graphics.enable = true;
 }
