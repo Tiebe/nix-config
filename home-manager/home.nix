@@ -31,12 +31,7 @@
   home.packages = with pkgs; [
     vscode
     kitty
-    wofi
     vesktop
-    hashcat
-    bluetuith
-    grim
-    slurp
     sops
     gnupg
     wget
@@ -44,18 +39,11 @@
     jetbrains.clion
     parsec-bin
     onlyoffice-bin
-    prismlauncher-qt5
     spotify
-    wine
-    bottles
     vlc
     desktop-file-utils
-    vital
-    qpwgraph
-    distrobox
-    chntpw
     spotify
-    tidal-hifi
+    shellify
   ];
 
   programs.home-manager.enable = true;
@@ -63,6 +51,9 @@
       enable = true;
       userName = "Tiebe Groosman";
       userEmail = "tiebe.groosman@gmail.com";
+      extraConfig = {
+        "url \"ssh://git@github.com/\"" = { insteadOf = https://github.com/; };
+      };
   };
 
   programs.gh.enable = true;
