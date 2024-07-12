@@ -1,6 +1,7 @@
 keys:
   - &tiebe age13wcwnr0nkf0vyarcxa8skn4vdqcdw3e65j9e9alcz6sdr0l69uqqgz94lh
   - &jupiter age1dnpl9h8mznl9d7pslmpv5upzah4nlwz8v085xprtxvrx7vvskpfsexuspt
+  - &pluto age1vggl6tngzn0n5g82lwknl3j9et8fff4g4z6msnufz48hrkctt33szu5nv3
 
 creation_rules:
   - path_regex: secrets/[^/]+$
@@ -8,3 +9,4 @@ creation_rules:
     - age:
       - *tiebe
       - *jupiter
+      - *pluto
