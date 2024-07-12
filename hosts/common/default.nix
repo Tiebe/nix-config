@@ -165,9 +165,6 @@
     #media-session.enable = true;
   };
 
-
-  boot.loader.systemd-boot.enable = true;
-
   programs.adb.enable = true;
   programs.java.enable = true;
 
@@ -195,8 +192,8 @@
       initialPassword = "tiebe";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
-        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe
-        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq tiebe
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq tiebe"
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
       extraGroups = ["wheel" "adbusers" "docker" "dialout"];
@@ -240,6 +237,28 @@
     enable = true;
     #useRoutingFeatures = "client";
     authKeyFile = "/run/secrets/tailscale_key";
+  };
+
+  boot = {
+    # Enable "Silent Boot"
+    consoleLogLevel = 0;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "loglevel=3"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+    ];
+    # Hide the OS choice for bootloaders.
+    # It's still possible to open the bootloader list by pressing any key
+    # It will just not appear on screen unless a key is pressed
+    loader = {
+      systemd-boot.enable = true;
+      timeout = 0;
+    };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
