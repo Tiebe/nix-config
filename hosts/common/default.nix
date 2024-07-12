@@ -259,7 +259,7 @@
     loader = {
       systemd-boot = { 
         enable = true;
-        consoleMode = "max"
+        consoleMode = "max";
       };
       timeout = 0;
     };
