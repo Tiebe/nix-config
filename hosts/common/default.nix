@@ -242,11 +242,12 @@
   boot = {
     # Enable "Silent Boot"
     consoleLogLevel = 0;
-    initrd.verbose = false;
+    plymouth.enable = true;
     kernelParams = [
       "quiet"
       "splash"
       "boot.shell_on_fail"
+      "i915.fastboot=1"
       "loglevel=3"
       "rd.systemd.show_status=false"
       "rd.udev.log_level=3"
@@ -256,7 +257,10 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = { 
+        enable = true;
+        consoleMode = "max"
+      };
       timeout = 0;
     };
   };

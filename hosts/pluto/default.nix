@@ -11,6 +11,11 @@
     ../common
   ];
 
+  boot.initrd = {
+    kernelModules = [ "i915" ];
+    verbose = false;
+  };
+
   networking.hostName = "pluto";
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth

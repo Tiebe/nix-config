@@ -11,6 +11,11 @@
     ../common
   ];
 
+  boot.initrd = {
+    kernelModules = [ "amdgpu" ];
+    verbose = false;
+  };
+
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = "jupiter";
