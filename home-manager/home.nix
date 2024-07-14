@@ -34,6 +34,7 @@
     shellify
     direnv
     fzf
+    #androidenv.androidPkgs.androidsdk     
   ];
 
   services.lorri.enable = true;

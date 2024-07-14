@@ -34,13 +34,14 @@
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!
   nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
+  environment.etc = with pkgs; (lib.mapAttrs'
     (name: value: {
       name = "nix/path/${name}";
       value.source = value.flake;
     })
-    config.nix.registry;
+    config.nix.registry) // {
+      "jdk21".source = jdk21;
+  };
 
 
   sops = {
@@ -86,6 +87,7 @@
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
+      android_sdk.accept_license = true;    
     };
   };
 
@@ -173,10 +175,6 @@
     gtkmm3
     #inputs.nixpkgs.rquickshare
   ];
-
-#  environment.etc = with pkgs; {
-#      "jdk21".source = jdk21;
-#  };
 
   nixpkgs.config = {
     jdk21 = {
