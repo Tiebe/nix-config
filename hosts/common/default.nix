@@ -68,20 +68,6 @@
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -150,7 +136,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -173,21 +158,18 @@
   environment.systemPackages = with pkgs; [
     jdk21
     gtkmm3
-    #inputs.nixpkgs.rquickshare
   ];
 
   nixpkgs.config = {
     jdk21 = {
       enableJavaFx = true;
     };
+    cudaSupport = true; 
   };
   
   users.users = {
     tiebe = {
-      # TODO: You can set an initial password for your user.
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "tiebe";
+      hashedPasswordFile = config.sops.secrets.user_pwd.path;
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe"
@@ -200,7 +182,6 @@
 
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [ zsh ];
-
   programs.zsh.enable = true;
 
   home-manager = {

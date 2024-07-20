@@ -1,27 +1,30 @@
-{ config, pkgs, ... }:
-
-  let
-    lock-false = {
-      Value = false;
-      Status = "locked";
-    };
-    lock-true = {
-      Value = true;
-      Status = "locked";
-    };
-  in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  lock-false = {
+    Value = false;
+    Status = "locked";
+  };
+  lock-true = {
+    Value = true;
+    Status = "locked";
+  };
+in {
   programs = {
     firefox = {
       enable = true;
 
-      /* ---- POLICIES ---- */
+      /*
+      ---- POLICIES ----
+      */
       # Check about:policies#documentation for options.
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
         EnableTrackingProtection = {
-          Value= true;
+          Value = true;
           Locked = true;
           Cryptomining = true;
           Fingerprinting = true;
@@ -38,7 +41,9 @@
         SearchBar = "unified"; # alternative: "separate"
         PasswordManagerEnabled = false;
 
-        /* ---- EXTENSIONS ---- */
+        /*
+        ---- EXTENSIONS ----
+        */
         # Check about:support for extension/add-on ID strings.
         # Valid strings for installation_mode are "allowed", "blocked",
         # "force_installed" and "normal_installed".
@@ -70,10 +75,12 @@
             installation_mode = "force_installed";
           };
         };
-  
-        /* ---- PREFERENCES ---- */
+
+        /*
+        ---- PREFERENCES ----
+        */
         # Check about:config for options.
-        Preferences = { 
+        Preferences = {
           "extensions.pocket.enabled" = lock-false;
           "extensions.screenshots.disabled" = lock-true;
           "browser.topsites.contile.enabled" = lock-false;

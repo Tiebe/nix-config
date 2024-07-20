@@ -12,7 +12,7 @@
   ];
 
   boot.initrd = {
-    kernelModules = [ "i915" ];
+    kernelModules = ["i915"];
     verbose = false;
   };
 
@@ -21,5 +21,11 @@
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      mesa.drivers
+      vpl-gpu-rt # or intel-media-sdk for QSV
+    ];
+  };
 }
