@@ -7,12 +7,7 @@
   config,
   pkgs,
   ...
-}: {
-  nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-  };
-
+}: {      
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -43,6 +38,7 @@
       "jdk21".source = jdk21;
   };
 
+  programs.nix-ld.enable = true;
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
@@ -176,7 +172,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq tiebe"
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel" "adbusers" "docker" "dialout"];
+    extraGroups = ["wheel" "adbusers" "docker" "dialout" "networkmanager"];
     };
   };
 

@@ -9,6 +9,7 @@
     onlyoffice-bin
     spotify
     vlc
-    kitty
+    solaar
   ];
+
 }

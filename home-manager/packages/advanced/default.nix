@@ -8,5 +8,8 @@
     ./git.nix
     ./firefox.nix
     ./plasma
+    ./wezterm
+    ./spotify-player
+    ./neovim
   ];
 }
