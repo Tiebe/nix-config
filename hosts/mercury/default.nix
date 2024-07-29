@@ -15,6 +15,8 @@
     ../common
   ];
 
+  custom.root = "/etc/nixos";
+
   wsl.enable = true;
   wsl.defaultUser = "tiebe";
 }

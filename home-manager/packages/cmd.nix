@@ -10,6 +10,7 @@
     gnupg
     direnv
     inetutils
+    nix-output-monitor
   ];
 
   programs.gh.enable = true;

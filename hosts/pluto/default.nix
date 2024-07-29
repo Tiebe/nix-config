@@ -16,6 +16,8 @@
     verbose = false;
   };
 
+  custom.root = "/etc/nixos";
+
   networking.hostName = "pluto";
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth

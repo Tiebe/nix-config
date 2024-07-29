@@ -8,6 +8,7 @@
     enableCompletion = true;
 
     shellAliases = {
+      "update" = "sudo ls /dev/null > /dev/null 2>&1 && sudo nixos-rebuild switch |& nom";
     };
 
     oh-my-zsh = {

@@ -11,5 +11,4 @@
     vlc
     solaar
   ];
-
 }

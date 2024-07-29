@@ -16,6 +16,8 @@
     verbose = false;
   };
 
+  custom.root = "/etc/nixos";
+
   services.xserver.videoDrivers = ["amdgpu"];
 
   networking.hostName = "jupiter";
