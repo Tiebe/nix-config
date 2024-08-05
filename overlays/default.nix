@@ -2,7 +2,7 @@
 {inputs, ...}: {
   modifications = final: prev: {
     ragenix = prev.ragenix.override {
-        plugins = [final.age-plugin-yubikey];
+      plugins = [final.age-plugin-yubikey];
     };
   };
 }

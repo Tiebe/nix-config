@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     fzf
     wget
-    sops
     gnupg
     direnv
     inetutils

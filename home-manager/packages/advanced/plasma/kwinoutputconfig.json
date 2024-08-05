@@ -3,14 +3,16 @@
         "data": [
             {
                 "autoRotation": "InTabletMode",
-                "connectorName": "DP-3",
+                "brightness": 1,
+                "colorProfileSource": "sRGB",
+                "connectorName": "DVI-I-2",
                 "edidHash": "6bc9a10783cea355f988fc213f4569bf",
                 "edidIdentifier": "AOC 9986 16617 25 2023 0",
                 "highDynamicRange": false,
                 "iccProfilePath": "",
                 "mode": {
                     "height": 1440,
-                    "refreshRate": 155000,
+                    "refreshRate": 143912,
                     "width": 2560
                 },
                 "overscan": 0,
@@ -24,7 +26,9 @@
             },
             {
                 "autoRotation": "InTabletMode",
-                "connectorName": "HDMI-A-1",
+                "brightness": 1,
+                "colorProfileSource": "sRGB",
+                "connectorName": "DVI-I-1",
                 "edidHash": "055f2172d6491b0972ea2db2da23005b",
                 "edidIdentifier": "HWP 12675 16843009 48 2016 0",
                 "highDynamicRange": false,
@@ -37,6 +41,29 @@
                 "overscan": 0,
                 "rgbRange": "Automatic",
                 "scale": 1,
+                "sdrBrightness": 200,
+                "sdrGamutWideness": 0,
+                "transform": "Normal",
+                "vrrPolicy": "Automatic",
+                "wideColorGamut": false
+            },
+            {
+                "autoRotation": "InTabletMode",
+                "brightness": 1,
+                "colorProfileSource": "sRGB",
+                "connectorName": "eDP-1",
+                "edidHash": "7aaafe9cf6ff981797ba08c557cdf001",
+                "edidIdentifier": "AUO 11917 0 0 2019 0",
+                "highDynamicRange": false,
+                "iccProfilePath": "",
+                "mode": {
+                    "height": 1080,
+                    "refreshRate": 60056,
+                    "width": 1920
+                },
+                "overscan": 0,
+                "rgbRange": "Automatic",
+                "scale": 1.25,
                 "sdrBrightness": 200,
                 "sdrGamutWideness": 0,
                 "transform": "Normal",
@@ -70,9 +97,72 @@
                         "priority": 1
                     }
                 ]
+            },
+            {
+                "lidClosed": false,
+                "outputs": [
+                    {
+                        "enabled": true,
+                        "outputIndex": 2,
+                        "position": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "priority": 0
+                    },
+                    {
+                        "enabled": true,
+                        "outputIndex": 0,
+                        "position": {
+                            "x": 1536,
+                            "y": 0
+                        },
+                        "priority": 1
+                    },
+                    {
+                        "enabled": true,
+                        "outputIndex": 1,
+                        "position": {
+                            "x": 4096,
+                            "y": 0
+                        },
+                        "priority": 2
+                    }
+                ]
+            },
+            {
+                "lidClosed": true,
+                "outputs": [
+                    {
+                        "enabled": false,
+                        "outputIndex": 2,
+                        "position": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "priority": -1
+                    },
+                    {
+                        "enabled": true,
+                        "outputIndex": 0,
+                        "position": {
+                            "x": 1920,
+                            "y": 0
+                        },
+                        "priority": 0
+                    },
+                    {
+                        "enabled": true,
+                        "outputIndex": 1,
+                        "position": {
+                            "x": 0,
+                            "y": 597
+                        },
+                        "priority": 1
+                    }
+                ]
             }
         ],
         "name": "setups"
     }
 ]
-

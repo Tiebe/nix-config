@@ -16,7 +16,7 @@
     verbose = false;
   };
 
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  services.xserver.videoDrivers = ["displaylink" "modesetting"];
 
   custom.root = "/etc/nixos";
 

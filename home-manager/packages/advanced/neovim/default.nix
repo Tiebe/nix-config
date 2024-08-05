@@ -7,7 +7,6 @@
 }: let
   nvimDir = "${specialArgs.custom.root}/home-manager/packages/advanced/neovim";
 in {
-  
   config = {
     programs.neovim = {
       enable = true;
