@@ -10,5 +10,7 @@
     spotify
     vlc
     solaar
+    goldwarden
   ];
+
 }

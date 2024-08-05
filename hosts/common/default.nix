@@ -25,6 +25,7 @@
     #../../system/wayland
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
+    ./age.nix
   ];
 
   options.custom = {
@@ -179,7 +180,7 @@
 
     users.users = {
       tiebe = {
-        hashedPasswordFile = config.sops.secrets.user_pwd.path;
+        hashedPasswordFile = config.age.secrets.password.path;
         isNormalUser = true;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe"

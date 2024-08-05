@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    agenix = {
+      url = "github:yaxitech/ragenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -26,6 +31,7 @@
     nixpkgs,
     home-manager,
     sops-nix,
+    agenix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -34,6 +40,7 @@
     ];
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
+    overlays = import ./overlays {inherit inputs;};
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     nixosConfigurations = {

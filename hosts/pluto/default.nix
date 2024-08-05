@@ -16,6 +16,8 @@
     verbose = false;
   };
 
+  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+
   custom.root = "/etc/nixos";
 
   networking.hostName = "pluto";
