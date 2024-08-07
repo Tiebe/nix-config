@@ -74,6 +74,11 @@ in {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/i-dont-care-about-cookies/latest.xpi";
             installation_mode = "force_installed";
           };
+          # Enhanced GitHub
+          "{72bd91c9-3dc5-40a8-9b10-dec633c0873f}" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/enhanced-github/latest.xpi";
+            installation_mode = "force_installed";
+          };
         };
 
         /*
