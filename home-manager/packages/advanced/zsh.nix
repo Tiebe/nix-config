@@ -23,6 +23,10 @@
       ];
       theme = "jonathan";
     };
+
+    initExtra = ''
+
+    '';
   };
 
   programs.starship = {

@@ -19,6 +19,11 @@
       url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -54,5 +59,13 @@
         modules = [./hosts/mercury];
       };
     };
+
+    # packages.x86_64-linux = {
+    #   install-iso = nixos-generators.nixosGenerate {
+    #     system = "x86_64-linux";
+    #     modules = [];
+    #     format = "virtualbox";
+    #   };
+    # };
   };
 }

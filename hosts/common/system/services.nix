@@ -15,6 +15,13 @@
     };
   };
 
+  #     programs.ssh.startAgent = true;
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
   services.tailscale = {
     enable = true;
     #useRoutingFeatures = "client";

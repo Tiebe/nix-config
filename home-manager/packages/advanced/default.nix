@@ -11,5 +11,6 @@
     ./wezterm
     ./spotify-player
     ./neovim
+    #./discord
   ];
 }

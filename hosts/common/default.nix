@@ -39,6 +39,11 @@
     environment.systemPackages = with pkgs; [
       jdk21
       gtkmm3
+      (pkgs.discord.override {
+        withVencord = true;
+        withOpenASAR = true;
+      })
+      vencord
     ];
 
     virtualisation.docker.enable = true;
