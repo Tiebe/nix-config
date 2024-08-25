@@ -22,7 +22,6 @@ in {
   ];
 
   programs.gnupg.agent.enable = true;
-  services.yubikey-agent.enable = true;
   services.pcscd.enable = true;
 
   age = {

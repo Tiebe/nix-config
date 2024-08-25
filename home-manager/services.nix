@@ -20,9 +20,15 @@
     };
   };
 
+  services.gpg-agent = {
+    enable = true;
+    enableExtraSocket = true;
+    enableSshSupport = true;
+  };
+
   home.file = {
     ".gnupg/gpg.conf".source = ./gpg.conf;
     ".gnupg/scdaemon.conf".text = "disable-ccid";
-    ".gnupg/gpg-agent.conf".source = ./gpg-agent.conf;
+    #".gnupg/gpg-agent.conf".source = ./gpg-agent.conf;
   };
 }
