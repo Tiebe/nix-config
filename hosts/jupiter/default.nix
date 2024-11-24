@@ -18,7 +18,7 @@
 
   custom.root = "/etc/nixos";
 
-  services.xserver.videoDrivers = ["amdgpu"];
+  services.xserver.videoDrivers = [ "amdgpu" "displaylink" "modesetting" ];
 
   networking.hostName = "jupiter";
 
@@ -34,4 +34,6 @@
   hardware.graphics.enable = true;
 
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
+
+  services.sunshine.enable = true;
 }

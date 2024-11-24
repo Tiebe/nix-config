@@ -11,5 +11,7 @@
     vlc
     solaar
     goldwarden
+
+    prismlauncher
   ];
 }
