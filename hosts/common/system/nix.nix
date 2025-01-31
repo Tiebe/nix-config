@@ -44,6 +44,10 @@
     experimental-features = "nix-command flakes";
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
+
+    substituters = [ "https://winapps.cachix.org/" ];
+    trusted-public-keys = [ "winapps.cachix.org-1:HI82jWrXZsQRar/PChgIx1unmuEsiQMQq+zt05CD36g=" ];
+
   };
   nixpkgs.config = {
   };

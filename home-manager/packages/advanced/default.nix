@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -12,5 +13,6 @@
     ./spotify-player
     ./neovim
     #./discord
+    ./winapps
   ];
 }

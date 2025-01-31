@@ -30,4 +30,13 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
+  virtualisation.oci-containers.backend = "podman";
+  networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
 }

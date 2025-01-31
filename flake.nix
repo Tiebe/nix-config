@@ -24,6 +24,11 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    winapps = {
+      url = "github:winapps-org/winapps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -32,6 +37,7 @@
     home-manager,
     sops-nix,
     agenix,
+    winapps,
     ...
   } @ inputs: let
     inherit (self) outputs;

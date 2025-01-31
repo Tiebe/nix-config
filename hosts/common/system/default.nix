@@ -11,5 +11,6 @@
     ./locale.nix
     ./services.nix
     ./network.nix
+    ./winapps.nix
   ];
 }
