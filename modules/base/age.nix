@@ -13,28 +13,31 @@ in {
 
   environment.systemPackages = with pkgs; [
     age-plugin-yubikey
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubikey-manager
     gawk
     gnupg
     inputs.agenix.packages.x86_64-linux.default
   ];
 
-  programs.gnupg.agent.enable = true;
   services.pcscd.enable = true;
 
   age = {
     secrets = {
       password.file = agePath "password.age";
       tailscale.file = agePath "tailscale.age";
+      wifi.file = agePath "wifi.age";
     };
 
     identityPaths = [
-      (lib.mkIf (builtins.getEnv "HOSTNAME" != "jupiter") (agePath "keys/age-yubikey-identity-c67fa313.txt"))
-      (lib.mkIf (builtins.getEnv "HOSTNAME" == "jupiter") (agePath "keys/age-yubikey-identity-9b188c32.txt"))
+      (agePath "keys/age-yubikey-identity-c67fa313.txt")
+      (agePath "keys/age-yubikey-identity-9b188c32.txt")
     ];
   };
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
 
   # system.activationScripts.waitForYubikey = {
   #   text = ''

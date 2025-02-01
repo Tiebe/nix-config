@@ -6,4 +6,5 @@ let
 in {
   "password.age".publicKeys = [yubikey_5c];
   "tailscale.age".publicKeys = [yubikey_5c];
+  "wifi.age".publicKeys = [yubikey_5c];
 }

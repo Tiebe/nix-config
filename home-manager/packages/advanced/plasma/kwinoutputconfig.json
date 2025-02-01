@@ -4,7 +4,7 @@
             {
                 "allowSdrSoftwareBrightness": true,
                 "autoRotation": "InTabletMode",
-                "brightness": 1,
+                "brightness": 0,
                 "colorProfileSource": "sRGB",
                 "connectorName": "DP-2",
                 "edidHash": "6bc9a10783cea355f988fc213f4569bf",
@@ -28,7 +28,7 @@
             {
                 "allowSdrSoftwareBrightness": true,
                 "autoRotation": "InTabletMode",
-                "brightness": 1,
+                "brightness": 0,
                 "colorProfileSource": "sRGB",
                 "connectorName": "DVI-I-1",
                 "edidHash": "055f2172d6491b0972ea2db2da23005b",
@@ -52,12 +52,12 @@
             {
                 "allowSdrSoftwareBrightness": true,
                 "autoRotation": "InTabletMode",
-                "brightness": 1,
+                "brightness": 0,
                 "colorProfileSource": "sRGB",
                 "connectorName": "DP-3",
                 "edidHash": "e9c0d1373f9db688db7c2748714b8e0d",
                 "edidIdentifier": "GBT 12819 727712406 34 2023 0",
-                "highDynamicRange": true,
+                "highDynamicRange": false,
                 "iccProfilePath": "",
                 "mode": {
                     "height": 1440,
@@ -67,11 +67,11 @@
                 "overscan": 0,
                 "rgbRange": "Automatic",
                 "scale": 1,
-                "sdrBrightness": 329,
+                "sdrBrightness": 50,
                 "sdrGamutWideness": 0,
                 "transform": "Normal",
                 "vrrPolicy": "Never",
-                "wideColorGamut": true
+                "wideColorGamut": false
             }
         ],
         "name": "outputs"
@@ -162,6 +162,38 @@
                             "x": 4480,
                             "y": 0
                         },
+                        "priority": 1
+                    },
+                    {
+                        "enabled": true,
+                        "outputIndex": 2,
+                        "position": {
+                            "x": 1920,
+                            "y": 0
+                        },
+                        "priority": 0
+                    },
+                    {
+                        "enabled": true,
+                        "outputIndex": 1,
+                        "position": {
+                            "x": 0,
+                            "y": 360
+                        },
+                        "priority": 2
+                    }
+                ]
+            },
+            {
+                "lidClosed": false,
+                "outputs": [
+                    {
+                        "enabled": true,
+                        "outputIndex": 1,
+                        "position": {
+                            "x": 0,
+                            "y": 0
+                        },
                         "priority": 0
                     },
                     {
@@ -172,15 +204,6 @@
                             "y": 0
                         },
                         "priority": 1
-                    },
-                    {
-                        "enabled": true,
-                        "outputIndex": 1,
-                        "position": {
-                            "x": 0,
-                            "y": 360
-                        },
-                        "priority": 2
                     }
                 ]
             }

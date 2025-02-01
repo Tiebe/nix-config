@@ -11,10 +11,10 @@
       RDP_DOMAIN = "";
 
       RDP_IP = "127.0.0.1";
-      WAFLAVOR = "podman";
+      WAFLAVOR = "docker";
       RDP_SCALE = "100";
 
-      RDP_FLAGS = "/cert:tofu /sound /microphone";
+      RDP_FLAGS = "\"/cert:tofu /sound /microphone\"";
       MULTIMON = "false";
       DEBUG = "true";
 

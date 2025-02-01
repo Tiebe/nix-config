@@ -8,7 +8,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../common
+    ./modules.nix
   ];
 
   boot.initrd = {
@@ -21,9 +21,6 @@
   custom.root = "/etc/nixos";
 
   networking.hostName = "pluto";
-
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
   hardware.graphics = {
     enable = true;

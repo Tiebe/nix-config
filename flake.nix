@@ -59,11 +59,6 @@
         specialArgs = {inherit inputs outputs;};
         modules = [./hosts/pluto];
       };
-
-      mercury = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [./hosts/mercury];
-      };
     };
 
     # packages.x86_64-linux = {
