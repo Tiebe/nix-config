@@ -37,7 +37,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      tiebe = import ../../../home-manager/home.nix;
+      tiebe = import ../../home-manager/home.nix;
     };
   };
 }
