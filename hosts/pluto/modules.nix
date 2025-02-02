@@ -11,7 +11,7 @@
   servicesModule = file: module "services/${file}.nix";
   systemModule = file: module "system/${file}.nix";
   programModule = file: module "programs/${file}.nix";
-  desktopModule = file: module "desktop/${file}.nix";
+  desktopModule = file: module "desktop/${file}";
 in {
   imports = [
     (baseModule "nix")
@@ -30,7 +30,7 @@ in {
     (systemModule "networking/bluetooth")
 
     (systemModule "users")
-    (desktopModule "plasma")
+    (desktopModule "gnome")
 
     (programModule "distrobox")
     (programModule "vencord")
