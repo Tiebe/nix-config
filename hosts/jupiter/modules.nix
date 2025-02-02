@@ -31,7 +31,7 @@ in {
     (systemModule "networking/bluetooth")
 
     (systemModule "users")
-    (desktopModule "plasma")
+    (desktopModule "gnome")
 
 
     (programModule "adb")

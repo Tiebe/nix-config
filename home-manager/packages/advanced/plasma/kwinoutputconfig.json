@@ -4,7 +4,7 @@
             {
                 "allowSdrSoftwareBrightness": true,
                 "autoRotation": "InTabletMode",
-                "brightness": 0,
+                "brightness": 1,
                 "colorProfileSource": "sRGB",
                 "connectorName": "DP-2",
                 "edidHash": "6bc9a10783cea355f988fc213f4569bf",
@@ -28,7 +28,7 @@
             {
                 "allowSdrSoftwareBrightness": true,
                 "autoRotation": "InTabletMode",
-                "brightness": 0,
+                "brightness": 1,
                 "colorProfileSource": "sRGB",
                 "connectorName": "DVI-I-1",
                 "edidHash": "055f2172d6491b0972ea2db2da23005b",
@@ -52,7 +52,7 @@
             {
                 "allowSdrSoftwareBrightness": true,
                 "autoRotation": "InTabletMode",
-                "brightness": 0,
+                "brightness": 1,
                 "colorProfileSource": "sRGB",
                 "connectorName": "DP-3",
                 "edidHash": "e9c0d1373f9db688db7c2748714b8e0d",
