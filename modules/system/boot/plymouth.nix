@@ -8,7 +8,7 @@ theme: {
     consoleLogLevel = 0;
     plymouth = {
       enable = true;
-      theme = "${theme}";
+      #theme = "${theme}";
       themePackages = with pkgs; [
         # By default we would install all themes
         (adi1090x-plymouth-themes.override {

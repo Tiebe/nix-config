@@ -49,47 +49,46 @@
   home-manager.users.tiebe = {
     dconf = {
       enable = true;
-      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      #settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
       #settings."org/gnome/desktop/interface".cursor-theme = "Adwaita";
+      settings = {
+        "org/gnome/shell".favorite-apps = ["firefox.desktop"];
+        "org/gnome/desktop/wm/keybindings" = {
+          switch-windows = [ "<Alt>Tab" ];
+          switch-windows-backward = [ "<Shift><Alt>Tab" ];
+          switch-applications = [ "<Super>Tab" ];
+          switch-applications-backward = [ "<Shift><Super>Tab" ];
+        };
 
-      settings."org/gnome/shell" = {
-        disable-user-extensions = false;
-        enabled-extensions = with pkgs.gnomeExtensions; [
-          blur-my-shell.extensionUuid
-          appindicator.extensionUuid
-          user-themes.extensionUuid
-        ];
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+          binding = "<Super>Return";
+          command = "wezterm";
+          name = "WezTerm";
+        };
+
+        "org/gnome/system/location".enabled = true;
+        "system/locale".region = "nl_NL.UTF-8";
+        "org/gnome/desktop/interface".enable-hot-corners = false;
+        "org/gnome/mutter".dynamic-workspaces = true;
+        "org/gnome/shell/app-switcher".current-workspace-only = true;
+
+        "org/gnome/shell" = {
+          disable-user-extensions = false;
+          enabled-extensions = with pkgs.gnomeExtensions; [
+            blur-my-shell.extensionUuid
+            appindicator.extensionUuid
+            user-themes.extensionUuid
+          ];
+        };
       };
     };
 
     gtk = {
       enable = true;
-      iconTheme = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
-      };
-
-      theme = {
-        name = "palenight";
-        package = pkgs.palenight-theme;
-      };
-
-      cursorTheme = {
-        name = "Numix-Cursor";
-        package = pkgs.numix-cursor-theme;
-      };
-
-      gtk3.extraConfig = {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
-
-      gtk4.extraConfig = {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
 
     };
   };

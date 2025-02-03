@@ -34,6 +34,7 @@
     sharedModules = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
     ];
+    backupFileExtension = "backup";
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {

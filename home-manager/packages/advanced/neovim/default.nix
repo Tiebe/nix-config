@@ -49,20 +49,20 @@ in {
       # Raw symlink to the plugin manager lock file, so that it stays writeable
       ".config/nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${nvimDir}/lazy-lock.json";
 
-      ".config/nvim/init.lua".text =
-        # lua
-        ''
-          package.path = package.path .. ";${config.home.homeDirectory}/.config/nvim/nix/?.lua"
+      # ".config/nvim/init.lua".text =
+      #   # lua
+      #   ''
+      #     package.path = package.path .. ";${config.home.homeDirectory}/.config/nvim/nix/?.lua"
 
-          vim.g.gcc_bin_path = '${lib.getExe pkgs.gcc}'
-          vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.${
-            if pkgs.stdenv.isDarwin
-            then "dylib"
-            else "so"
-          }'
+      #     vim.g.gcc_bin_path = '${lib.getExe pkgs.gcc}'
+      #     vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.${
+      #       if pkgs.stdenv.isDarwin
+      #       then "dylib"
+      #       else "so"
+      #     }'
 
-          require("config")
-        '';
+      #     require("config")
+      #   '';
 
       # Out of store symlink of whe whole configuration, for more agility when editing it
       ".config/nvim/lua".source = config.lib.file.mkOutOfStoreSymlink "${nvimDir}/config/lua";

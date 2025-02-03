@@ -32,12 +32,14 @@ in {
 
     (systemModule "users")
     (desktopModule "gnome")
+    (desktopModule "theme")
 
 
     (programModule "adb")
     (programModule "distrobox")
     (programModule "vencord")
     (programModule "steam")
+    (programModule "comma")
     (servicesModule "sunshine")
   ];
 

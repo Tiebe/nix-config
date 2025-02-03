@@ -10,6 +10,7 @@
     direnv
     inetutils
     nix-output-monitor
+    toybox
   ];
 
   programs.gh.enable = true;
