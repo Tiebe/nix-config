@@ -50,15 +50,47 @@
     dconf = {
       enable = true;
       settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      #settings."org/gnome/desktop/interface".cursor-theme = "Adwaita";
 
       settings."org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = with pkgs.gnomeExtensions; [
           blur-my-shell.extensionUuid
           appindicator.extensionUuid
+          user-themes.extensionUuid
         ];
       };
     };
-  };
 
+    gtk = {
+      enable = true;
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+
+      theme = {
+        name = "palenight";
+        package = pkgs.palenight-theme;
+      };
+
+      cursorTheme = {
+        name = "Numix-Cursor";
+        package = pkgs.numix-cursor-theme;
+      };
+
+      gtk3.extraConfig = {
+        Settings = ''
+          gtk-application-prefer-dark-theme=1
+        '';
+      };
+
+      gtk4.extraConfig = {
+        Settings = ''
+          gtk-application-prefer-dark-theme=1
+        '';
+      };
+
+    };
+  };
 }
