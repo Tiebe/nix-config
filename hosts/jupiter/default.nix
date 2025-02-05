@@ -26,4 +26,6 @@
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "23.11";
 }

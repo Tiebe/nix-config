@@ -26,7 +26,10 @@
         })
         config.nix.registry);
 
-    programs.nix-ld.enable = true;
+    programs.nix-ld = {
+      enable = true;
+      package = pkgs.nix-ld-rs; # only for NixOS 24.05
+    };
 
     nixpkgs = {
       # Configure your nixpkgs instance
@@ -47,8 +50,5 @@
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
     };
-
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    system.stateVersion = "23.11";
   };
 }
