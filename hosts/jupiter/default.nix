@@ -24,6 +24,6 @@
 
   hardware.graphics.enable = true;
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
-
+  virtualisation.docker.storageDriver = "btrfs";
 
 }

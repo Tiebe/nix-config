@@ -31,9 +31,12 @@ in {
 
     (systemModule "users")
     (desktopModule "gnome")
+    (desktopModule "theme")
 
     (programModule "distrobox")
     (programModule "vencord")
+    (programModule "comma")
+
   ];
 
 }
