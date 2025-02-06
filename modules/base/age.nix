@@ -26,6 +26,7 @@ in {
       tailscale.file = agePath "tailscale.age";
       wifi.file = agePath "wifi.age";
       atuin.file = agePath "atuin.age";
+      atuin.owner = "tiebe";
     };
 
     identityPaths = [

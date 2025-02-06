@@ -10,4 +10,6 @@
   };
 
   networking.firewall.checkReversePath = false;
+
+  systemd.services."tailscaled".after = ["graphical.target"];
 }
