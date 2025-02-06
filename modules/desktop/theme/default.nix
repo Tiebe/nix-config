@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: {
-  imports = [ inputs.stylix.nixosModules.stylix ];
+  imports = [inputs.stylix.nixosModules.stylix];
 
   stylix.enable = true;
 
@@ -20,7 +20,6 @@
   stylix.fonts.sizes.desktop = 10;
   stylix.fonts.sizes.popups = 10;
   stylix.fonts.sizes.terminal = 10;
-
 
   #stylix.polarity = "dark";
 }

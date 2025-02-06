@@ -8,7 +8,6 @@
 }: {
   imports = [
     ./advanced
-    ./cmd.nix
     ./dev.nix
     ./gui.nix
   ];

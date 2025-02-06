@@ -3,5 +3,5 @@
   pkgs,
   ...
 }: {
-  environment.systemPackages = [ pkgs.vencord ];
+  environment.systemPackages = [pkgs.vencord];
 }

@@ -31,7 +31,7 @@
     (final: prev: {
       gnome = prev.gnome.overrideScope (gnomeFinal: gnomePrev: {
         mutter = gnomePrev.mutter.overrideAttrs (old: {
-          src = pkgs.fetchFromGitLab  {
+          src = pkgs.fetchFromGitLab {
             domain = "gitlab.gnome.org";
             owner = "vanvugt";
             repo = "mutter";
@@ -43,8 +43,8 @@
     })
   ];
 
-  environment.systemPackages = with pkgs; [ gnomeExtensions.appindicator ];
-  services.udev.packages = with pkgs; [ gnome-settings-daemon ];
+  environment.systemPackages = with pkgs; [gnomeExtensions.appindicator];
+  services.udev.packages = with pkgs; [gnome-settings-daemon];
 
   home-manager.users.tiebe = {
     dconf = {
@@ -54,14 +54,14 @@
       settings = {
         "org/gnome/shell".favorite-apps = ["firefox.desktop"];
         "org/gnome/desktop/wm/keybindings" = {
-          switch-windows = [ "<Alt>Tab" ];
-          switch-windows-backward = [ "<Shift><Alt>Tab" ];
-          switch-applications = [ "<Super>Tab" ];
-          switch-applications-backward = [ "<Shift><Super>Tab" ];
+          switch-windows = ["<Alt>Tab"];
+          switch-windows-backward = ["<Shift><Alt>Tab"];
+          switch-applications = ["<Super>Tab"];
+          switch-applications-backward = ["<Shift><Super>Tab"];
         };
 
         "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+          custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"];
         };
 
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -89,7 +89,6 @@
 
     gtk = {
       enable = true;
-
     };
   };
 }

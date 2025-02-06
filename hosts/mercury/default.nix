@@ -22,22 +22,21 @@
       autoAttach = ["7-1"];
     };
   };
-    environment.systemPackages = [
-      pkgs.linuxPackages.usbip
-      pkgs.yubikey-manager
-      pkgs.libfido2
-    ];
+  environment.systemPackages = [
+    pkgs.linuxPackages.usbip
+    pkgs.yubikey-manager
+    pkgs.libfido2
+  ];
 
-        services.pcscd.enable = true;
-    services.udev = {
-      enable = true;
-      packages = [pkgs.yubikey-personalization];
-      extraRules = ''
-        SUBSYSTEM=="usb", MODE="0666"
-        KERNEL=="hidraw*", SUBSYSTEM=="hidraw", TAG+="uaccess", MODE="0666"
-      '';
-    };
-
+  services.pcscd.enable = true;
+  services.udev = {
+    enable = true;
+    packages = [pkgs.yubikey-personalization];
+    extraRules = ''
+      SUBSYSTEM=="usb", MODE="0666"
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", TAG+="uaccess", MODE="0666"
+    '';
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 

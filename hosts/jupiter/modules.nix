@@ -34,13 +34,12 @@ in {
     (desktopModule "gnome")
     (desktopModule "theme")
 
-
     (programModule "adb")
     (programModule "distrobox")
     (programModule "vencord")
     (programModule "steam")
-    (programModule "comma")
+    (programModule "terminal/zsh")
+    (programModule "terminal/util")
     (servicesModule "sunshine")
   ];
-
 }

@@ -24,7 +24,8 @@ in {
     (desktopModule "theme")
 
     #(programModule "distrobox")
-    (programModule "comma")
+    (programModule "terminal/zsh")
+    (programModule "terminal/util")
+    (programModule "git")
   ];
-
 }

@@ -21,7 +21,7 @@ in {
             id = "$WIFI_SSID_" + builtins.toString i;
             type = "wifi";
           };
-          ipv4 = { method = "auto"; };
+          ipv4 = {method = "auto";};
           ipv6 = {
             method = "auto";
             "addr-gen-mode" = "stable-privacy";
@@ -46,7 +46,8 @@ in {
           #   "phase2-auth" = "mschapv2";
           # };
         };
-      }) networkCount
+      })
+      networkCount
     );
   };
 }

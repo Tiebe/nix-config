@@ -19,5 +19,10 @@
 	"prefix": {
 		"prefix": "pre",
 		"body": [ "{", "  inputs,", "  outputs,", "  lib,", "  config,", "  pkgs,", "  ...", "}: {", "  $0", "}" ]
+	},
+
+	"home": {
+		"prefix": "home",
+		"body": [ "home-manager.users.tiebe = {", "  $0", "};" ]
 	}
 }

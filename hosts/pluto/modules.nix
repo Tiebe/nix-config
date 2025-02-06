@@ -35,8 +35,8 @@ in {
 
     (programModule "distrobox")
     (programModule "vencord")
-    (programModule "comma")
-
+    (programModule "terminal/zsh")
+    (programModule "terminal/util")
+    (programModule "git")
   ];
-
 }

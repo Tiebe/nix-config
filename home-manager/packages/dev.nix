@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     vscode
     jetbrains-toolbox
-    
   ];
 
   home.sessionPath = [
