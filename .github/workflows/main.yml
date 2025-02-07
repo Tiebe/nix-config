@@ -1,0 +1,40 @@
+name: Build and Push to Cachix
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v3
+
+      # Install Nix with flake support
+      - name: Install Nix
+        uses: cachix/install-nix-action@v17
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # Build and push the first system
+      - name: Build and push Jupiter
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          echo "Building Jupiter..."
+          nix build .#nixosConfigurations.system1.config.system.build.toplevel
+          echo "Pushing Jupiter build to Cachix..."
+          cachix push tiebe $(nix path-info -r ./result)
+
+      # Build and push the second system
+      - name: Build and push Pluto
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          echo "Building Pluto..."
+          nix build .#nixosConfigurations.system2.config.system.build.toplevel
+          echo "Pushing Pluto build to Cachix..."
+          cachix push tiebe $(nix path-info -r ./result)
