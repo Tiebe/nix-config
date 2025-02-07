@@ -18,8 +18,33 @@
 
 	"prefix": {
 		"prefix": "pre",
-		"body": [ "{", "  inputs,", "  outputs,", "  lib,", "  config,", "  pkgs,", "  ...", "}: {", "  $0", "}" ]
-	},
+		"body": [
+			"{",
+			"  inputs,",
+			"  outputs,",
+			"  lib,",
+			"  config,",
+			"  pkgs,",
+			"  ...",
+			"}:",
+			"let",
+			"  inherit (lib) mkEnableOption mkIf mkOption types;",
+			"  cfg = config.tiebe.$0;",
+			"in",
+			"{",
+			"  options = {",
+			"    tiebe.$0 = {",
+			"      enable = mkEnableOption \"\";",
+			"    };",
+			"  };",
+			"",
+			"  config = mkIf cfg.enable {",
+			"    ",
+			"  };",
+			"}"
+		],
+		"description": "prefix"
+		},
 
 	"home": {
 		"prefix": "home",

@@ -40,7 +40,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  custom.root = "/etc/nixos";
   networking.hostName = "mercury";
 
   nix.registry.nixpkgs.flake = inputs.nixpkgs;

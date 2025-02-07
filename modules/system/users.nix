@@ -29,7 +29,7 @@
   home-manager = {
     extraSpecialArgs = {
       inherit inputs outputs;
-      custom = config.custom;
+      tiebe = config.tiebe;
     };
     sharedModules = [
       inputs.plasma-manager.homeManagerModules.plasma-manager

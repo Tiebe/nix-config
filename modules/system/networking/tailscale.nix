@@ -1,15 +1,31 @@
 {
+  inputs,
+  outputs,
+  lib,
   config,
   pkgs,
   ...
-}: {
-  services.tailscale = {
-    enable = true;
-    #useRoutingFeatures = "client";
-    authKeyFile = config.age.secrets.tailscale.path;
+}:
+let
+  inherit (lib) mkEnableOption mkIf mkOption types;
+  cfg = config.tiebe.system.networking.tailscale;
+in
+{
+  options = {
+    tiebe.system.networking.tailscale = {
+      enable = mkEnableOption "tailscale";
+    };
   };
 
-  networking.firewall.checkReversePath = false;
+  config = mkIf cfg.enable {
+    services.tailscale = {
+      enable = true;
+      #useRoutingFeatures = "client";
+      authKeyFile = config.age.secrets.tailscale.path;
+    };
 
-  systemd.services."tailscaled".after = ["graphical.target"];
+    networking.firewall.checkReversePath = false;
+
+    systemd.services."tailscaled".after = ["graphical.target"];
+  };
 }

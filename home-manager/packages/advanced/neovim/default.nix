@@ -5,7 +5,7 @@
   specialArgs,
   ...
 }: let
-  nvimDir = "${specialArgs.custom.root}/home-manager/packages/advanced/neovim";
+  nvimDir = "${specialArgs.tiebe.base.nix.root}/home-manager/packages/advanced/neovim";
 in {
   config = {
     programs.neovim = {

@@ -5,7 +5,7 @@
   specialArgs,
   ...
 }: let
-  plasmaDir = "${specialArgs.custom.root}/home-manager/packages/advanced/plasma";
+  plasmaDir = "${specialArgs.tiebe.base.nix.root}/home-manager/packages/advanced/plasma";
 in {
   imports = [
     ./config.nix

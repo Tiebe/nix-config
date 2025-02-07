@@ -1,23 +1,30 @@
 {
   inputs,
-  config,
+  outputs,
   lib,
+  config,
   pkgs,
   ...
-}: {
-  options.custom = {
-    root = lib.mkOption {
-      type = with lib.types; uniq str;
-      example = "/etc/nixos";
-      description = ''
-        Root of nix flake.
-      '';
+}: let
+  inherit (lib) mkEnableOption mkIf mkOption types;
+  cfg = config.tiebe.base.nix;
+in {
+  options = {
+    tiebe.base.nix = {
+      enable = mkEnableOption "nix config";
+      root = lib.mkOption {
+        type = with lib.types; uniq str;
+        example = "/etc/nixos";
+        description = ''
+          Root of nix flake.
+        '';
+        default = "/etc/nixos";
+      };
     };
   };
-  config = {
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nix.nixPath = ["/etc/nix/path"];
+
+  config = mkIf cfg.enable {
+
     environment.etc = with pkgs; (lib.mapAttrs'
       (name: value: {
         name = "nix/path/${name}";
@@ -39,15 +46,30 @@
       };
     };
 
-    # This will add each flake input as a registry
-    # To m ake nix3 commands consistent with your flake
-    nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+    nix = {
+      # This will add each flake input as a registry
+      # To m ake nix3 commands consistent with your flake
+      registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+      # This will additionally add your inputs to the system's legacy channels
+      # Making legacy nix commands consistent as well, awesome!
+      nixPath = ["/etc/nix/path"];
 
-    nix.settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Deduplicate and optimize nix store
-      auto-optimise-store = true;
+      settings = {
+        # Enable flakes and new 'nix' command
+        experimental-features = "nix-command flakes";
+        # Deduplicate and optimize nix store
+        auto-optimise-store = true;
+
+        extra-substituters = [
+          "https://tiebe.cachix.org?priority=10"
+          "https://nix-community.cachix.org?priority=20"
+          "https://cache.nixos.org?priority=30"
+        ];
+        trusted-public-keys = [
+          "tiebe.cachix.org-1:gIjdnOcIlX9TOKT6StlrNvhCAnQiy9vAoxMfzMhVg54="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+      };
     };
   };
 }

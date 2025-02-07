@@ -1,14 +1,28 @@
 {
+  inputs,
+  outputs,
+  lib,
   config,
   pkgs,
   ...
-}: {
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+}: let
+  inherit (lib) mkEnableOption mkIf mkOption types;
+  cfg = config.tiebe.desktop.plasma;
+in {
+  options = {
+    tiebe.desktop.plasma = {
+      enable = mkEnableOption "the KDE Plasma desktop";
+    };
+  };
 
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    plasma-browser-integration
-  ];
+  config = mkIf cfg.enable {
+    # Enable the X11 windowing system.
+    services.xserver.enable = true;
+    services.xserver.displayManager.gdm.enable = true;
+    services.desktopManager.plasma6.enable = true;
+
+    environment.plasma6.excludePackages = with pkgs.kdePackages; [
+      plasma-browser-integration
+    ];
+  };
 }
