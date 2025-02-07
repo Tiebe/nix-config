@@ -9,9 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: df -h
+      - name: Clean up disk
+        uses: AdityaGarg8/remove-unwanted-software@v4.1
+        with:
+          remove-dotnet: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
+          remove-large-packages: 'true'
+          remove-cached-tools: 'true'
+
+      - run: df -h
+      
       # Check out the repository
       - uses: actions/checkout@v3
-
+\
       # Install Nix with flake support
       - name: Install Nix
         uses: cachix/install-nix-action@v17
@@ -29,6 +42,8 @@ jobs:
           echo "Pushing Jupiter build to Cachix..."
           cachix push tiebe $(nix path-info -r ./result)
 
+      - run: df -h
+
       # Build and push the second system
       - name: Build and push Pluto
         env:
@@ -38,3 +53,6 @@ jobs:
           nix build .#nixosConfigurations.pluto.config.system.build.toplevel
           echo "Pushing Pluto build to Cachix..."
           cachix push tiebe $(nix path-info -r ./result)
+
+      - run: df -h
+
