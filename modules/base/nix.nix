@@ -49,7 +49,7 @@ in {
     nix = {
       # This will add each flake input as a registry
       # To m ake nix3 commands consistent with your flake
-      nix.registry.nixpkgs.flake = inputs.nixpkgs;
+      registry.nixpkgs.flake = inputs.nixpkgs;
       # This will additionally add your inputs to the system's legacy channels
       # Making legacy nix commands consistent as well, awesome!
       nixPath = ["/etc/nix/path"];
