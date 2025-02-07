@@ -49,7 +49,7 @@ in {
     nix = {
       # This will add each flake input as a registry
       # To m ake nix3 commands consistent with your flake
-      registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+      nix.registry.nixpkgs.flake = inputs.nixpkgs;
       # This will additionally add your inputs to the system's legacy channels
       # Making legacy nix commands consistent as well, awesome!
       nixPath = ["/etc/nix/path"];

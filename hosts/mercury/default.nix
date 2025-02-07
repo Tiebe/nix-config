@@ -42,7 +42,5 @@
 
   networking.hostName = "mercury";
 
-  nix.registry.nixpkgs.flake = inputs.nixpkgs;
-
   system.stateVersion = "24.05";
 }
