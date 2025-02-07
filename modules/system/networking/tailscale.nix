@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.networking.tailscale;
-in
-{
+in {
   options = {
     tiebe.system.networking.tailscale = {
       enable = mkEnableOption "tailscale";

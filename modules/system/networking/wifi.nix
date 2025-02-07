@@ -5,15 +5,13 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.networking.wifi;
 
   # Define the maximum number of networks you expect.
   networkCount = 205;
-in
-{
+in {
   options = {
     tiebe.system.networking.wifi = {
       enable = mkEnableOption "Wi-Fi support";

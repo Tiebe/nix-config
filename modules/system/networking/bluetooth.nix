@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.networking.bluetooth;
-in
-{
+in {
   options = {
     tiebe.system.networking.bluetooth = {
       enable = mkEnableOption "bluetooth support";

@@ -56,7 +56,7 @@ in {
   };
 
   imports = [
-     ../../modules
+    ../../modules
     (servicesModule "docker")
     (servicesModule "printing")
     (servicesModule "sound")
