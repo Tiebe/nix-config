@@ -43,7 +43,6 @@
         wezterm.enable = true;
         vscode.enable = true;
         firefox.enable = true;
-        wezterm.enable = true;
         media.enable = true;
         parsec.enable = true;
         office.enable = true;

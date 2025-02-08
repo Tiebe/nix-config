@@ -68,6 +68,7 @@ jobs:
           name: pluto-closure
           path: /nix/system
 
-      - run: df -h
-        continue-on-error: true
+      - name: Check final storage
+        if: always()
+        run: df -h
 
