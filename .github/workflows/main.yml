@@ -69,4 +69,5 @@ jobs:
           path: /nix/system
 
       - run: df -h
+        continue-on-error: true
 
