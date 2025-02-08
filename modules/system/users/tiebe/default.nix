@@ -49,7 +49,7 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       users = {
-        tiebe = {
+        tiebe = { config, pkgs, lib, ... }: {
           programs.home-manager.enable = true;
 
           home = {
