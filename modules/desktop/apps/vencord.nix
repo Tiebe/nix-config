@@ -17,6 +17,9 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = [pkgs.vencord];
-    services.arrpc.enable = true;
+
+    home-manager.users.tiebe = {
+      services.arrpc.enable = true;
+    };
   };
 }
