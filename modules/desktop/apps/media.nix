@@ -7,7 +7,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.desktop.apps.spotify;
+  cfg = config.tiebe.desktop.apps.media;
 in {
   options = {
     tiebe.desktop.apps.media = {

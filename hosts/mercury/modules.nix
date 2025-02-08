@@ -5,27 +5,43 @@
   config,
   pkgs,
   ...
-}: let
-  module = path: ../../modules/${path};
-  baseModule = file: module "base/${file}.nix";
-  servicesModule = file: module "services/${file}.nix";
-  systemModule = file: module "system/${file}.nix";
-  programModule = file: module "programs/${file}.nix";
-  desktopModule = file: module "desktop/${file}";
-in {
-  imports = [
-    (baseModule "nix")
-    (baseModule "age")
-    (baseModule "locale")
+}: {
+  imports = [../../modules];
 
-    (systemModule "users")
+  config.tiebe = {
+    base = {
+      age.enable = true;
+      locale.enable = true;
+      nix.enable = true;
+    };
 
-    (desktopModule "gnome")
-    (desktopModule "theme")
+    system = {  
+      users.tiebe.enable = true;
+    };
 
-    #(programModule "distrobox")
-    (programModule "terminal/zsh")
-    (programModule "terminal/util")
-    (programModule "git")
-  ];
+
+    desktop = {
+      gnome.enable = true;
+      theme.enable = true;
+
+      apps = {
+        vscode.enable = true;
+        wezterm.enable = true;
+      };
+    };
+
+    terminal = {
+      zsh.enable = true;
+      utils = {
+        basic.enable = true;
+        advanced.enable = true;
+      };
+    };
+
+    services = {
+      docker.enable = true;
+      gpg.enable = true;
+      lorri.enable = true;
+    };
+  };
 }
