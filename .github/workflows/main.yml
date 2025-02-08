@@ -10,16 +10,16 @@ jobs:
 
     steps:
       - name: Clean up disk
-        uses: AdityaGarg8/remove-unwanted-software@master
+        uses: easimon/maximize-build-space@master
         with:
           remove-dotnet: 'true'
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
-          #build-mount-path: '/nix'
-          #overprovision-lvm: true
-          remove-large-packages: 'true'
-          remove-cached-tools: 'true'
+          build-mount-path: '/nix'
+          overprovision-lvm: true
+          #remove-large-packages: 'true'
+          #remove-cached-tools: 'true'
       
       # Check out the repository
       - uses: actions/checkout@v3
@@ -46,13 +46,15 @@ jobs:
         run: |
           echo "Building Jupiter..."
           nix build .#nixosConfigurations.jupiter.config.system.build.toplevel
-          nix copy --to 'file:///nix/system' ./result
+          nix copy --to 'file:///nix' ./result
+          cd /nix/nar
+          tar -cvf jupiter.tar *
 
       - name: Upload Binary Closure Archive
         uses: actions/upload-artifact@v4.6.0
         with:
-          name: jupiter-closure
-          path: /nix/system
+          name: jupiter-closure.tar
+          path: /nix/nar/jupiter.tar
 
       - run: df -h
 
@@ -60,14 +62,17 @@ jobs:
       - name: Build and push Pluto
         run: |
           echo "Building Pluto..."
-          sudo nix build .#nixosConfigurations.pluto.config.system.build.toplevel
-          sudo nix copy --to 'file:///nix/system' ./result
+          rm -rf /nix/nar
+          nix build .#nixosConfigurations.pluto.config.system.build.toplevel
+          nix copy --to 'file:///nix' ./result
+          cd /nix/nar
+          tar -cvf pluto.tar *
 
       - name: Upload Binary Closure Archive
         uses: actions/upload-artifact@v4.6.0
         with:
-          name: pluto-closure
-          path: /nix/system
+          name: pluto-closure.tar
+          path: /nix/nar/pluto.tar
 
       - name: Check final storage
         if: always()
