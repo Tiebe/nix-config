@@ -7,5 +7,6 @@
     ./networking/tailscale.nix
     ./networking/wifi.nix
     ./sound.nix
+    ./users.nix
   ];
 }
