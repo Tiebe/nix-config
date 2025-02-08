@@ -16,7 +16,7 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
-          build-mount-path: '/nix/store'
+          build-mount-path: '/nix'
           overprovision-lvm: true
           #remove-large-packages: 'true'
           #remove-cached-tools: 'true'
@@ -60,8 +60,8 @@ jobs:
       - name: Build and push Pluto
         run: |
           echo "Building Pluto..."
-          nix build .#nixosConfigurations.pluto.config.system.build.toplevel
-          nix copy --to 'file:///nix/system' ./result
+          sudo nix build .#nixosConfigurations.pluto.config.system.build.toplevel
+          sudo nix copy --to 'file:///nix/system' ./result
 
       - name: Upload Binary Closure Archive
         uses: actions/upload-artifact@v4.6.0
