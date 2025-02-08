@@ -64,7 +64,7 @@
       printing.enable = true;
       ssh-server.enable = true;
       sunshine.enable = true;
-      vr.enable = true;
+      vr.enable = false;
       gpg.enable = true;
       lorri.enable = true;
     };
