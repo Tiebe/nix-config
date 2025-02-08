@@ -59,7 +59,7 @@ in {
         # Deduplicate and optimize nix store
         auto-optimise-store = true;
 
-        extra-substituters = [
+        substituters = [
           "https://tiebe.cachix.org?priority=10"
           "https://nix-community.cachix.org?priority=20"
           "https://cache.nixos.org?priority=30"
