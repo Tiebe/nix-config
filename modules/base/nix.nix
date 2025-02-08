@@ -12,14 +12,6 @@ in {
   options = {
     tiebe.base.nix = {
       enable = mkEnableOption "nix config";
-      root = lib.mkOption {
-        type = with lib.types; uniq str;
-        example = "/etc/nixos";
-        description = ''
-          Root of nix flake.
-        '';
-        default = "/etc/nixos";
-      };
     };
   };
 

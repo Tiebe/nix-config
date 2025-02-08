@@ -5,15 +5,8 @@
   config,
   pkgs,
   ...
-}: let
-  module = path: ../../modules/${path};
-  baseModule = file: module "base/${file}.nix";
-  servicesModule = file: module "services/${file}.nix";
-  systemModule = file: module "system/${file}.nix";
-  programModule = file: module "programs/${file}.nix";
-  desktopModule = file: module "desktop/${file}";
-in {
-  imports = [ ../../modules ];
+}: {
+  imports = [../../modules];
 
   config.tiebe = {
     base = {
@@ -46,6 +39,12 @@ in {
 
       apps = {
         vencord.enable = true;
+        vscode.enable = true;
+        firefox.enable = true;
+        wezterm.enable = true;
+        media.enable = true;
+        parsec.enable = true;
+        office.enable = true;
       };
     };
 
@@ -62,6 +61,7 @@ in {
       docker.enable = true;
       printing.enable = true;
       vr.enable = true;
+      gpg.enable = true;
     };
   };
 }

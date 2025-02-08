@@ -27,5 +27,6 @@ in {
     ];
 
     programs.adb.enable = true;
+    users.users.tiebe.extraGroups = ["adbusers"];
   };
 }

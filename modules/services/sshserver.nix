@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.ssh-server;
-in
-{
+in {
   options = {
     tiebe.services.ssh-server = {
       enable = mkEnableOption "the SSH server";

@@ -5,18 +5,16 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.users.tiebe;
-in
-{
+  cfg = config.tiebe.system.users.tiebe;
+in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
 
   options = {
-    tiebe.users.tiebe = {
+    tiebe.system.users.tiebe = {
       enable = mkEnableOption "primary user (tiebe)";
     };
   };
@@ -31,7 +29,7 @@ in
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq tiebe"
         ];
-        extraGroups = ["wheel" "adbusers" "docker" "dialout" "networkmanager"];
+        extraGroups = ["wheel" "dialout"];
       };
     };
 
@@ -51,10 +49,18 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       users = {
-        tiebe = import ../../home-manager/home.nix;
+        tiebe = {
+          programs.home-manager.enable = true;
+
+          home = {
+            username = "tiebe";
+            homeDirectory = "/home/tiebe";
+            file.".face".source = config.lib.file.mkOutOfStoreSymlink ./profile.jpg;
+          };
+
+          home.stateVersion = "23.11";
+        };
       };
     };
   };
 }
-
-

@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.vr;
-in
-{
+in {
   options = {
     tiebe.services.vr = {
       enable = mkEnableOption "VR services, like WiVRn and StardustXR";

@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.docker;
-in
-{
+in {
   options = {
     tiebe.services.docker = {
       enable = mkEnableOption "Docker";
@@ -27,5 +25,7 @@ in
     };
 
     virtualisation.oci-containers.backend = "docker";
+
+    users.users.tiebe.extraGroups = ["docker"];
   };
 }

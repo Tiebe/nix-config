@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.sound;
-in
-{
+in {
   options = {
     tiebe.system.sound = {
       enable = mkEnableOption "sound support";

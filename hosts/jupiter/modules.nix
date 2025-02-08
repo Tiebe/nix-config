@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: {
-  imports = [ ../../modules ];
+  imports = [../../modules];
 
   config.tiebe = {
     base = {
@@ -28,10 +28,10 @@
         tailscale.enable = true;
       };
 
+      users.tiebe.enable = true;
+
       sound.enable = true;
     };
-
-    users.tiebe.enable = true;
 
     desktop = {
       gnome.enable = true;
@@ -40,6 +40,14 @@
       apps = {
         steam.enable = true;
         vencord.enable = true;
+        wezterm.enable = true;
+        vscode.enable = true;
+        firefox.enable = true;
+        wezterm.enable = true;
+        media.enable = true;
+        parsec.enable = true;
+        office.enable = true;
+        minecraft.enable = true;
       };
     };
 
@@ -58,6 +66,8 @@
       ssh-server.enable = true;
       sunshine.enable = true;
       vr.enable = true;
+      gpg.enable = true;
+      lorri.enable = true;
     };
   };
 }

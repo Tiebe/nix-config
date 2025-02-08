@@ -27,5 +27,6 @@ in {
     ];
 
     systemd.services.NetworkManager-wait-online.enable = false;
+    users.users.tiebe.extraGroups = ["networkmanager"];
   };
 }

@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.printing;
-in
-{
+in {
   options = {
     tiebe.services.printing = {
       enable = mkEnableOption "support for printing documents";

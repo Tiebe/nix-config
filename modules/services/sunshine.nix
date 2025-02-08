@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.sunshine;
-in
-{
+in {
   options = {
     tiebe.services.sunshine = {
       enable = mkEnableOption "Sunshine, a remote desktop/remote gaming service";

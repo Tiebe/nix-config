@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.winapps;
-in
-{
+in {
   options = {
     tiebe.services.winapps = {
       enable = mkEnableOption "WinApps";

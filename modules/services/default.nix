@@ -6,5 +6,7 @@
     ./sunshine.nix
     ./vr.nix
     ./winapps.nix
+    ./gpg
+    ./lorri.nix
   ];
 }
