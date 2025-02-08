@@ -48,7 +48,7 @@ jobs:
           nix copy --to 'file:///nix/system' ./result
 
       - name: Upload Binary Closure Archive
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: jupiter-closure
           path: /nix/system
@@ -63,7 +63,7 @@ jobs:
           nix copy --to 'file:///nix/system' ./result
 
       - name: Upload Binary Closure Archive
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: pluto-closure
           path: /nix/system
