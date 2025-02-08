@@ -6,5 +6,6 @@
     ./networking/network.nix
     ./networking/tailscale.nix
     ./networking/wifi.nix
+    ./sound.nix
   ];
 }

@@ -9,5 +9,6 @@
     ./desktop/apps
     ./terminal
     ./system
+    ./services
   ];
 }

@@ -1,15 +1,31 @@
 {
+  inputs,
+  outputs,
+  lib,
   config,
   pkgs,
   ...
-}: {
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
+}:
+let
+  inherit (lib) mkEnableOption mkIf mkOption types;
+  cfg = config.tiebe.services.docker;
+in
+{
+  options = {
+    tiebe.services.docker = {
+      enable = mkEnableOption "Docker";
     };
   };
 
-  virtualisation.oci-containers.backend = "docker";
+  config = mkIf cfg.enable {
+    virtualisation.docker = {
+      enable = true;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+    };
+
+    virtualisation.oci-containers.backend = "docker";
+  };
 }

@@ -13,30 +13,55 @@
   programModule = file: module "programs/${file}.nix";
   desktopModule = file: module "desktop/${file}";
 in {
-  imports = [
-    (baseModule "nix")
-    (baseModule "age")
-    (baseModule "locale")
-    (systemModule "boot/systemdboot")
-    (import (systemModule "boot/plymouth") "circle")
-    (systemModule "networking/network")
-    (systemModule "networking/tailscale")
-    (systemModule "networking/wifi")
-    (servicesModule "docker")
-    (servicesModule "printing")
-    (servicesModule "sound")
-    (servicesModule "winapps")
-    (servicesModule "docker")
-    (systemModule "networking/bluetooth")
+  imports = [ ../../modules ];
 
-    (systemModule "users")
-    (desktopModule "gnome")
-    (desktopModule "theme")
+  config.tiebe = {
+    base = {
+      age.enable = true;
+      locale.enable = true;
+      nix.enable = true;
+    };
 
-    (programModule "distrobox")
-    (programModule "vencord")
-    (programModule "terminal/zsh")
-    (programModule "terminal/util")
-    (programModule "git")
-  ];
+    system = {
+      boot = {
+        systemd-boot.enable = true;
+        plymouth.enable = true;
+      };
+
+      networking = {
+        network.enable = true;
+        wifi.enable = true;
+        bluetooth.enable = true;
+        tailscale.enable = true;
+      };
+
+      sound.enable = true;
+    };
+
+    users.tiebe.enable = true;
+
+    desktop = {
+      gnome.enable = true;
+      theme.enable = true;
+
+      apps = {
+        vencord.enable = true;
+      };
+    };
+
+    terminal = {
+      zsh.enable = true;
+      utils = {
+        basic.enable = true;
+        advanced.enable = true;
+      };
+    };
+
+    services = {
+      winapps.enable = true;
+      docker.enable = true;
+      printing.enable = true;
+      vr.enable = true;
+    };
+  };
 }

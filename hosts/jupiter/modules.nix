@@ -5,15 +5,8 @@
   config,
   pkgs,
   ...
-}: let
-  module = path: ../../modules/${path};
-  baseModule = file: module "base/${file}.nix";
-  servicesModule = file: module "services/${file}.nix";
-  systemModule = file: module "system/${file}.nix";
-  programModule = file: module "programs/${file}.nix";
-  desktopModule = file: module "desktop/${file}";
-in {
-  # imports = [ ];
+}: {
+  imports = [ ../../modules ];
 
   config.tiebe = {
     base = {
@@ -34,7 +27,11 @@ in {
         bluetooth.enable = true;
         tailscale.enable = true;
       };
+
+      sound.enable = true;
     };
+
+    users.tiebe.enable = true;
 
     desktop = {
       gnome.enable = true;
@@ -53,20 +50,14 @@ in {
         advanced.enable = true;
       };
     };
+
+    services = {
+      winapps.enable = true;
+      docker.enable = true;
+      printing.enable = true;
+      ssh-server.enable = true;
+      sunshine.enable = true;
+      vr.enable = true;
+    };
   };
-
-  imports = [
-    ../../modules
-    (servicesModule "docker")
-    (servicesModule "printing")
-    (servicesModule "sound")
-    (servicesModule "sshserver")
-    (servicesModule "winapps")
-    (servicesModule "docker")
-
-    (systemModule "users")
-
-    (servicesModule "sunshine")
-    (servicesModule "vr")
-  ];
 }
