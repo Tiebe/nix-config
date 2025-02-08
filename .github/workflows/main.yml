@@ -16,8 +16,9 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
-          remove-large-packages: 'true'
-          remove-cached-tools: 'true'
+          build-mount-path: '/nix'
+          #remove-large-packages: 'true'
+          #remove-cached-tools: 'true'
       
       # Check out the repository
       - uses: actions/checkout@v3
@@ -30,8 +31,10 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
+      - name: Prefetch DisplayLink drivers
       - run: nix-prefetch-url --name displaylink-600.zip https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
 
+      - name: Start cachix
       - uses: cachix/cachix-action@v15
         with:
           name: tiebe
@@ -39,25 +42,31 @@ jobs:
 
       # Build and push the first system
       - name: Build and push Jupiter
-        env:
-          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
           echo "Building Jupiter..."
           nix build .#nixosConfigurations.jupiter.config.system.build.toplevel
-          echo "Pushing Jupiter build to Cachix..."
-          cachix push tiebe ./result
+          nix copy --to 'file:///nix/system' ./result
+
+      - name: Upload Binary Closure Archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: jupiter-closure
+          path: /nix/system
 
       - run: df -h
 
       # Build and push the second system
       - name: Build and push Pluto
-        env:
-          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
         run: |
           echo "Building Pluto..."
           nix build .#nixosConfigurations.pluto.config.system.build.toplevel
-          echo "Pushing Pluto build to Cachix..."
-          cachix push tiebe ./result
+          nix copy --to 'file:///nix/system' ./result
+
+      - name: Upload Binary Closure Archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: pluto-closure
+          path: /nix/system
 
       - run: df -h
 
