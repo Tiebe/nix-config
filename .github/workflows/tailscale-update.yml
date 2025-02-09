@@ -123,12 +123,13 @@ jobs:
           f.write(ephemeral_key)
           f.close()
           
-          command = "age -o secrets/tailscale.age "
+          command = ["age", "-o", "secrets/tailscale.age"]
           
           for key in tailscale_keys:
-              command += f"-r {key} "
+              command.append("-r")
+              command.append(key)
           
-          command += "key.txt"
+          command.append("key.txt")
           subprocess.run(command)
           
           print("Updated tailscale.age with new ephemeral key")
