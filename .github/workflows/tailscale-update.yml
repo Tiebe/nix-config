@@ -146,7 +146,7 @@ jobs:
           git checkout -b tailscale-update
           git add secrets/tailscale.age
           git commit -m "Update tailscale key"
-          git push origin tailscale-update
+          git push --force origin tailscale-update
 
           gh pr create \
             --title "Update tailscale key" \
