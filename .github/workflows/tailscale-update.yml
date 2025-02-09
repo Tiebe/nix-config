@@ -17,6 +17,10 @@ permissions:
 jobs:
   update-ts:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # needed to push new branches
+      pull-requests: write # needed to create and merge PRs
+
 
     steps:
       - uses: actions/checkout@v4
@@ -34,12 +38,6 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
-
-      - name: Setup upterm session
-        env:
-          TS_CLIENT_ID: ${{ secrets.TS_CLIENT_ID }}
-          TS_CLIENT_SECRET: ${{ secrets.TS_CLIENT_SECRET }}
-        uses: lhotari/action-upterm@v1
             
       - name: Create new key
         env:
@@ -144,8 +142,11 @@ jobs:
           git commit -m "Update tailscale key"
           git push origin tailscale-update
 
-          gh pr create \
+          PR_NUMBER=$(gh pr create \
             --title "Update tailscale key" \
             --body "Update tailscale key" \
             --head tailscale-update \
-            --base main
+            --base main \
+            --json number \
+            --jq '.number')
+          gh pr merge "$PR_NUMBER" --merge
