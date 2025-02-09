@@ -46,9 +46,9 @@ jobs:
         run: |
           echo "Building Jupiter..."
           nix build .#nixosConfigurations.jupiter.config.system.build.toplevel
-          nix copy --to 'file:///nix' ./result
+          sudo -E env "PATH=$PATH" nix copy --to 'file:///nix' ./result
           cd /nix/nar
-          tar -cvf jupiter.tar *
+          sudo -E env "PATH=$PATH" tar -cvf jupiter.tar *
 
       - name: Upload Binary Closure Archive
         uses: actions/upload-artifact@v4.6.0
@@ -62,11 +62,11 @@ jobs:
       - name: Build and push Pluto
         run: |
           echo "Building Pluto..."
-          rm -rf /nix/nar
+          sudo rm -rf /nix/nar
           nix build .#nixosConfigurations.pluto.config.system.build.toplevel
-          nix copy --to 'file:///nix' ./result
+          sudo -E env "PATH=$PATH" nix copy --to 'file:///nix' ./result
           cd /nix/nar
-          tar -cvf pluto.tar *
+          sudo -E env "PATH=$PATH" tar -cvf pluto.tar *
 
       - name: Upload Binary Closure Archive
         uses: actions/upload-artifact@v4.6.0
