@@ -8,5 +8,6 @@
     ./networking/wifi.nix
     ./sound.nix
     ./users/tiebe
+    ./ddc.nix
   ];
 }

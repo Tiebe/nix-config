@@ -31,6 +31,7 @@
       users.tiebe.enable = true;
 
       sound.enable = true;
+      ddc.enable = true;
     };
 
     desktop = {
