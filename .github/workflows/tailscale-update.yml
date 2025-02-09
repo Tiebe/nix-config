@@ -125,7 +125,7 @@ jobs:
           f.write(ephemeral_key)
           f.close()
           
-          command = ["age", "-o", "secrets/tailscale.age"]
+          command = ["age", "-a", "-o", "secrets/tailscale.age"]
           
           for key in tailscale_keys:
               command.append("-r")
@@ -138,6 +138,8 @@ jobs:
         shell: python
 
       - name: Commit and PR
+        env: 
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           git config user.name "Tiebe Groosman"
           git config user.email "tiebe.groosman@gmail.com"
@@ -146,11 +148,9 @@ jobs:
           git commit -m "Update tailscale key"
           git push origin tailscale-update
 
-          PR_NUMBER=$(gh pr create \
+          gh pr create \
             --title "Update tailscale key" \
             --body "Update tailscale key" \
             --head tailscale-update \
             --base main \
-            --json number \
-            --jq '.number')
-          gh pr merge "$PR_NUMBER" --merge
+          gh pr merge --auto --merge
