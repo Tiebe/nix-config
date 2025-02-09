@@ -61,7 +61,6 @@
       winapps.enable = true;
       docker.enable = true;
       printing.enable = true;
-      vr.enable = true;
       gpg.enable = true;
       lorri.enable = true;
     };
