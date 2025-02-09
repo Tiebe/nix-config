@@ -152,5 +152,5 @@ jobs:
             --title "Update tailscale key" \
             --body "Update tailscale key" \
             --head tailscale-update \
-            --base main \
+            --base main
           gh pr merge --auto --merge
