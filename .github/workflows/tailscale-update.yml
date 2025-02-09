@@ -153,4 +153,4 @@ jobs:
             --body "Update tailscale key" \
             --head tailscale-update \
             --base main
-          gh pr merge --auto --merge
+          gh pr merge --auto --delete-branch --merge tailscale-update
