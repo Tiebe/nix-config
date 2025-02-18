@@ -121,6 +121,7 @@ in {
             "browser.newtabpage.activity-stream.showSponsored" = lock-false;
             "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
             "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+            "browser.sessionstore.resume_from_crash" = lock-false;
           };
 
           "3rdparty" = {

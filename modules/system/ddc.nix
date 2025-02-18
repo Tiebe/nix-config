@@ -18,11 +18,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    boot.kernelModules = ["i2c-dev"];
-    services.udev.extraRules = ''
-            KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
-    '';
-
+    hardware.i2c.enable = true;
     users.users.tiebe.extraGroups = [ "i2c" ];
+
+    environment.systemPackages = with pkgs.gnomeExtensions; [ brightness-control-using-ddcutil ];
+    home-manager.users.tiebe.dconf.settings."org/gnome/shell".enabled-extensions = with pkgs.gnomeExtensions; [ brightness-control-using-ddcutil.extensionUuid ];
   };
 }
