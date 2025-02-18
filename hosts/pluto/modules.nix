@@ -27,12 +27,11 @@
         bluetooth.enable = true;
         tailscale.enable = true;
       };
-  
+
       users.tiebe.enable = true;
 
       sound.enable = true;
     };
-
 
     desktop = {
       gnome.enable = true;

@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.ddc;
-in
-{
+in {
   options = {
     tiebe.system.ddc = {
       enable = mkEnableOption "DDC monitor control";
@@ -23,5 +21,8 @@ in
 
     environment.systemPackages = with pkgs.gnomeExtensions; [ brightness-control-using-ddcutil ];
     home-manager.users.tiebe.dconf.settings."org/gnome/shell".enabled-extensions = with pkgs.gnomeExtensions; [ brightness-control-using-ddcutil.extensionUuid ];
+    services.udev.extraRules = ''
+      KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+    '';
   };
 }

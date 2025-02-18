@@ -19,7 +19,10 @@ in {
     # Enable the X11 windowing system.
     services.xserver.enable = true;
     services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+    services.xserver.desktopManager.gnome = {
+      enable = true;
+      extraGSettingsOverridePackages = [pkgs.mutter];
+    };
 
     environment.gnome.excludePackages = with pkgs; [
       atomix # puzzle game
@@ -95,6 +98,11 @@ in {
               appindicator.extensionUuid
               user-themes.extensionUuid
             ];
+          };
+
+          "org/gnome/mutter/wayland" = {
+            xwayland-allow-grabs = true;
+            xwayland-grab-access-rules = ["Remmina" "VirtualBox Machine" "parsecd"];
           };
         };
       };
