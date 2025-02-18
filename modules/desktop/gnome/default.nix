@@ -21,7 +21,7 @@ in {
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.desktopManager.gnome = {
       enable = true;
-      extraGSettingsOverridePackages = [ pkgs.mutter ];
+      extraGSettingsOverridePackages = [pkgs.mutter];
     };
 
     environment.gnome.excludePackages = with pkgs; [
@@ -102,7 +102,7 @@ in {
 
           "org/gnome/mutter/wayland" = {
             xwayland-allow-grabs = true;
-            xwayland-grab-access-rules = [ "Remmina" "VirtualBox Machine" "parsecd" ];
+            xwayland-grab-access-rules = ["Remmina" "VirtualBox Machine" "parsecd"];
           };
         };
       };

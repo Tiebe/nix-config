@@ -15,10 +15,9 @@
       nix.enable = true;
     };
 
-    system = {  
+    system = {
       users.tiebe.enable = true;
     };
-
 
     desktop = {
       gnome.enable = true;

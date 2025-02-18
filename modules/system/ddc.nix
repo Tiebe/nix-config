@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.ddc;
-in
-{
+in {
   options = {
     tiebe.system.ddc = {
       enable = mkEnableOption "DDC monitor control";
@@ -20,9 +18,9 @@ in
   config = mkIf cfg.enable {
     boot.kernelModules = ["i2c-dev"];
     services.udev.extraRules = ''
-            KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+      KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
     '';
 
-    users.users.tiebe.extraGroups = [ "i2c" ];
+    users.users.tiebe.extraGroups = ["i2c"];
   };
 }
