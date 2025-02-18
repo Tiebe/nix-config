@@ -6,8 +6,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     plasma-manager = {
       url = "github:pjones/plasma-manager";
@@ -30,14 +32,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:danth/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -75,13 +88,5 @@
         modules = [./hosts/mercury];
       };
     };
-
-    # packages.x86_64-linux = {
-    #   install-iso = nixos-generators.nixosGenerate {
-    #     system = "x86_64-linux";
-    #     modules = [];
-    #     format = "virtualbox";
-    #   };
-    # };
   };
 }
