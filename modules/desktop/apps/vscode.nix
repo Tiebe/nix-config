@@ -16,16 +16,18 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ nil ];
+    environment.systemPackages = with pkgs; [nil];
 
     home-manager.users.tiebe = {
       programs.vscode = {
         enable = true;
         extensions = with pkgs.vscode-extensions; [
-          ms-python.python ms-python.pylint ms-python.vscode-pylance
+          ms-python.python
+          ms-python.pylint
+          ms-python.vscode-pylance
           ms-azuretools.vscode-docker
           jock.svg
-          jnoortheen.nix-ide 
+          jnoortheen.nix-ide
         ];
 
         userSettings = {
@@ -33,7 +35,6 @@ in {
           "[nix]"."editor.tabSize" = 2;
           "files.autoSave" = "on";
         };
-
       };
     };
   };

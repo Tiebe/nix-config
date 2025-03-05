@@ -16,7 +16,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.tiebe = { inputs, ... }: {
+    home-manager.users.tiebe = {inputs, ...}: {
       imports = [
         inputs.nixcord.homeManagerModules.nixcord
       ];
@@ -27,7 +27,7 @@ in {
 
         vesktop.enable = true;
 
-        config.plugins  = {
+        config.plugins = {
           betterGifAltText.enable = true;
           betterSessions.enable = true;
           betterSettings.enable = true;
@@ -83,7 +83,5 @@ in {
       stylix.targets.vesktop.enable = false;
       services.arrpc.enable = true;
     };
-
-
   };
 }
