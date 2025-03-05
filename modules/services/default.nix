@@ -8,5 +8,6 @@
     ./winapps.nix
     ./gpg
     ./lorri.nix
+    ./podman.nix
   ];
 }

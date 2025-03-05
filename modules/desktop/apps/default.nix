@@ -8,6 +8,6 @@
     ./media.nix
     ./minecraft.nix
     ./office.nix
-    ./parsec.nix
+    ./parsec
   ];
 }

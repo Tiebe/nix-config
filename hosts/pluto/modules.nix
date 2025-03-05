@@ -57,8 +57,9 @@
     };
 
     services = {
-      winapps.enable = true;
-      docker.enable = true;
+      #winapps.enable = true;
+      #docker.enable = true;
+      podman.enable = true;
       printing.enable = true;
       gpg.enable = true;
       lorri.enable = true;
