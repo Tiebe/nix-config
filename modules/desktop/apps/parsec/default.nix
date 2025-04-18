@@ -18,7 +18,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      parsec-custom.wrapper 
+      parsec-custom.wrapper
       parsec-custom.desktop
     ];
   };

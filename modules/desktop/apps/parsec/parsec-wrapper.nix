@@ -1,6 +1,7 @@
-{ pkgs, fetchurl }:
-
-let
+{
+  pkgs,
+  fetchurl,
+}: let
   parsec-wrapper = pkgs.writeShellScriptBin "parsec-wrapper" ''
     ${pkgs.parsec-bin}/bin/parsecd "$@" &
     disown
@@ -11,7 +12,7 @@ let
 
   parsec-icon = fetchurl {
     url = "https://www.svgrepo.com/download/331528/parsec.svg";
-    sha256 = "sha256-KTV90OYP4U4RKTeacmL4flc7qyz2kt2YUVCnnwsL6PY="; 
+    sha256 = "sha256-KTV90OYP4U4RKTeacmL4flc7qyz2kt2YUVCnnwsL6PY=";
   };
 
   parsec-desktop = pkgs.makeDesktopItem {
@@ -21,10 +22,9 @@ let
     exec = "${parsec-wrapper}/bin/parsec-wrapper %u";
     icon = "${parsec-icon}";
     comment = "Simple, low-latency game streaming.";
-    categories = [ "Network" "Game" "Utility" ];
+    categories = ["Network" "Game" "Utility"];
   };
-in
-{
+in {
   wrapper = parsec-wrapper;
   desktop = parsec-desktop;
 }

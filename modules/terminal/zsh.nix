@@ -19,7 +19,7 @@ in {
     home-manager.users.tiebe = {
       programs.zsh = {
         enable = true;
-        enableCompletion = true;
+        enableCompletion = false;
 
         shellAliases = {
           "update" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && nix flake update && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
@@ -45,7 +45,7 @@ in {
             "chrissicool/zsh-256color"
             "djui/alias-tips"
             #"yuhonas/zsh-ansimotd"
-            "marlonrichert/zsh-autocomplete"
+            #"marlonrichert/zsh-autocomplete"
             "Tarrasch/zsh-bd"
             "MikeDacre/careful_rm"
             "bartboy011/cd-reminder"

@@ -80,7 +80,6 @@ in {
         };
       };
 
-      stylix.targets.vesktop.enable = false;
       services.arrpc.enable = true;
     };
   };

@@ -60,7 +60,9 @@ in {
           home = {
             username = "tiebe";
             homeDirectory = "/home/tiebe";
-            file.".face".source = config.lib.file.mkOutOfStoreSymlink ./profile.jpg;
+            file.".face".source = ./profile.jpg;
+            file.".face.icon".source = ./profile.jpg;
+            file.".config/face.jpg".source = ./profile.jpg;
           };
 
           home.stateVersion = "23.11";
