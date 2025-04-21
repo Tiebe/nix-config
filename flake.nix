@@ -60,6 +60,8 @@
     hyprland = {
       url = "github:hyprwm/Hyprland";
     };
+
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = {
@@ -71,6 +73,7 @@
     winapps,
     stylix,
     lix-module,
+    catppuccin,
     ...
   } @ inputs: let
     inherit (self) outputs;

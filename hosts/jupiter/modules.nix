@@ -34,6 +34,8 @@
       ddc.enable = true;
     };
 
+    theme.catppuccin.enable = true;
+
     desktop = {
       #theme.enable = true;
       hyprland = {
@@ -44,6 +46,9 @@
         animations.enable = true;
         binds.enable = true;
         windowrules.enable = true;
+
+        waybar.enable = true;
+        rofi.enable = true;
       };
 
       apps = {

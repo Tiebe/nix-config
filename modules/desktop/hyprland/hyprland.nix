@@ -99,7 +99,7 @@ in {
           ];
 
           input = {
-             kb_layout = "us";
+            kb_layout = "us";
             kb_options = [
               "grp:alt_caps_toggle"
               "caps:super"
@@ -114,7 +114,7 @@ in {
               disable_while_typing = true;
               scroll_factor = 0.8;
             };
-           };
+          };
 
           gestures = {
             workspace_swipe = 1;
@@ -127,18 +127,18 @@ in {
             workspace_swipe_forever = 1;
           };
 
-           general = {
-             "$modifier" = "SUPER";
-             layout = "dwindle";
-             gaps_in = 6;
-             gaps_out = 8;
-             border_size = 2;
-             resize_on_border = true;
-             #"col.active_border" = "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
-             #"col.inactive_border" = "rgb(${config.lib.stylix.colors.base01})";
-           };
+          general = {
+            "$modifier" = "SUPER";
+            layout = "dwindle";
+            gaps_in = 6;
+            gaps_out = 8;
+            border_size = 2;
+            resize_on_border = true;
+            #"col.active_border" = "rgb(${config.lib.stylix.colors.base08}) rgb(${config.lib.stylix.colors.base0C}) 45deg";
+            #"col.inactive_border" = "rgb(${config.lib.stylix.colors.base01})";
+          };
 
-           misc = {
+          misc = {
             layers_hog_keyboard_focus = true;
             initial_workspace_tracking = 0;
             mouse_move_enables_dpms = true;
@@ -146,7 +146,7 @@ in {
             disable_hyprland_logo = true;
             disable_splash_rendering = true;
             enable_swallow = false;
-           };
+          };
 
           dwindle = {
             pseudotile = true;
@@ -208,11 +208,14 @@ in {
             "QT_SCALE_FACTOR,1"
             "EDITOR,nano"
           ];
-         };
+        };
 
         extraConfig = "
-      monitor=,preferred,auto,auto
-    ";
+          monitor=desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS32Q 23342B600296, 2560x1440@165, 0x0, 1
+          monitor=desc:AOC Q27G2SG4 XFXP6HA016617, 2560x1440@155, -2560x0, 1
+          monitor=desc:Hewlett Packard HP 22cwa 6CM64808DT, 1920x1080x60, 2560x0, 1
+          monitor=,preferred,auto,1
+        ";
       };
     };
   };

@@ -9,5 +9,6 @@
     ./terminal
     ./system
     ./services
+    ./desktop/theme/catppuccin.nix
   ];
 }
