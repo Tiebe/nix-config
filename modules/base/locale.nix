@@ -49,6 +49,7 @@ in {
         material-icons
         fira-code
         fira-code-symbols
+        nerd-fonts.jetbrains-mono
       ];
     };
   };

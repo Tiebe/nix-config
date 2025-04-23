@@ -7,7 +7,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.desktop.hyprland.rofi;
+  cfg = config.tiebe.desktop.hyprland.programs.rofi;
 
   script = pkgs.writeShellScriptBin "rofi-launcher" ''
     # check if rofi is already running
@@ -18,7 +18,7 @@
   '';
 in {
   options = {
-    tiebe.desktop.hyprland.rofi = {
+    tiebe.desktop.hyprland.programs.rofi = {
       enable = mkEnableOption "Rofi";
     };
   };

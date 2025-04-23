@@ -7,11 +7,11 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.desktop.hyprland.waybar;
+  cfg = config.tiebe.desktop.hyprland.programs.waybar;
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
 in {
   options = {
-    tiebe.desktop.hyprland.waybar = {
+    tiebe.desktop.hyprland.programs.waybar = {
       enable = mkEnableOption "Waybar";
     };
   };
@@ -28,12 +28,10 @@ in {
             position = "top";
             modules-center = ["hyprland/workspaces"];
             modules-left = [
-              "custom/startmenu"
               "hyprland/window"
               "pulseaudio"
               "cpu"
               "memory"
-              "idle_inhibitor"
             ];
             modules-right = [
               "custom/hyprbindings"
@@ -55,16 +53,13 @@ in {
               on-scroll-down = "hyprctl dispatch workspace e-1";
             };
             "clock" = {
-              format = '' {:L%H:%M}'';
+              format = ''{:L%H:%M}'';
               tooltip = true;
               tooltip-format = "<big>{:%A, %d.%B %Y }</big>\n<tt><small>{calendar}</small></tt>";
             };
             "hyprland/window" = {
-              max-length = 22;
+              max-length = 50;
               separate-outputs = false;
-              rewrite = {
-                "" = " 🙈 No Windows? ";
-              };
             };
             "memory" = {
               interval = 5;
@@ -123,12 +118,6 @@ in {
               format = "";
               on-click = "sleep 0.1 && wlogout";
             };
-            "custom/startmenu" = {
-              tooltip = false;
-              format = "";
-              # exec = "rofi -show drun";
-              on-click = "sleep 0.1 && rofi-launcher";
-            };
             "custom/hyprbindings" = {
               tooltip = false;
               format = "󱕴";
@@ -186,99 +175,108 @@ in {
             };
           }
         ];
-        # style = concatStrings [
-        #   ''
-        #     * {
-        #       font-family: JetBrainsMono Nerd Font Mono;
-        #       font-size: 16px;
-        #       border-radius: 0px;
-        #       border: none;
-        #       min-height: 0px;
-        #     }
-        #     window#waybar {
-        #       background: rgba(0,0,0,0);
-        #     }
-        #     #workspaces {
-        #       color: #${config.lib.stylix.colors.base00};
-        #       background: #${config.lib.stylix.colors.base01};
-        #       margin: 4px 4px;
-        #       padding: 5px 5px;
-        #       border-radius: 16px;
-        #     }
-        #     #workspaces button {
-        #       font-weight: bold;
-        #       padding: 0px 5px;
-        #       margin: 0px 3px;
-        #       border-radius: 16px;
-        #       color: #${config.lib.stylix.colors.base00};
-        #       background: linear-gradient(45deg, #${config.lib.stylix.colors.base08}, #${config.lib.stylix.colors.base0D});
-        #       opacity: 0.5;
-        #       transition: ${betterTransition};
-        #     }
-        #     #workspaces button.active {
-        #       font-weight: bold;
-        #       padding: 0px 5px;
-        #       margin: 0px 3px;
-        #       border-radius: 16px;
-        #       color: #${config.lib.stylix.colors.base00};
-        #       background: linear-gradient(45deg, #${config.lib.stylix.colors.base08}, #${config.lib.stylix.colors.base0D});
-        #       transition: ${betterTransition};
-        #       opacity: 1.0;
-        #       min-width: 40px;
-        #     }
-        #     #workspaces button:hover {
-        #       font-weight: bold;
-        #       border-radius: 16px;
-        #       color: #${config.lib.stylix.colors.base00};
-        #       background: linear-gradient(45deg, #${config.lib.stylix.colors.base08}, #${config.lib.stylix.colors.base0D});
-        #       opacity: 0.8;
-        #       transition: ${betterTransition};
-        #     }
-        #     tooltip {
-        #       background: #${config.lib.stylix.colors.base00};
-        #       border: 1px solid #${config.lib.stylix.colors.base08};
-        #       border-radius: 12px;
-        #     }
-        #     tooltip label {
-        #       color: #${config.lib.stylix.colors.base08};
-        #     }
-        #     #window, #pulseaudio, #cpu, #memory, #idle_inhibitor {
-        #       font-weight: bold;
-        #       margin: 4px 0px;
-        #       margin-left: 7px;
-        #       padding: 0px 18px;
-        #       background: #${config.lib.stylix.colors.base04};
-        #       color: #${config.lib.stylix.colors.base00};
-        #       border-radius: 24px 10px 24px 10px;
-        #     }
-        #     #custom-startmenu {
-        #       color: #${config.lib.stylix.colors.base0B};
-        #       background: #${config.lib.stylix.colors.base02};
-        #       font-size: 28px;
-        #       margin: 0px;
-        #       padding: 0px 30px 0px 15px;
-        #       border-radius: 0px 0px 40px 0px;
-        #     }
-        #     #custom-hyprbindings, #network, #battery,
-        #     #custom-notification, #tray, #custom-exit {
-        #       font-weight: bold;
-        #       background: #${config.lib.stylix.colors.base0F};
-        #       color: #${config.lib.stylix.colors.base00};
-        #       margin: 4px 0px;
-        #       margin-right: 7px;
-        #       border-radius: 10px 24px 10px 24px;
-        #       padding: 0px 18px;
-        #     }
-        #     #clock {
-        #       font-weight: bold;
-        #       color: #0D0E15;
-        #       background: linear-gradient(90deg, #${config.lib.stylix.colors.base0E}, #${config.lib.stylix.colors.base0C});
-        #       margin: 0px;
-        #       padding: 0px 15px 0px 30px;
-        #       border-radius: 0px 0px 0px 40px;
-        #     }
-        #   ''
-        # ];
+        style = ''
+          * {
+            font-family: JetBrainsMono Nerd Font;
+            font-size: 16px;
+            border-radius: 0px;
+            border: none;
+            min-height: 0px;
+          }
+
+          window#waybar {
+            background: rgba(0, 0, 0, 0);
+          }
+
+          #workspaces {
+            color: @base;
+            background: @surface0;
+            margin: 4px 4px;
+            padding: 5px 5px;
+            border-radius: 16px;
+          }
+
+          #workspaces button {
+            font-weight: bold;
+            padding: 0px 5px;
+            margin: 0px 3px;
+            border-radius: 16px;
+            color: @base;
+            background: linear-gradient(45deg, @red, @blue);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+          }
+
+          #workspaces button.active {
+            font-weight: bold;
+            padding: 0px 5px;
+            margin: 0px 3px;
+            border-radius: 16px;
+            color: @base;
+            background: linear-gradient(45deg, @red, @blue);
+            opacity: 1.0;
+            min-width: 40px;
+            transition: all 0.3s ease;
+          }
+
+          #workspaces button:hover {
+            font-weight: bold;
+            border-radius: 16px;
+            color: @base;
+            background: linear-gradient(45deg, @red, @blue);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+          }
+
+          tooltip {
+            background: @base;
+            border: 1px solid @red;
+            border-radius: 12px;
+          }
+
+          tooltip label {
+            color: @red;
+          }
+
+          #window, #pulseaudio, #cpu, #memory, #idle_inhibitor {
+            font-weight: bold;
+            margin: 4px 0px;
+            margin-left: 7px;
+            padding: 0px 18px;
+            background: @overlay1;
+            color: @base;
+            border-radius: 24px 10px 24px 10px;
+          }
+
+          #custom-startmenu {
+            color: @green;
+            background: @surface1;
+            font-size: 28px;
+            margin: 0px;
+            padding: 0px 30px 0px 15px;
+            border-radius: 0px 0px 40px 0px;
+          }
+
+          #custom-hyprbindings, #network, #battery,
+          #custom-notification, #tray, #custom-exit {
+            font-weight: bold;
+            background: @red;
+            color: @base;
+            margin: 4px 0px;
+            margin-right: 7px;
+            border-radius: 10px 24px 10px 24px;
+            padding: 0px 18px;
+          }
+
+          #clock {
+            font-weight: bold;
+            color: @crust;
+            background: linear-gradient(90deg, @mauve, @peach);
+            margin: 0px;
+            padding: 0px 15px 0px 30px;
+            border-radius: 0px 0px 0px 40px;
+          }
+        '';
       };
     };
   };

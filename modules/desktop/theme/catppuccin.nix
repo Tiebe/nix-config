@@ -28,7 +28,15 @@ in {
       catppuccin = {
         flavor = "mocha";
         rofi.enable = true;
+        waybar.enable = true;
+        wlogout.enable = true;
         enable = true;
+      };
+
+      home.pointerCursor = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
+        size = 24;
       };
     };
   };

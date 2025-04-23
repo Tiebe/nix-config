@@ -47,8 +47,12 @@
         binds.enable = true;
         windowrules.enable = true;
 
-        waybar.enable = true;
-        rofi.enable = true;
+        programs = {
+          waybar.enable = true;
+          rofi.enable = true;
+          swaync.enable = true;
+          wlogout.enable = true;
+        };
       };
 
       apps = {
@@ -69,8 +73,10 @@
       utils = {
         basic.enable = true;
         advanced.enable = true;
+
+        neovim.enable = true;
+        fastfetch.enable = true;
       };
-      fastfetch.enable = true;
     };
 
     services = {

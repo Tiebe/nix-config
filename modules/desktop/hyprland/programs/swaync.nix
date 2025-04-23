@@ -7,7 +7,7 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.desktop.hyprland.swaync;
+  cfg = config.tiebe.desktop.hyprland.programs.swaync;
 
   script = pkgs.writeShellScriptBin "task-waybar" ''
     sleep 0.1
@@ -15,7 +15,7 @@
   '';
 in {
   options = {
-    tiebe.desktop.hyprland.swaync = {
+    tiebe.desktop.hyprland.programs.swaync = {
       enable = mkEnableOption "Sway Notification Center";
     };
   };

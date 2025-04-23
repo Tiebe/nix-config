@@ -7,10 +7,10 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.terminal.fastfetch;
+  cfg = config.tiebe.terminal.utils.fastfetch;
 in {
   options = {
-    tiebe.terminal.fastfetch = {
+    tiebe.terminal.utils.fastfetch = {
       enable = mkEnableOption "FastFetch";
     };
   };

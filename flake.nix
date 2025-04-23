@@ -62,6 +62,7 @@
     };
 
     catppuccin.url = "github:catppuccin/nix";
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -74,6 +75,7 @@
     stylix,
     lix-module,
     catppuccin,
+    nvf,
     ...
   } @ inputs: let
     inherit (self) outputs;

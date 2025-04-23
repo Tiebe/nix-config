@@ -1,0 +1,11 @@
+{
+	"name": "nixos-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": "all",
+				"path": "prefix.code-snippets"
+			}
+		]
+	}
+}
