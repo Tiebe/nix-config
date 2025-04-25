@@ -14,7 +14,6 @@
   wsl = {
     enable = true;
     defaultUser = "tiebe";
-    nativeSystemd = true;
 
     usbip = {
       enable = true;

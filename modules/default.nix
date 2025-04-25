@@ -1,14 +1,14 @@
 {inputs, ...}: {
   imports = [
-    ./base/age.nix
-    ./base/locale.nix
-    ./base/nix.nix
+    ./base
     ./desktop/gnome
     ./desktop/plasma
-    ./desktop/theme
+    #    ./desktop/theme
     ./desktop/apps
+    ./desktop/hyprland
     ./terminal
     ./system
     ./services
+    ./desktop/theme/catppuccin.nix
   ];
 }

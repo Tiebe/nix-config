@@ -37,7 +37,7 @@ in {
         userName = "Tiebe Groosman";
         userEmail = "tiebe.groosman@gmail.com";
         extraConfig = {
-          "url \"ssh://git@github.com/\"" = {insteadOf = https://github.com/;};
+          "url \"ssh://git@github.com/\"" = {insteadOf = "https://github.com/";};
         };
       };
       programs.gh.enable = true;

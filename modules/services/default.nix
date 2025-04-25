@@ -9,5 +9,7 @@
     ./gpg
     ./lorri.nix
     ./podman.nix
+    ./cachix.nix
+    ./openvpn
   ];
 }

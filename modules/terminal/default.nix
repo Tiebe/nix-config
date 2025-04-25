@@ -3,5 +3,6 @@
     ./zsh.nix
     ./utils/basic.nix
     ./utils/advanced.nix
+    ./fastfetch.nix
   ];
 }

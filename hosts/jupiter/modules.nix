@@ -34,9 +34,22 @@
       ddc.enable = true;
     };
 
+    theme.catppuccin.enable = true;
+
     desktop = {
-      gnome.enable = true;
-      theme.enable = true;
+      #theme.enable = true;
+      hyprland = {
+        enable = true;
+        idle.enable = true;
+        lock.enable = true;
+
+        animations.enable = true;
+        binds.enable = true;
+        windowrules.enable = true;
+
+        waybar.enable = true;
+        rofi.enable = true;
+      };
 
       apps = {
         steam.enable = true;
@@ -57,6 +70,7 @@
         basic.enable = true;
         advanced.enable = true;
       };
+      fastfetch.enable = true;
     };
 
     services = {
@@ -65,9 +79,11 @@
       printing.enable = true;
       ssh-server.enable = true;
       sunshine.enable = true;
-      vr.enable = false;
+      vr.enable = true;
       gpg.enable = true;
       lorri.enable = true;
+      cachix.enable = true;
+      openvpn.enable = true;
     };
   };
 }
