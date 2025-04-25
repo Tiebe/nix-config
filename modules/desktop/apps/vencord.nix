@@ -79,7 +79,7 @@ in {
           webKeybinds.enable = true;
         };
       };
-
+      
       stylix.targets.vesktop.enable = false;
       services.arrpc.enable = true;
     };

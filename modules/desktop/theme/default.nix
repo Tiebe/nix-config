@@ -30,6 +30,13 @@ in {
     stylix.fonts.sizes.desktop = 10;
     stylix.fonts.sizes.popups = 10;
     stylix.fonts.sizes.terminal = 10;
+    # home-manager.users.tiebe = {
+    #   stylix.targets.vscode.profileNames = [ "Default" ]; 
+    #   stylix.targets.qt.platform = "qtct";
+    #   stylix.targets.vesktop.enable = false;
+
+    # };
+
 
     #stylix.polarity = "dark";
   };
