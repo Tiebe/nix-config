@@ -9,7 +9,7 @@ let
   tiebe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq";
 
   yubikeys = [yubikey_5c yubikey_5];
-  hosts = [jupiter pluto];
+  hosts = [jupiter pluto mercury];
 
   all = yubikeys ++ hosts ++ [tiebe];
 in {
@@ -20,4 +20,9 @@ in {
   "email/tiebe.tiebe.me.age".publicKeys = all;
   "email/tiebe.tiebe.dev.age".publicKeys = all;
   "email/tiebe.groosman.gmail.com.age".publicKeys = all;
+
+  "avb/password.age".publicKeys = all;
+  "avb/ota.key.base64.age".publicKeys = all;
+  "avb/avb.key.base64.age".publicKeys = all;
+  "avb/ota.cert.base64.age".publicKeys = all;
 }
