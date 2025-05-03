@@ -18,7 +18,7 @@
     system = {
       boot = {
         systemd-boot.enable = true;
-        plymouth.enable = true;
+        plymouth.enable = false;
       };
 
       networking = {
@@ -28,14 +28,18 @@
         tailscale.enable = true;
       };
 
-      users.tiebe.enable = true;
+      users.tiebe = {
+        enable = true;
+        email.enable = true;
+      };
 
       sound.enable = true;
     };
 
+    theme.catppuccin.enable = true;
+
     desktop = {
       gnome.enable = true;
-      theme.enable = true;
 
       apps = {
         vencord.enable = true;
@@ -45,6 +49,7 @@
         media.enable = true;
         parsec.enable = true;
         office.enable = true;
+        thunderbird.enable = true;
       };
     };
 
@@ -54,6 +59,7 @@
         basic.enable = true;
         advanced.enable = true;
       };
+      fastfetch.enable = true;
     };
 
     services = {

@@ -28,7 +28,10 @@
         tailscale.enable = true;
       };
 
-      users.tiebe.enable = true;
+      users.tiebe = {
+        enable = true;
+        email.enable = true;
+      };
 
       sound.enable = true;
       ddc.enable = true;
@@ -37,7 +40,6 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      #theme.enable = true;
       hyprland = {
         enable = true;
         idle.enable = true;
@@ -61,6 +63,7 @@
         parsec.enable = true;
         office.enable = true;
         minecraft.enable = true;
+        thunderbird.enable = true;
       };
     };
 

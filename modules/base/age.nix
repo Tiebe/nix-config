@@ -38,6 +38,12 @@ in {
         wifi.file = agePath "wifi.age";
         atuin.file = agePath "atuin.age";
         atuin.owner = "tiebe";
+        emailTiebeAtTiebeMe.file = agePath "email/tiebe.tiebe.me.age";
+        emailTiebeAtTiebeMe.owner = "tiebe";
+        emailTiebeAtTiebeDev.file = agePath "email/tiebe.tiebe.dev.age";
+        emailTiebeAtTiebeDev.owner = "tiebe";
+        emailTiebeGroosmanGmailCom.file = agePath "email/tiebe.groosman.gmail.com.age";
+        emailTiebeGroosmanGmailCom.owner = "tiebe";
       };
 
       identityPaths = [

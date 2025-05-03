@@ -9,5 +9,6 @@
     ./minecraft.nix
     ./office.nix
     ./parsec
+    ./thunderbird.nix
   ];
 }

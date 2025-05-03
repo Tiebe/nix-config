@@ -8,6 +8,7 @@
     ./networking/wifi.nix
     ./sound.nix
     ./users/tiebe
+    ./users/tiebe/email.nix
     ./ddc.nix
   ];
 }
