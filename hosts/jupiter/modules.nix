@@ -47,6 +47,8 @@
         binds.enable = true;
         windowrules.enable = true;
 
+        greetd.enable = true;
+
         programs = {
           waybar.enable = true;
           rofi.enable = true;

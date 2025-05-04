@@ -4,6 +4,6 @@
     ./hypridle.nix
     ./hyprlock.nix
     ./config
-    ./greetd.nix
+    ./programs
   ];
 }

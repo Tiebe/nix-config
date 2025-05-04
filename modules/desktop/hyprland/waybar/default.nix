@@ -7,11 +7,11 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.desktop.hyprland.programs.waybar;
+  cfg = config.tiebe.desktop.hyprland.waybar;
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
 in {
   options = {
-    tiebe.desktop.hyprland.programs.waybar = {
+    tiebe.desktop.hyprland.waybar = {
       enable = mkEnableOption "Waybar";
     };
   };
