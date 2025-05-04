@@ -17,6 +17,7 @@
 
     system = {
       boot = {
+        erase-your-darlings.enable = true;
         systemd-boot.enable = true;
         plymouth.enable = true;
       };
