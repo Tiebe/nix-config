@@ -92,6 +92,11 @@ in {
               install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/sponsorblock/latest.xpi";
               installation_mode = "force_installed";
             };
+
+            "{firefox-extension@steamdb.info}" = {
+              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/steam-database/latest.xpi";
+              installation_mode = "force_installed";
+            };
           };
 
           /*

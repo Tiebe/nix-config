@@ -23,7 +23,7 @@
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
-      mesa.drivers
+      mesa
       vpl-gpu-rt # or intel-media-sdk for QSV
       vaapiIntel
       intel-media-driver
