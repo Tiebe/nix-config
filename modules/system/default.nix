@@ -10,5 +10,6 @@
     ./users/tiebe
     ./users/tiebe/email.nix
     ./ddc.nix
+    ./boot/erase-your-darlings
   ];
 }
