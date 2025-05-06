@@ -31,10 +31,6 @@ in {
           "cat" = "bat";
         };
 
-        initExtraFirst = ''
-          export WEZTERM_SHELL_SKIP_ALL=1
-        '';
-
         antidote = {
           enable = true;
           plugins = [
@@ -56,13 +52,20 @@ in {
             "birdhackor/zsh-eza-ls-plugin"
             "aubreypwd/zsh-plugin-fd"
             "atuinsh/atuin"
+            "mfaerevaag/wd"
           ];
         };
 
-        initExtra = ''
-          bindkey '^[[1;5D' backward-word
-          bindkey '^[[1;5C' forward-word
-        '';
+        initContent = lib.mkMerge [
+          (lib.mkBefore ''
+            export WEZTERM_SHELL_SKIP_ALL=1
+          '')
+
+          ''
+            bindkey '^[[1;5D' backward-word
+            bindkey '^[[1;5C' forward-word
+          ''
+        ];
       };
 
       home.file.".rm_recycle_home".text = "";
@@ -77,10 +80,24 @@ in {
 
       programs.atuin = {
         enable = true;
+        flags = ["--disable-up-arrow"];
         settings = {
           key_path = config.age.secrets.atuin.path;
+          daemon.enabled = true;
         };
       };
+    };
+    systemd.user.services.atuind = {
+      enable = true;
+
+      environment = {
+        ATUIN_LOG = "info";
+      };
+      serviceConfig = {
+        ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+      };
+      after = ["network.target"];
+      wantedBy = ["default.target"];
     };
   };
 }

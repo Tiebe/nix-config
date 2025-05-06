@@ -11,5 +11,6 @@
     ./podman.nix
     ./cachix.nix
     ./openvpn
+    ./windows
   ];
 }

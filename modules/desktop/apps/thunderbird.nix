@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.thunderbird;
-in
-{
+in {
   options = {
     tiebe.desktop.apps.thunderbird = {
       enable = mkEnableOption "the Thunderbird email client";
@@ -26,6 +24,5 @@ in
         };
       };
     };
-
   };
 }

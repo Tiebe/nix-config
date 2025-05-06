@@ -27,6 +27,7 @@ in {
       usbutils
       bat
       python314
+      coreutils
     ];
 
     home-manager.users.tiebe = {

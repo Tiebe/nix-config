@@ -18,7 +18,7 @@ in {
   config = mkIf cfg.enable {
     home-manager.users.tiebe = {inputs, ...}: {
       imports = [
-        inputs.nixcord.homeManagerModules.nixcord
+        inputs.nixcord.homeModules.nixcord
       ];
 
       programs.nixcord = {

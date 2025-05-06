@@ -19,10 +19,13 @@
   services.xserver.videoDrivers = ["amdgpu" "displaylink" "modesetting"];
 
   networking.hostName = "jupiter";
+  networking.hostId = "4ca1d14d";
+
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   hardware.graphics.enable = true;
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
-  virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker.storageDriver = "zfs";
 
   systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
   hardware.graphics = {

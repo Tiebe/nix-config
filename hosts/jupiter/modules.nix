@@ -19,7 +19,6 @@
       boot = {
         erase-your-darlings.enable = true;
         systemd-boot.enable = true;
-        plymouth.enable = true;
       };
 
       networking = {
@@ -86,7 +85,7 @@
     };
 
     services = {
-      winapps.enable = true;
+      #winapps.enable = true;
       docker.enable = true;
       printing.enable = true;
       ssh-server.enable = true;
@@ -96,6 +95,73 @@
       lorri.enable = true;
       cachix.enable = true;
       openvpn.enable = true;
+      windows = {
+        enable = true;
+        uuid = "03560274-043c-0572-b206-1e0700080009";
+
+        cpu = {
+          cores = 9;
+          threads = 2;
+        };
+
+        memory = 29;
+        diskPath = "/persist/windows/windows.qcow2";
+        nvramPath = "/persist/windows/nvram.fd";
+
+        sysinfo = {
+          bios = {
+            vendor = "American Megatrends International, LLC.";
+            version = "FK";
+            date = "09/27/2024";
+          };
+
+          system = {
+            manufacturer = "Gigabyte Technology Co., Ltd.";
+            product = "Z790 AORUS ELITE AX";
+            version = "Default string";
+            serial = "Default string";
+            family = "Z790 MB";
+          };
+        };
+
+        gpuModule = "amdgpu";
+
+        pciDevices = [
+          {
+            type = "pci";
+            mode = "subsystem";
+            managed = true;
+            source = {
+              domain = "0x0000";
+              bus = "0x03";
+              slot = "0x00";
+              function = "0x0";
+            };
+          }
+          {
+            type = "pci";
+            mode = "subsystem";
+            managed = true;
+            source = {
+              domain = "0x0000";
+              bus = "0x03";
+              slot = "0x00";
+              function = "0x1";
+            };
+          }
+          {
+            type = "pci";
+            mode = "subsystem";
+            managed = true;
+            source = {
+              domain = "0x0000";
+              bus = "0x00";
+              slot = "0x14";
+              function = "0x0";
+            };
+          }
+        ];
+      };
     };
   };
 }

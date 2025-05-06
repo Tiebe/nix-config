@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.users.tiebe.email;
-in
-{
+in {
   options = {
     tiebe.system.users.tiebe.email = {
       enable = mkEnableOption "Email accounts for tiebe";

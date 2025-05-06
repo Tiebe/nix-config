@@ -18,7 +18,7 @@
     };
 
     agenix = {
-      url = "github:yaxitech/ragenix";
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -61,6 +61,11 @@
       url = "github:hyprwm/Hyprland";
     };
 
+    nixvirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/0.5.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     catppuccin.url = "github:catppuccin/nix";
     nvf.url = "github:notashelf/nvf";
   };
@@ -76,6 +81,7 @@
     lix-module,
     catppuccin,
     nvf,
+    nixvirt,
     ...
   } @ inputs: let
     inherit (self) outputs;

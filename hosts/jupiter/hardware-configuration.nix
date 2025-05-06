@@ -17,32 +17,40 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
-  fileSystems."/" =
-    { device = "rpool/local/root";
-      fsType = "zfs";
-    };
+  boot.initrd.supportedFilesystems = ["zfs"]; # boot from zfs
+  boot.kernelParams = [
+    "elevator=none" # Because ZFS doesn't have the whole disk, just a partition. Set the disk’s scheduler to none. ZFS takes this step automatically if it does control the entire disk.
+    "nohibernate" # ZFS misses support for freeze/thaw operations.This means that using ZFS together with hibernation (suspend to disk) may cause filesystem corruption.See https://github.com/openzfs/zfs/issues/260.
+    # "boot.debug1devices"
+  ];
+  boot.supportedFilesystems = ["zfs"];
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/020D-1E55";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  fileSystems."/" = {
+    device = "rpool/local/root";
+    fsType = "zfs";
+  };
 
-  fileSystems."/nix" =
-    { device = "rpool/local/nix";
-      fsType = "zfs";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/020D-1E55";
+    fsType = "vfat";
+    options = ["fmask=0077" "dmask=0077" "defaults"];
+  };
 
-  fileSystems."/home" =
-    { device = "rpool/safe/home";
-      fsType = "zfs";
-    };
+  fileSystems."/nix" = {
+    device = "rpool/local/nix";
+    fsType = "zfs";
+  };
 
-  fileSystems."/persist" =
-    { device = "rpool/safe/persist";
-      fsType = "zfs";
-    };
+  fileSystems."/home" = {
+    device = "rpool/safe/home";
+    fsType = "zfs";
+  };
 
+  fileSystems."/persist" = {
+    device = "rpool/safe/persist";
+    fsType = "zfs";
+    neededForBoot = true;
+  };
 
   swapDevices = [
     {

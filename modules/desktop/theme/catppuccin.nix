@@ -30,6 +30,7 @@ in {
         rofi.enable = true;
         waybar.enable = true;
         wlogout.enable = true;
+        mako.enable = false;
         enable = true;
       };
 

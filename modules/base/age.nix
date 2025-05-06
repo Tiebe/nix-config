@@ -47,6 +47,7 @@ in {
       };
 
       identityPaths = [
+        "/persist/etc/ssh/ssh_host_ed25519_key"
         "/etc/ssh/ssh_host_ed25519_key"
         (agePath "keys/age-yubikey-identity-c67fa313.txt")
         (agePath "keys/age-yubikey-identity-9b188c32.txt")
