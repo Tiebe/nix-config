@@ -1,0 +1,34 @@
+version: 39
+jobs:
+- name: GitHub Push
+  steps:
+  - !PushRepository
+    name: push
+    remoteUrl: https://github.com/Tiebe/nix-config
+    passwordSecret: GitHub Token
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  - !TagCreateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 14400
+- name: GitHub Pull
+  steps:
+  - !PullRepository
+    name: pull
+    remoteUrl: https://github.com/Tiebe/nix-config
+    passwordSecret: GitHub Token
+    refs: refs/heads/* refs/tags/*
+    withLfs: true
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !ScheduleTrigger
+    cronExpression: 0 0 1 * * ?
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 14400
