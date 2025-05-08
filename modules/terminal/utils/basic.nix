@@ -46,6 +46,7 @@ in {
         extraConfig = {
           "url \"ssh://git@github.com/\"" = {insteadOf = "https://github.com/";};
           "url \"ssh://git@tiebe.me/\"" = {insteadOf = "https://git.tiebe.me/";};
+          init.defaultBranch = "main";
         };
       };
       programs.gh.enable = true;
