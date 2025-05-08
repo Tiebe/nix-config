@@ -44,6 +44,10 @@ in {
         emailTiebeAtTiebeDev.owner = "tiebe";
         emailTiebeGroosmanGmailCom.file = agePath "email/tiebe.groosman.gmail.com.age";
         emailTiebeGroosmanGmailCom.owner = "tiebe";
+        gpgPublic.file = agePath "gpg/public.age";
+        gpgPublic.owner = "tiebe";
+        gpgPrivate.file = agePath "gpg/private.age";
+        gpgPrivate.owner = "tiebe";
       };
 
       identityPaths = [

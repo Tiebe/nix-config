@@ -70,6 +70,7 @@
         office.enable = true;
         minecraft.enable = true;
         thunderbird.enable = true;
+        obsidian.enable = true;
       };
     };
 

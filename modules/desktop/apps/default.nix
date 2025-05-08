@@ -10,5 +10,6 @@
     ./office.nix
     ./parsec
     ./thunderbird.nix
+    ./obsidian.nix
   ];
 }

@@ -16,7 +16,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.waypipe ];
+    environment.systemPackages = [pkgs.waypipe];
 
     services.openssh = {
       enable = true;

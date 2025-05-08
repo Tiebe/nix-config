@@ -36,9 +36,16 @@ in {
       programs.git = {
         enable = true;
         userName = "Tiebe Groosman";
-        userEmail = "tiebe.groosman@gmail.com";
+        userEmail = "tiebe@tiebe.me";
+        signing = {
+          format = "openpgp";
+          key = "53612C9FED81D4EE";
+          signByDefault = true;
+          signer = "${pkgs.gnupg}/bin/gpg";
+        };
         extraConfig = {
           "url \"ssh://git@github.com/\"" = {insteadOf = "https://github.com/";};
+          "url \"ssh://git@tiebe.me/\"" = {insteadOf = "https://git.tiebe.me/";};
         };
       };
       programs.gh.enable = true;

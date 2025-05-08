@@ -23,10 +23,28 @@ in {
         enableSshSupport = true;
       };
 
-      home.file = {
-        ".gnupg/gpg.conf".source = ./gpg.conf;
-        ".gnupg/scdaemon.conf".text = "disable-ccid";
-        #".gnupg/gpg-agent.conf".source = ./gpg-agent.conf;
+      programs.gpg = {
+        enable = true;
+
+        scdaemonSettings = {
+          disable-ccid = true;
+        };
+      };
+
+      systemd.user.services.gpg-import-keys = {
+        Unit = {
+          Description = "Auto import gpg keys";
+          After = ["gpg-agent.socket"];
+        };
+
+        Service = {
+          Type = "oneshot";
+          ExecStart = toString (pkgs.writeShellScript "import-gpg-keys" ''
+            ${pkgs.gnupg}/bin/gpg --import ${config.age.secrets.gpgPublic.path} ${config.age.secrets.gpgPrivate.path}
+          '');
+        };
+
+        Install = {WantedBy = ["default.target"];};
       };
     };
   };

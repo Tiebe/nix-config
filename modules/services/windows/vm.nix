@@ -101,7 +101,7 @@ in {
     virtualisation.libvirt.connections."qemu:///session".domains = [
       {
         active = false;
-        definition = (pkgs.replaceVars ./windows.xml {
+        definition = pkgs.replaceVars ./windows.xml {
           uuid = cfg.uuid;
 
           domainName = cfg.domainName;
@@ -128,13 +128,14 @@ in {
 
           diskPath = cfg.diskPath;
           pciDevices = lib.concatStringsSep "\n" (map (pciDevice: ''
-<hostdev mode="subsystem" type="pci" managed="yes">
-  <source>
-    <address domain="${pciDevice.source.domain}" bus="${pciDevice.source.bus}" slot="${pciDevice.source.slot}" function="${pciDevice.source.function}"/>
-  </source>
-</hostdev>
-          '') cfg.pciDevices);
-        });
+              <hostdev mode="subsystem" type="pci" managed="yes">
+                <source>
+                  <address domain="${pciDevice.source.domain}" bus="${pciDevice.source.bus}" slot="${pciDevice.source.slot}" function="${pciDevice.source.function}"/>
+                </source>
+              </hostdev>
+            '')
+            cfg.pciDevices);
+        };
       }
     ];
   };

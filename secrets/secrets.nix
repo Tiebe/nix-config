@@ -25,4 +25,8 @@ in {
   "avb/ota.key.base64.age".publicKeys = all;
   "avb/avb.key.base64.age".publicKeys = all;
   "avb/ota.cert.base64.age".publicKeys = all;
+
+  "gpg/public.age".publicKeys = all;
+  "gpg/private.age".publicKeys = all;
+  "github_pk.age".publicKeys = all;
 }
