@@ -102,7 +102,7 @@ in {
           scope = {
             objects = [cfg.domainName];
             operations = ["prepare"];
-            subOperations = ["start"];
+            subOperations = ["begin"];
           };
 
           script = ''
@@ -123,17 +123,13 @@ in {
 
           script = ''
             sleep 3
-
             ${pkgs.kmod}/bin/modprobe ${cfg.gpuModule}
             sleep 2
-
             ${pkgs.systemd}/bin/systemctl start display-manager
           '';
         };
       };
     };
-
-    virtualisation.spiceUSBRedirection.enable = true;
 
     users.users.tiebe.extraGroups = ["kvm" "input" "libvirtd"];
     programs.virt-manager.enable = true;

@@ -16,6 +16,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ pkgs.waypipe ];
+
     services.openssh = {
       enable = true;
       settings = {
@@ -23,6 +25,7 @@ in {
         PermitRootLogin = "no";
         # Use keys only. Remove if you want to SSH using password (not recommended)
         PasswordAuthentication = false;
+        X11Forwarding = true;
       };
     };
   };
