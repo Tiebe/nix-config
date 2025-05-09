@@ -6,7 +6,7 @@ let
   pluto = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDEvOgR7VedJwRvKO9wD8am7K388emFAgMk31NMzn2di";
   mercury = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy/tfffA9oA8uP2WSBonNHsaOjwGmQApGUmlYY7M2rg";
 
-  tiebe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq";
+  tiebe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2";
 
   yubikeys = [yubikey_5c yubikey_5];
   hosts = [jupiter pluto mercury];
@@ -29,4 +29,7 @@ in {
   "gpg/public.age".publicKeys = all;
   "gpg/private.age".publicKeys = all;
   "github_pk.age".publicKeys = all;
+
+  "ssh/private.age".publicKeys = all;
+  "ssh/public.age".publicKeys = all;
 }

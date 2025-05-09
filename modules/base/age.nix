@@ -48,6 +48,20 @@ in {
         gpgPublic.owner = "tiebe";
         gpgPrivate.file = agePath "gpg/private.age";
         gpgPrivate.owner = "tiebe";
+
+        sshPrivate = {
+          file = agePath "ssh/private.age";
+          mode = "600";
+          owner = "tiebe";
+          path = "/home/tiebe/.ssh/id_ed25519";
+        };
+
+        sshPublic = {
+          file = agePath "ssh/public.age";
+          mode = "644";
+          owner = "tiebe";
+          path = "/home/tiebe/.ssh/id_ed25519.pub";
+        };
       };
 
       identityPaths = [
