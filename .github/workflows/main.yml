@@ -24,9 +24,10 @@ jobs:
       # Check out the repository
       - uses: actions/checkout@v3
 
-      - name: Lix GHA Installer Action
-        uses: samueldr/lix-gha-installer-action@latest
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
         with:
+          nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
             substituters = https://tiebe.cachix.org?priority=10 https://nix-community.cachix.org?priority=20 https://cache.nixos.org?priority=30 https://hyprland.cachix.org https://cache.nixos.org/
