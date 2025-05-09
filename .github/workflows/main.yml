@@ -24,14 +24,15 @@ jobs:
       # Check out the repository
       - uses: actions/checkout@v3
 
-      # Install Nix with flake support
-      - name: Install Nix
-        uses: cachix/install-nix-action@v30
+      - name: Lix GHA Installer Action
+        uses: samueldr/lix-gha-installer-action@v2025-02-26.prerelease
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
+            substituters = https://tiebe.cachix.org?priority=10 https://nix-community.cachix.org?priority=20 https://cache.nixos.org?priority=30 https://hyprland.cachix.org https://cache.nixos.org/
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= tiebe.cachix.org-1:gIjdnOcIlX9TOKT6StlrNvhCAnQiy9vAoxMfzMhVg54= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
 
+            
       - name: Prefetch DisplayLink drivers
         run: nix-prefetch-url --name displaylink-610.zip https://www.synaptics.com/sites/default/files/exe_files/2024-10/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.1-EXE.zip
         
