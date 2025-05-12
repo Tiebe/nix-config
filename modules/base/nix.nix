@@ -52,13 +52,13 @@ in {
         auto-optimise-store = true;
 
         substituters = [
-          "https://tiebe.cachix.org?priority=10"
+          "https://attic.tiebe.me/main?priority=10"
           "https://nix-community.cachix.org?priority=20"
           "https://cache.nixos.org?priority=30"
           "https://hyprland.cachix.org"
         ];
         trusted-public-keys = [
-          "tiebe.cachix.org-1:gIjdnOcIlX9TOKT6StlrNvhCAnQiy9vAoxMfzMhVg54="
+          "main:S9W2CMEkPauQRH8eQQUk4QMzOa1hr9+KCZRCzqPZJls="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         ];

@@ -32,49 +32,29 @@ jobs:
             experimental-features = nix-command flakes
             substituters = https://tiebe.cachix.org?priority=10 https://nix-community.cachix.org?priority=20 https://cache.nixos.org?priority=30 https://hyprland.cachix.org https://cache.nixos.org/
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= tiebe.cachix.org-1:gIjdnOcIlX9TOKT6StlrNvhCAnQiy9vAoxMfzMhVg54= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@v0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ secrets.ATTIC_CACHE }}
+          token: ${{ secrets.ATTIC_TOKEN }}
+
+      - name: Install nix-fast-build
+        shell: bash
+        run: |
+          nix profile install nixpkgs#nix-fast-build
 
             
       - name: Prefetch DisplayLink drivers
         run: nix-prefetch-url --name displaylink-610.zip https://www.synaptics.com/sites/default/files/exe_files/2024-10/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.1-EXE.zip
-        
-      - name: Start cachix
-        uses: cachix/cachix-action@v15
-        with:
-          name: tiebe
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-
-      # Build and push the first system
-      - name: Build and push Jupiter
+      
+      - name: Build
+        shell: bash
         run: |
-          echo "Building Jupiter..."
-          nix build .#nixosConfigurations.jupiter.config.system.build.toplevel
-          sudo -E env "PATH=$PATH" nix copy --to 'file:///nix' ./result
-          cd /nix/nar
-          sudo -E env "PATH=$PATH" tar -cvf jupiter.tar *
-
-      - name: Upload Binary Closure Archive
-        uses: actions/upload-artifact@v4.6.0
-        with:
-          name: jupiter-closure.tar
-          path: /nix/nar/jupiter.tar
-
-      - run: df -h
-
-      # Build and push the second system
-      - name: Build and push Pluto
-        run: |
-          echo "Building Pluto..."
-          sudo rm -rf /nix/nar
-          nix build .#nixosConfigurations.pluto.config.system.build.toplevel
-          sudo -E env "PATH=$PATH" nix copy --to 'file:///nix' ./result
-          cd /nix/nar
-          sudo -E env "PATH=$PATH" tar -cvf pluto.tar *
-
-      - name: Upload Binary Closure Archive
-        uses: actions/upload-artifact@v4.6.0
-        with:
-          name: pluto-closure.tar
-          path: /nix/nar/pluto.tar
+          nix-fast-build --eval-workers 1 --skip-cached --no-nom --attic-cache=$ATTIC_CACHE \
+              -f '.#nixosConfigurations.*.config.system.build.toplevel'
+        env:
+          ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
 
       - name: Check final storage
         if: always()
