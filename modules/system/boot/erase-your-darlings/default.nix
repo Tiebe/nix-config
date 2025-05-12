@@ -48,6 +48,9 @@ in {
       ];
     };
 
+    environment.etc.machine-id.source = "/persist/etc/machine-id";
+    security.sudo.extraConfig = "Defaults lecture=\"never\"";
+
     users.mutableUsers = false;
   };
 }

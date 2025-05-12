@@ -20,6 +20,9 @@ in {
       enable = true;
       #useRoutingFeatures = "client";
       authKeyFile = config.age.secrets.tailscale.path;
+      extraUpFlags = [
+        "--login-server" "https://headscale.tiebe.me"
+      ];
     };
 
     networking.firewall.checkReversePath = false;
