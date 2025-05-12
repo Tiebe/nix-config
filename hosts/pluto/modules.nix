@@ -58,8 +58,8 @@
       utils = {
         basic.enable = true;
         advanced.enable = true;
+        fastfetch.enable = true;
       };
-      fastfetch.enable = true;
     };
 
     services = {
