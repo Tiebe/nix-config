@@ -12,5 +12,6 @@
     ./cachix.nix
     ./openvpn
     ./windows
+    ./nextcloud.nix
   ];
 }

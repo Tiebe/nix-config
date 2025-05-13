@@ -96,6 +96,7 @@
       lorri.enable = true;
       cachix.enable = true;
       openvpn.enable = true;
+      nextcloud.enable = true;
       windows = {
         enable = true;
         uuid = "03560274-043c-0572-b206-1e0700080009";

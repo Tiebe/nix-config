@@ -21,12 +21,16 @@ in {
       #useRoutingFeatures = "client";
       authKeyFile = config.age.secrets.tailscale.path;
       extraUpFlags = [
-        "--login-server" "https://headscale.tiebe.me"
+        "--login-server"
+        "https://headscale.tiebe.me"
       ];
     };
+
+    security.pki.certificateFiles = [./caddy.crt];
 
     networking.firewall.checkReversePath = false;
 
     systemd.services."tailscaled".after = ["graphical.target"];
+    systemd.services."tailscaled-autoconnect".after = ["graphical.target"];
   };
 }
