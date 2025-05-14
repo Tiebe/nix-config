@@ -43,7 +43,8 @@ jobs:
       - name: Install nix-fast-build
         shell: bash
         run: |
-          mkdir /nix/tmp
+          sudo mkdir /nix/tmp
+          sudo chmod 777 /nix/tmp
           nix profile install nixpkgs#nix-fast-build
 
             
