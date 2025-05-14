@@ -12,10 +12,11 @@ jobs:
       - name: Clean up disk
         uses: easimon/maximize-build-space@master
         with:
-          remove-dotnet: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
+          remove-dotnet: true
+          remove-haskell: true
+          remove-codeql: true
+          remove-docker-images: true
+          remove-android: true
           build-mount-path: '/nix'
           overprovision-lvm: true
           #remove-large-packages: 'true'
@@ -42,6 +43,7 @@ jobs:
       - name: Install nix-fast-build
         shell: bash
         run: |
+          mkdir /nix/tmp
           nix profile install nixpkgs#nix-fast-build
 
             
@@ -55,6 +57,7 @@ jobs:
               -f '.#nixosConfigurations.jupiter.config.system.build.toplevel'
         env:
           ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
+          TMPDIR: /nix/tmp
       - name: Build Pluto
         shell: bash
         run: |
@@ -62,6 +65,8 @@ jobs:
               -f '.#nixosConfigurations.pluto.config.system.build.toplevel'
         env:
           ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
+          TMPDIR: /nix/tmp
+          
       - name: Build Mercury
         shell: bash
         run: |
@@ -69,6 +74,7 @@ jobs:
               -f '.#nixosConfigurations.mercury.config.system.build.toplevel'
         env:
           ATTIC_CACHE: ${{ secrets.ATTIC_CACHE }}
+          TMPDIR: /nix/tmp
 
       - name: Check final storage
         if: always()
