@@ -21,8 +21,6 @@
   networking.hostName = "jupiter";
   networking.hostId = "4ca1d14d";
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-
   hardware.graphics.enable = true;
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
   virtualisation.docker.storageDriver = "zfs";
