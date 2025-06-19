@@ -59,11 +59,10 @@ in {
 
           home = {
             username = "tiebe";
-            homeDirectory = "/home/tiebe";
             file.".face".source = ./profile.jpg;
             file.".face.icon".source = ./profile.jpg;
-            file.".config/face.jpg".source = ./profile.jpg;
           };
+          xdg.configFile."face.jpg".source = ./profile.jpg;
 
           home.stateVersion = "23.11";
         };
