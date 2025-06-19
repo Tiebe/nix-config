@@ -5,10 +5,12 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.devenv;
-in {
+in
+{
   options = {
     tiebe.services.devenv = {
       enable = mkEnableOption "devenv.sh";
@@ -16,6 +18,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [pkgs.devenv];
+    environment.systemPackages = [ pkgs.devenv ];
   };
 }

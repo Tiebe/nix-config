@@ -3,7 +3,7 @@
     ./steam.nix
     ./vencord.nix
     ./wezterm
-    ./firefox
+    ./firefox.nix
     ./vscode.nix
     ./media.nix
     ./minecraft.nix

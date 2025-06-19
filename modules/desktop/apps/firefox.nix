@@ -18,8 +18,6 @@
     Status = "locked";
   };
 in {
-  imports = [./evict.nix];
-
   options = {
     tiebe.desktop.apps.firefox = {
       enable = mkEnableOption "Firefox";

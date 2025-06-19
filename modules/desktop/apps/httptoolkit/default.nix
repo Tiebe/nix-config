@@ -5,17 +5,19 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.httptoolkit;
-in {
+in
+{
   options = {
     tiebe.desktop.apps.httptoolkit = {
       enable = mkEnableOption "HTTP Toolkit";
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [httptoolkit httptoolkit-server];
+  config = mkIf cfg.enable {   
+    environment.systemPackages = with pkgs; [ httptoolkit httptoolkit-server ];
   };
 }

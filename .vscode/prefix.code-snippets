@@ -44,34 +44,10 @@
 			"}"
 		],
 		"description": "prefix"
-	},
+		},
 
 	"home": {
 		"prefix": "home",
 		"body": [ "home-manager.users.tiebe = {", "  $0", "};" ]
-	},
-
-	"evict": {
-		"prefix": "evict",
-		"body": [
-			"{",
-			"  inputs,",
-			"  outputs,",
-			"  lib,",
-			"  config,",
-			"  pkgs,",
-			"  ...",
-			"}:",
-			"let",
-			"  inherit (lib) mkEnableOption mkIf mkOption types;",
-			"  cfg = config.tiebe.system.users.tiebe.evict-your-darlings;",
-			"in",
-			"{",
-			"  config = mkIf cfg.enable {",
-			"    $0",
-			"  };",
-			"}"
-		],
-		"description": "evict"
-	},
+	}
 }

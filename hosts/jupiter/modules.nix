@@ -31,7 +31,6 @@
       users.tiebe = {
         enable = true;
         email.enable = true;
-        evict-your-darlings.enable = true;
       };
 
       sound.enable = true;

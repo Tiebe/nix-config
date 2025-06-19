@@ -5,6 +5,5 @@
     ./utils/advanced.nix
     ./utils/fastfetch.nix
     ./utils/neovim.nix
-    ./evict.nix
   ];
 }
