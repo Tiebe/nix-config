@@ -13,5 +13,7 @@
     ./openvpn
     ./windows
     ./nextcloud.nix
+    ./devenv.nix
+    ./variety
   ];
 }

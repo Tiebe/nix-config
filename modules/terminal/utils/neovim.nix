@@ -26,7 +26,7 @@ in {
           vimAlias = true;
           viAlias = true;
           withNodeJs = true;
-          useSystemClipboard = true;
+          # useSystemClipboard = true; // TODO: DEPRECATED
 
           options = {
             tabstop = 2;

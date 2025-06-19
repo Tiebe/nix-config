@@ -34,4 +34,6 @@ in {
   "ssh/public.age".publicKeys = all;
 
   "attic.age".publicKeys = all;
+
+  "davfs.age".publicKeys = all;
 }

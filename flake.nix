@@ -63,6 +63,7 @@
 
     catppuccin.url = "github:catppuccin/nix";
     nvf.url = "github:notashelf/nvf";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {
@@ -76,6 +77,7 @@
     catppuccin,
     nvf,
     nixvirt,
+    nixos-hardware,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -96,6 +98,11 @@
       pluto = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./hosts/pluto];
+      };
+
+      victoria = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./hosts/victoria];
       };
 
       mercury = nixpkgs.lib.nixosSystem {

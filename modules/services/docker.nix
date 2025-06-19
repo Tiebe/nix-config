@@ -27,5 +27,6 @@ in {
     virtualisation.oci-containers.backend = "docker";
 
     users.users.tiebe.extraGroups = ["docker"];
+    systemd.services."docker".after = ["graphical.target"];
   };
 }

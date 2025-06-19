@@ -31,6 +31,6 @@ in {
     networking.firewall.checkReversePath = false;
 
     systemd.services."tailscaled".after = ["graphical.target"];
-    systemd.services."tailscaled-autoconnect".after = ["graphical.target"];
+    systemd.services."tailscaled-autoconnect".after = ["tailscaled.service"];
   };
 }

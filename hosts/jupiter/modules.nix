@@ -40,24 +40,26 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      hyprland = {
-        enable = true;
-        idle.enable = true;
-        lock.enable = true;
+      gnome.enable = true;
 
-        animations.enable = true;
-        binds.enable = true;
-        windowrules.enable = true;
+      # hyprland = {
+      #   enable = true;
+      #   idle.enable = true;
+      #   lock.enable = true;
 
-        greetd.enable = true;
+      #   animations.enable = true;
+      #   binds.enable = true;
+      #   windowrules.enable = true;
 
-        programs = {
-          waybar.enable = true;
-          rofi.enable = true;
-          swaync.enable = true;
-          wlogout.enable = true;
-        };
-      };
+      #   greetd.enable = true;
+
+      #   programs = {
+      #     waybar.enable = true;
+      #     rofi.enable = true;
+      #     swaync.enable = true;
+      #     wlogout.enable = true;
+      #   };
+      # };
 
       apps = {
         steam.enable = true;
@@ -71,6 +73,7 @@
         minecraft.enable = true;
         thunderbird.enable = true;
         obsidian.enable = true;
+        httptoolkit.enable = true;
       };
     };
 
@@ -97,6 +100,8 @@
       cachix.enable = true;
       openvpn.enable = true;
       nextcloud.enable = true;
+      devenv.enable = true;
+      variety.enable = true;
       windows = {
         enable = true;
         uuid = "03560274-043c-0572-b206-1e0700080009";

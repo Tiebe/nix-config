@@ -11,5 +11,6 @@
     ./parsec
     ./thunderbird.nix
     ./obsidian.nix
+    ./httptoolkit
   ];
 }

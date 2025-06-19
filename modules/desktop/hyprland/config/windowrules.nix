@@ -82,6 +82,13 @@ in {
             "keepaspectratio, title:^(Picture-in-Picture)$"
             "noblur, tag:games*"
             "fullscreen, tag:games*"
+            "noinitialfocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+            "nofocus, class:^(.*jetbrains.*)$, title:^(win.*)$"
+            "noinitialfocus, class:^(.*jetbrains.*)$, title:^\\s$"
+            "nofocus, class:^(.*jetbrains.*)$, title:^\\s$"
+            "tag +jb, class:^jetbrains-.+$,floating:1"
+            "stayfocused, tag:jb"
+            "noinitialfocus, tag:jb"
           ];
 
           env = [
