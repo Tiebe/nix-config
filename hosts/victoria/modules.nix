@@ -19,7 +19,7 @@
       boot = {
         systemd-boot.enable = true;
         plymouth.enable = false;
-        erase-your-darlings = true;
+        erase-your-darlings.enable = true;
       };
 
       networking = {
@@ -51,6 +51,7 @@
         parsec.enable = true;
         office.enable = true;
         thunderbird.enable = true;
+        bitwarden.enable = true;
       };
     };
 

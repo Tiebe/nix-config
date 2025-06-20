@@ -17,7 +17,7 @@ in {
 
   config = mkIf cfg.enable {
     home-manager.users.tiebe = {
-      # catppuccin.wezterm.apply = true;
+      catppuccin.wezterm.apply = true;
 
       programs.wezterm = {
         enable = true;

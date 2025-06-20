@@ -13,6 +13,7 @@
   ];
 
   services.fwupd.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "victoria";

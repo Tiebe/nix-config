@@ -33,7 +33,7 @@ in
           WantedBy = [ "graphical-session.target" ];
         };
         Service = {
-          ExecStart = "${pkgs.variety}/bin/variety";
+          ExecStart = "${pkgs.toybox}/bin/pgrep variety || ${pkgs.variety}/bin/variety";
         };
       };
 

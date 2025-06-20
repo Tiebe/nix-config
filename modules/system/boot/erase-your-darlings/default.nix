@@ -39,7 +39,10 @@ in {
 
     systemd.tmpfiles.rules = [
       "L /var/lib/docker - - - - /persist/var/lib/docker"
+      "L /var/lib/fprint - - - - /persist/var/lib/fprint"
     ];
+
+    systemd.services.fprintd.serviceConfig.StateDirectory = "";
 
     users.mutableUsers = false;
   };

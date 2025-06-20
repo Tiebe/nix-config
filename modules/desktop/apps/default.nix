@@ -12,5 +12,6 @@
     ./thunderbird.nix
     ./obsidian.nix
     ./httptoolkit
+    ./bitwarden.nix
   ];
 }
