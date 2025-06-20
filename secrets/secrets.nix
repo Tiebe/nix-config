@@ -5,11 +5,12 @@ let
   jupiter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgt8r0Bw2Zikcjz4NPvty826oHnznFyBtJFK1ngNVXS";
   pluto = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDEvOgR7VedJwRvKO9wD8am7K388emFAgMk31NMzn2di";
   mercury = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy/tfffA9oA8uP2WSBonNHsaOjwGmQApGUmlYY7M2rg";
+  victoria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFatW1abAeXltbIl6wv8EhYd9S7ubx8mNd7HgdW7AP0z root@nixos";
 
   tiebe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2";
 
   yubikeys = [yubikey_5c yubikey_5];
-  hosts = [jupiter pluto mercury];
+  hosts = [jupiter pluto mercury victoria];
 
   all = yubikeys ++ hosts ++ [tiebe];
 in {

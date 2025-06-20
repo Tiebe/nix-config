@@ -16,24 +16,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    boot.initrd.postResumeCommands = lib.mkAfter ''
-      echo "Rolling back root partition..."
-      zfs rollback -r rpool/local/root@blank
-      echo ">> ROLLBACK COMPLETE <<"
-    '';
-
-    services.udev.extraRules = ''
-      KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*", ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
-    '';
-
-    nix.nixPath = ["nix-config=/persist/etc/nixos"];
-
-    services.zfs = {
-      autoScrub.enable = true;
-      autoSnapshot.enable = true;
-      # TODO: autoReplication
-    };
-
     services.openssh = {
       hostKeys = [
         {
@@ -48,8 +30,16 @@ in {
       ];
     };
 
-    environment.etc.machine-id.source = "/persist/etc/machine-id";
+    environment.etc = {
+      nixos.source = "/persist/etc/nixos";
+      machine-id.source = "/persist/etc/machine-id";
+    };
+
     security.sudo.extraConfig = "Defaults lecture=\"never\"";
+
+    systemd.tmpfiles.rules = [
+      "L /var/lib/docker - - - - /persist/var/lib/docker"
+    ];
 
     users.mutableUsers = false;
   };

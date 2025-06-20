@@ -19,6 +19,7 @@
       boot = {
         systemd-boot.enable = true;
         plymouth.enable = false;
+        erase-your-darlings = true;
       };
 
       networking = {

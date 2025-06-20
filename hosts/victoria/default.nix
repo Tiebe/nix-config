@@ -9,6 +9,7 @@
   imports = [
     inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
     ./modules.nix
+    ./hardware-configuration.nix
   ];
 
   services.fwupd.enable = true;
