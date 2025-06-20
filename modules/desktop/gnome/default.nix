@@ -18,7 +18,11 @@ in {
   config = mkIf cfg.enable {
     # Enable the X11 windowing system.
     services.xserver.enable = true;
-    services.displayManager.gdm.enable = true;
+    services.displayManager.gdm = {
+      enable = true;
+      debug = true;
+    };
+    
     services.desktopManager.gnome = {
       enable = true;
       extraGSettingsOverridePackages = [pkgs.mutter];
