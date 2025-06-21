@@ -17,7 +17,8 @@ in {
 
   config = mkIf cfg.enable {
     # Auto set timezone
-    services.automatic-timezoned.enable = true;
+    # services.automatic-timezoned.enable = true;
+    time.timeZone = "Europe/Amsterdam";
 
     # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";

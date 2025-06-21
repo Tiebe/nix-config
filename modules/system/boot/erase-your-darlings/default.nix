@@ -40,9 +40,19 @@ in {
     systemd.tmpfiles.rules = [
       "L /var/lib/docker - - - - /persist/var/lib/docker"
       "L /var/lib/fprint - - - - /persist/var/lib/fprint"
+      "L+ /var/lib/systemd/backlight - - - - /persist/var/lib/systemd/backlight"
     ];
 
     systemd.services.fprintd.serviceConfig.StateDirectory = "";
+    systemd.services."systemd-backlight@" = { 
+      environment = {
+        "SYSTEMD_LOG_LEVEL" = "debug";
+        "SYSTEMD_LOG_TARGET" = "journal";
+      };
+      requires = [ "persist.mount" ];
+      after = [ "persist.mount" ];
+      serviceConfig.StateDirectory = "";
+    };
 
     users.mutableUsers = false;
   };

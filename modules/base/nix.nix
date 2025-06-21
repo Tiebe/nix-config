@@ -15,7 +15,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable {    
     environment.etc = with pkgs; (lib.mapAttrs'
       (name: value: {
         name = "nix/path/${name}";

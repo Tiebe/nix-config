@@ -73,6 +73,7 @@
       lorri.enable = true;
       variety.enable = true;
       devenv.enable = true;
+      bitfocus-companion.enable = true;
     };
   };
 }

@@ -15,5 +15,6 @@
     ./nextcloud.nix
     ./devenv.nix
     ./variety
+    ./bitfocus-companion
   ];
 }
