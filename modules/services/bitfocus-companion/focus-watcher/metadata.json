@@ -1,0 +1,8 @@
+{
+  "name": "Focus Watcher",
+  "description": "Check focus and sends it to bitfocus companion",
+  "uuid": "focus-watcher@tiebe.me",
+  "shell-version": [
+    "48"
+  ]
+}

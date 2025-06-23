@@ -29,7 +29,7 @@
 								"action_sets": {
 									"down": [
 										{
-											"id": "YBVEpyp-2viVFicMKl7hL",
+											"id": "rxxzZHevDuHz2C6fJ-eBo",
 											"definitionId": "set_page",
 											"connectionId": "internal",
 											"options": {
@@ -88,7 +88,7 @@
 								"action_sets": {
 									"down": [
 										{
-											"id": "YTKJO2OSmDmG8YW8eL85L",
+											"id": "LoBtOG0BZPJ5h5viHH0il",
 											"definitionId": "set_page",
 											"connectionId": "internal",
 											"options": {
@@ -96,8 +96,109 @@
 												"controller": "self",
 												"controller_variable": "self",
 												"page_from_variable": false,
-												"page": "back",
+												"page": "startup",
 												"page_variable": "1"
+											},
+											"type": "action",
+											"children": {}
+										}
+									],
+									"up": []
+								},
+								"options": {
+									"runWhileHeld": []
+								}
+							}
+						}
+					}
+				}
+			},
+			"gridSize": {
+				"minColumn": 0,
+				"maxColumn": 4,
+				"minRow": 0,
+				"maxRow": 2
+			}
+		},
+		"3": {
+			"name": "Firefox",
+			"controls": {
+				"0": {
+					"0": {
+						"type": "button",
+						"style": {
+							"text": "Back",
+							"textExpression": false,
+							"size": "auto",
+							"png64": null,
+							"alignment": "center:center",
+							"pngalignment": "center:center",
+							"color": 16777215,
+							"bgcolor": 0,
+							"show_topbar": "default"
+						},
+						"options": {
+							"rotaryActions": false,
+							"stepAutoProgress": true
+						},
+						"feedbacks": [],
+						"steps": {
+							"0": {
+								"action_sets": {
+									"down": [
+										{
+											"id": "wofFKgHEZYDZ2g1KFt1m5",
+											"definitionId": "set_page",
+											"connectionId": "internal",
+											"options": {
+												"controller_from_variable": false,
+												"controller": "self",
+												"controller_variable": "self",
+												"page_from_variable": false,
+												"page": "startup",
+												"page_variable": "1"
+											},
+											"type": "action",
+											"children": {}
+										}
+									],
+									"up": []
+								},
+								"options": {
+									"runWhileHeld": []
+								}
+							}
+						}
+					},
+					"4": {
+						"type": "button",
+						"style": {
+							"text": "GitHub",
+							"textExpression": false,
+							"size": "18",
+							"png64": null,
+							"alignment": "center:center",
+							"pngalignment": "center:center",
+							"color": 16777215,
+							"bgcolor": 0,
+							"show_topbar": "default"
+						},
+						"options": {
+							"rotaryActions": false,
+							"stepAutoProgress": true
+						},
+						"feedbacks": [],
+						"steps": {
+							"0": {
+								"action_sets": {
+									"down": [
+										{
+											"id": "DBhQ5NihWY-r8xKvp2ZfR",
+											"definitionId": "exec",
+											"connectionId": "internal",
+											"options": {
+												"path": "/run/current-system/sw/bin/firefox \"https://github.com\"",
+												"timeout": 5000
 											},
 											"type": "action",
 											"children": {}
@@ -122,45 +223,203 @@
 		}
 	},
 	"triggers": {
-		"Fymnyu3H1k8V_UpKFZ3dv": {
-			"type": "trigger",
-			"options": {
-				"name": "New Trigger",
-				"enabled": false,
-				"sortOrder": 0
-			},
-			"actions": [],
-			"condition": [],
-			"events": []
-		},
 		"nEhAfBM_MMhJfmE99R0A3": {
 			"type": "trigger",
 			"options": {
-				"name": "New Trigger",
-				"enabled": false,
+				"name": "Firefox open",
+				"enabled": true,
 				"sortOrder": 0
 			},
-			"actions": [],
+			"actions": [
+				{
+					"id": "K5NEf0I_mgAYkpYPmt6gS",
+					"definitionId": "set_page",
+					"connectionId": "internal",
+					"options": {
+						"controller_from_variable": false,
+						"controller": "streamdeck:A00SA5082L5T47",
+						"controller_variable": "self",
+						"page_from_variable": false,
+						"page": 3,
+						"page_variable": "1"
+					},
+					"type": "action",
+					"children": {}
+				},
+				{
+					"id": "XrbJl79UAFnNXK1yc-uMJ",
+					"definitionId": "custom_variable_set_value",
+					"connectionId": "internal",
+					"options": {
+						"name": "switched",
+						"value": "true"
+					},
+					"type": "action",
+					"children": {}
+				}
+			],
+			"condition": [
+				{
+					"id": "zv9mgsqdwuNlIxixR6S0p",
+					"definitionId": "variable_value",
+					"connectionId": "internal",
+					"options": {
+						"variable": "custom:active_application",
+						"op": "eq",
+						"value": "firefox.desktop"
+					},
+					"type": "feedback",
+					"style": {
+						"color": 16777215,
+						"bgcolor": 16711680
+					},
+					"isInverted": false,
+					"children": {}
+				},
+				{
+					"id": "G8vCqcTpC32TL-_h1FtqE",
+					"definitionId": "variable_value",
+					"connectionId": "internal",
+					"options": {
+						"variable": "custom:auto_switch",
+						"op": "eq",
+						"value": "true"
+					},
+					"type": "feedback",
+					"style": {
+						"color": 16777215,
+						"bgcolor": 16711680
+					},
+					"isInverted": false,
+					"children": {}
+				}
+			],
+			"events": [
+				{
+					"id": "pW2ZPVFMDQ0xCX-ygD10u",
+					"type": "variable_changed",
+					"enabled": true,
+					"options": {
+						"variableId": "custom:active_application"
+					}
+				}
+			]
+		},
+		"eXjh7w3biyRS0oZK-QgQS": {
+			"type": "trigger",
+			"options": {
+				"name": "Nothing defined open",
+				"enabled": true,
+				"sortOrder": 0
+			},
+			"actions": [
+				{
+					"id": "sH-VDUlxdN6MPl5pPtrMD",
+					"definitionId": "set_page",
+					"connectionId": "internal",
+					"options": {
+						"controller_from_variable": false,
+						"controller": "streamdeck:A00SA5082L5T47",
+						"controller_variable": "self",
+						"page_from_variable": false,
+						"page": "startup",
+						"page_variable": "1"
+					},
+					"type": "action",
+					"children": {}
+				}
+			],
+			"condition": [
+				{
+					"id": "-38o2DrN7Cu51zdbIAalI",
+					"definitionId": "variable_value",
+					"connectionId": "internal",
+					"options": {
+						"variable": "custom:switched",
+						"op": "eq",
+						"value": "false"
+					},
+					"type": "feedback",
+					"style": {
+						"color": 16777215,
+						"bgcolor": 16711680
+					},
+					"isInverted": false,
+					"children": {}
+				}
+			],
+			"events": [
+				{
+					"id": "pW2ZPVFMDQ0xCX-ygD10u",
+					"type": "variable_changed",
+					"enabled": true,
+					"options": {
+						"variableId": "custom:active_application"
+					}
+				}
+			]
+		},
+		"bHUU5zn2NNl0teqCJsfFg": {
+			"type": "trigger",
+			"options": {
+				"name": "Reset switched",
+				"enabled": true,
+				"sortOrder": 0
+			},
+			"actions": [
+				{
+					"id": "bMXJ_pqPAbQtNX2MVSDka",
+					"definitionId": "custom_variable_set_value",
+					"connectionId": "internal",
+					"options": {
+						"name": "switched",
+						"value": "false"
+					},
+					"type": "action",
+					"children": {}
+				}
+			],
 			"condition": [],
 			"events": [
 				{
-					"id": "IIceKIFL2fJ2GDsgnzH7J",
-					"type": "condition_true",
+					"id": "1gjR2MsMY8gwT5fryQKa7",
+					"type": "variable_changed",
 					"enabled": true,
-					"options": {}
+					"options": {
+						"variableId": "custom:active_application"
+					}
 				}
 			]
 		}
 	},
-	"custom_variables": {},
+	"custom_variables": {
+		"active_application": {
+			"description": "A custom variable",
+			"defaultValue": "",
+			"persistCurrentValue": false,
+			"sortOrder": 0
+		},
+		"auto_switch": {
+			"description": "A custom variable",
+			"defaultValue": "true",
+			"persistCurrentValue": false,
+			"sortOrder": 1
+		},
+		"switched": {
+			"description": "A custom variable",
+			"defaultValue": "false",
+			"persistCurrentValue": false,
+			"sortOrder": 2
+		}
+	},
 	"instances": {},
 	"surfaces": {
 		"streamdeck:A00SA5082L5T47": {
 			"groupConfig": {
 				"name": "Auto group",
-				"last_page_id": "PQUaEI4wBnikijVjUzc27",
+				"last_page_id": "qhSo-FASjKmO37biLTYhD",
 				"startup_page_id": "PQUaEI4wBnikijVjUzc27",
-				"use_last_page": true,
+				"use_last_page": false,
 				"page": 1
 			},
 			"config": {

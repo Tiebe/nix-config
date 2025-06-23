@@ -37,5 +37,11 @@ in
         '';
       };
     };
+
+    home-manager.users.tiebe = {
+      home.file.".local/share/gnome-shell/extensions/focus-watcher@tiebe.me".source = ./focus-watcher;
+      dconf.settings."org/gnome/shell".enabled-extensions = [ "focus-watcher@tiebe.me" ];
+    };
+    
   };
 }
