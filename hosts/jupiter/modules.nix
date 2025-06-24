@@ -89,11 +89,11 @@
     };
 
     services = {
-      #winapps.enable = true;
+      # winapps.enable = true;
       docker.enable = true;
       printing.enable = true;
       ssh-server.enable = true;
-      sunshine.enable = true;
+      # sunshine.enable = true;
       vr.enable = true;
       gpg.enable = true;
       lorri.enable = true;
@@ -102,6 +102,7 @@
       nextcloud.enable = true;
       devenv.enable = true;
       variety.enable = true;
+      bitfocus-companion.enable = true;
       windows = {
         enable = true;
         uuid = "03560274-043c-0572-b206-1e0700080009";

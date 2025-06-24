@@ -19,9 +19,10 @@
       users.tiebe.enable = true;
     };
 
+    theme.catppuccin.enable = true;
+
     desktop = {
       gnome.enable = true;
-      theme.enable = true;
 
       apps = {
         vscode.enable = true;
