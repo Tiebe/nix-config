@@ -74,6 +74,7 @@
       variety.enable = true;
       devenv.enable = true;
       bitfocus-companion.enable = true;
+      nextcloud.enable = true;
     };
   };
 }
