@@ -19,7 +19,6 @@
       boot = {
         systemd-boot.enable = true;
         plymouth.enable = false;
-        erase-your-darlings.enable = true;
       };
 
       networking = {
@@ -73,8 +72,6 @@
       lorri.enable = true;
       variety.enable = true;
       devenv.enable = true;
-      bitfocus-companion.enable = true;
-      nextcloud.enable = true;
     };
   };
 }

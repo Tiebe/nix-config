@@ -93,6 +93,13 @@ in {
           "system/locale".region = "nl_NL.UTF-8";
           "org/gnome/desktop/interface".enable-hot-corners = false;
           "org/gnome/mutter".dynamic-workspaces = true;
+          
+          "org/gnome/mutter/wayland" = {
+            xwayland-allow-grabs = true;
+            xwayland-grab-access-rules = ["Remmina" "VirtualBox Machine" "parsecd"];
+                        experimental-features = [ "scale-monitor-framebuffer" "xwayland-native-scaling" ];
+
+          };
           "org/gnome/shell/app-switcher".current-workspace-only = true;
 
           "org/gnome/shell" = {
@@ -102,11 +109,6 @@ in {
               appindicator.extensionUuid
               user-themes.extensionUuid
             ];
-          };
-
-          "org/gnome/mutter/wayland" = {
-            xwayland-allow-grabs = true;
-            xwayland-grab-access-rules = ["Remmina" "VirtualBox Machine" "parsecd"];
           };
         };
       };
