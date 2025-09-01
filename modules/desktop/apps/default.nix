@@ -13,5 +13,7 @@
     ./obsidian.nix
     ./httptoolkit
     ./bitwarden.nix
+    ./legcord.nix
+    ./intellij.nix
   ];
 }

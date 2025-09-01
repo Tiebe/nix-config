@@ -42,7 +42,8 @@
       gnome.enable = true;
 
       apps = {
-        vencord.enable = true;
+        # vencord.enable = true;
+        legcord.enable = true;
         vscode.enable = true;
         firefox.enable = true;
         wezterm.enable = true;
@@ -51,6 +52,8 @@
         office.enable = true;
         thunderbird.enable = true;
         bitwarden.enable = true;
+        steam.enable = true;
+        intellij.enable = true;
       };
     };
 
