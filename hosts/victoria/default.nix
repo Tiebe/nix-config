@@ -24,6 +24,8 @@
     patch = ./boot_vga.patch;
   } ];
 
+  networking.firewall.enable = true;
+
 
   system.stateVersion = "25.05";
 }

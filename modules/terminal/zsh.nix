@@ -43,7 +43,7 @@ in {
             #"yuhonas/zsh-ansimotd"
             #"marlonrichert/zsh-autocomplete"
             "Tarrasch/zsh-bd"
-            "MikeDacre/careful_rm"
+            # "MikeDacre/careful_rm"
             "bartboy011/cd-reminder"
             "ChrisPenner/copy-pasta"
             "mrjohannchang/zsh-interactive-cd"
