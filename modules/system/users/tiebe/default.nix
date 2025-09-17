@@ -43,7 +43,7 @@ in {
         tiebe = config.tiebe;
       };
       sharedModules = [
-        inputs.plasma-manager.homeManagerModules.plasma-manager
+        inputs.plasma-manager.homeModules.plasma-manager
       ];
       backupFileExtension = "backup";
       useGlobalPkgs = true;
