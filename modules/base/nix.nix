@@ -15,7 +15,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {    
+  config = mkIf cfg.enable {
     environment.etc = with pkgs; (lib.mapAttrs'
       (name: value: {
         name = "nix/path/${name}";
@@ -68,7 +68,7 @@ in {
         http-connections = 128;
         max-substitution-jobs = 128;
         cores = 0;
-        max-jobs = "auto"; 
+        max-jobs = "auto";
       };
     };
   };

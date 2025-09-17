@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.bitwarden;
-in
-{
+in {
   options = {
     tiebe.desktop.apps.bitwarden = {
       enable = mkEnableOption "Bitwarden desktop";
@@ -18,6 +16,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.bitwarden-desktop ];
+    environment.systemPackages = [pkgs.bitwarden-desktop];
   };
 }

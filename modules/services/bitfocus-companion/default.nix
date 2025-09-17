@@ -5,18 +5,16 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.bitfocus-companion;
 
-  bitfocus-companion-original = import ./package.nix { inherit (pkgs) stdenv lib fetchFromGitHub nodejs git python3 udev yarn-berry_4 libusb1 dart-sass electron_36 makeWrapper; };
+  bitfocus-companion-original = import ./package.nix {inherit (pkgs) stdenv lib fetchFromGitHub nodejs git python3 udev yarn-berry_4 libusb1 dart-sass electron_36 makeWrapper;};
 
   bitfocus-companion = bitfocus-companion-original.overrideAttrs (finalAttrs: previousAttrs: {
-    patches = [ ./import.patch ];
+    patches = [./import.patch];
   });
-in
-{
+in {
   options = {
     tiebe.services.bitfocus-companion = {
       enable = mkEnableOption "Bitfocus Companion";
@@ -24,24 +22,23 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ bitfocus-companion ];
+    environment.systemPackages = [bitfocus-companion];
 
     systemd.user.services.bitfocus-companion = {
       enable = true;
-      wantedBy = [ "default.target" ];
+      wantedBy = ["default.target"];
       description = "Starts Bitfocus Companion";
       serviceConfig = {
         Type = "simple";
         ExecStart = ''
-          ${bitfocus-companion}/bin/bitfocus-companion --import-from-file ${ ./export.companionconfig }
+          ${bitfocus-companion}/bin/bitfocus-companion --import-from-file ${./export.companionconfig}
         '';
       };
     };
 
     home-manager.users.tiebe = {
       home.file.".local/share/gnome-shell/extensions/focus-watcher@tiebe.me".source = ./focus-watcher;
-      dconf.settings."org/gnome/shell".enabled-extensions = [ "focus-watcher@tiebe.me" ];
+      dconf.settings."org/gnome/shell".enabled-extensions = ["focus-watcher@tiebe.me"];
     };
-    
   };
 }

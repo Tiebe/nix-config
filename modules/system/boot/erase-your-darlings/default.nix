@@ -44,13 +44,13 @@ in {
     ];
 
     systemd.services.fprintd.serviceConfig.StateDirectory = "";
-    systemd.services."systemd-backlight@" = { 
+    systemd.services."systemd-backlight@" = {
       environment = {
         "SYSTEMD_LOG_LEVEL" = "debug";
         "SYSTEMD_LOG_TARGET" = "journal";
       };
-      requires = [ "persist.mount" ];
-      after = [ "persist.mount" ];
+      requires = ["persist.mount"];
+      after = ["persist.mount"];
       serviceConfig.StateDirectory = "";
     };
 

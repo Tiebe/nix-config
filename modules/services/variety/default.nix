@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.variety;
-in
-{
+in {
   options = {
     tiebe.services.variety = {
       enable = mkEnableOption "Variety wallpaper changer";
@@ -19,7 +17,7 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.tiebe = {
-      home.packages = [ 
+      home.packages = [
         pkgs.variety
       ];
 
@@ -30,14 +28,12 @@ in
           Description = "Start variety on boot";
         };
         Install = {
-          WantedBy = [ "graphical-session.target" ];
+          WantedBy = ["graphical-session.target"];
         };
         Service = {
           ExecStart = "${pkgs.toybox}/bin/pgrep variety || ${pkgs.variety}/bin/variety";
         };
       };
-
-
     };
   };
 }

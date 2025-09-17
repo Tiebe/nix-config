@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.legcord;
-in
-{
+in {
   options = {
     tiebe.desktop.apps.legcord = {
       enable = mkEnableOption "Legcord";
@@ -18,8 +16,8 @@ in
   };
 
   config = mkIf cfg.enable {
-      environment.systemPackages = with pkgs; [
-    legcord
-  ];
+    environment.systemPackages = with pkgs; [
+      legcord
+    ];
   };
 }
