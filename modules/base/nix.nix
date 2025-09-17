@@ -64,6 +64,11 @@ in {
         ];
 
         trusted-users = ["root" "tiebe"];
+
+        http-connections = 128;
+        max-substitution-jobs = 128;
+        cores = 0;
+        max-jobs = "auto"; 
       };
     };
   };
