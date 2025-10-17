@@ -22,7 +22,7 @@ in {
           enable = true;
           consoleMode = "max";
         };
-        timeout = 0;
+        timeout = 2;
       };
     };
   };

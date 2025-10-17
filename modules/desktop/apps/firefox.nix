@@ -102,6 +102,11 @@ in {
               install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/violentmonkey/latest.xpi";
               installation_mode = "force_installed";
             };
+
+            "search@kagi.com" = {
+              "install_url" = "https://addons.mozilla.org/en-US/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
+              installation_mode = "force_installed";
+            };
           };
 
           /*

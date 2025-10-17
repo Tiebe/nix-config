@@ -9,11 +9,11 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.bitfocus-companion;
 
-  bitfocus-companion-original = import ./package.nix {inherit (pkgs) stdenv lib fetchFromGitHub nodejs git python3 udev yarn-berry_4 libusb1 dart-sass electron_36 makeWrapper;};
+  bitfocus-companion = import ./package.nix {inherit (pkgs) stdenv lib fetchFromGitHub nodejs git python3 udev yarn-berry_4 libusb1 dart-sass electron_36 makeWrapper nix-update-script;};
 
-  bitfocus-companion = bitfocus-companion-original.overrideAttrs (finalAttrs: previousAttrs: {
-    patches = [./import.patch];
-  });
+  # bitfocus-companion = bitfocus-companion-original.overrideAttrs (finalAttrs: previousAttrs: {
+  #   patches = [./import.patch];
+  # });
 in {
   options = {
     tiebe.services.bitfocus-companion = {
@@ -31,7 +31,7 @@ in {
       serviceConfig = {
         Type = "simple";
         ExecStart = ''
-          ${bitfocus-companion}/bin/bitfocus-companion --import-from-file ${./export.companionconfig}
+          ${bitfocus-companion}/bin/bitfocus-companion
         '';
       };
     };

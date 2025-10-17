@@ -13,65 +13,63 @@
   ];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = ["amdgpu"];
+  boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
-
-  boot.initrd.supportedFilesystems = ["zfs"]; # boot from zfs
-  boot.kernelParams = [
-    "elevator=none" # Because ZFS doesn't have the whole disk, just a partition. Set the disk’s scheduler to none. ZFS takes this step automatically if it does control the entire disk.
-    "nohibernate" # ZFS misses support for freeze/thaw operations.This means that using ZFS together with hibernation (suspend to disk) may cause filesystem corruption.See https://github.com/openzfs/zfs/issues/260.
-    # "boot.debug1devices"
-  ];
-  boot.supportedFilesystems = ["zfs"];
+  boot.supportedFilesystems = ["ntfs"];
 
   fileSystems."/" = {
-    device = "rpool/local/root";
-    fsType = "zfs";
+    device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
+    fsType = "btrfs";
+    options = ["subvol=root" "noatime"];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
+    fsType = "btrfs";
+    options = ["subvol=home" "noatime"];
+  };
+
+  fileSystems."/persist" = {
+    device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
+    fsType = "btrfs";
+    options = ["subvol=persist" "noatime"];
+    neededForBoot = true;
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
+    fsType = "btrfs";
+    options = ["subvol=nix" "noatime"];
+  };
+
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
+    fsType = "btrfs";
+    options = ["subvol=log" "noatime" "compress=zstd"];
+    neededForBoot = true;
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/020D-1E55";
     fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077" "defaults"];
+    options = ["fmask=0022" "dmask=0022"];
   };
 
-  fileSystems."/nix" = {
-    device = "rpool/local/nix";
-    fsType = "zfs";
+  fileSystems."/run/media/tiebe/Data" = {
+    device = "/dev/disk/by-uuid/5dd4afd3-69b9-e6b1-9162-0f07bc9cca28";
+    fsType = "btrfs";
   };
 
-  fileSystems."/home" = {
-    device = "rpool/safe/home";
-    fsType = "zfs";
+  fileSystems."/run/media/tiebe/Games" = {
+    device = "/dev/disk/by-uuid/f1caf7db-1e19-dda4-d177-45e2f0feb0b8";
+    fsType = "btrfs";
   };
 
-  fileSystems."/persist" = {
-    device = "rpool/safe/persist";
-    fsType = "zfs";
-    neededForBoot = true;
-  };
-
-  boot.initrd.postResumeCommands = lib.mkAfter ''
-    echo "Rolling back root partition..."
-    zfs rollback -r rpool/local/root@blank
-    echo ">> ROLLBACK COMPLETE <<"
-  '';
-
-  services.udev.extraRules = ''
-    KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*", ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
-  '';
-
-  services.zfs = {
-    autoScrub.enable = true;
-    autoSnapshot.enable = true;
-    # TODO: autoReplication
-  };
+  # TODO!! when switching to erase your darlings, make sure to first recreate root snapshot with /run/media folders for mounts. otherwise no boot
 
   swapDevices = [
-    {
-      device = "/dev/disk/by-label/swap";
-    }
+    {device = "/dev/disk/by-uuid/a4b4def0-6197-4054-ba85-66ddec0a554b";}
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -79,6 +77,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s20f0u1u1i5.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp7s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 

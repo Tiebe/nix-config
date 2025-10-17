@@ -17,7 +17,7 @@
 
     system = {
       boot = {
-        erase-your-darlings.enable = true;
+        erase-your-darlings.enable = false;
         systemd-boot.enable = true;
       };
 
@@ -40,7 +40,7 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      gnome.enable = true;
+      plasma.enable = true;
 
       # hyprland = {
       #   enable = true;
@@ -63,12 +63,16 @@
 
       apps = {
         steam.enable = true;
-        vencord.enable = true;
+        discord = {
+          enable = true;
+          vencord = true;
+        };
+        vencord.enable = false;
         wezterm.enable = true;
         vscode.enable = true;
         firefox.enable = true;
         media.enable = true;
-        parsec.enable = true;
+        parsec.enable = false;
         office.enable = true;
         minecraft.enable = true;
         thunderbird.enable = true;
@@ -104,7 +108,7 @@
       variety.enable = true;
       bitfocus-companion.enable = true;
       windows = {
-        enable = true;
+        enable = false;
         uuid = "03560274-043c-0572-b206-1e0700080009";
 
         cpu = {

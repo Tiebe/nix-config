@@ -24,7 +24,7 @@ in {
         shellAliases = {
           "fullupdate" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix flake update && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
           "update" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
-          "capture-plasma" = "nix run github:nix-community/plasma-manager > /etc/nixos/home-manager/packages/advanced/plasma/config.nix && echo 'Captured Plasma config.'";
+          "capture-plasma" = "nix run github:nix-community/plasma-manager > /etc/nixos/modules/desktop/plasma/config.nix && echo 'Captured Plasma config.'";
           "o" = "xdg-open";
           "db" = "distrobox";
           "dbe" = "distrobox enter";

@@ -15,5 +15,6 @@
     ./bitwarden.nix
     ./legcord.nix
     ./intellij.nix
+    ./discord
   ];
 }

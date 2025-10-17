@@ -16,14 +16,14 @@
     verbose = false;
   };
 
-  services.xserver.videoDrivers = ["amdgpu" "displaylink" "modesetting"];
+  services.xserver.videoDrivers = ["amdgpu" "modesetting"];
 
   networking.hostName = "jupiter";
   networking.hostId = "4ca1d14d";
 
   hardware.graphics.enable = true;
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
-  virtualisation.docker.storageDriver = "zfs";
+  virtualisation.docker.storageDriver = "btrfs";
 
   systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
   hardware.graphics = {
@@ -34,5 +34,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

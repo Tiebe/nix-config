@@ -35,6 +35,7 @@ in {
 
           userSettings = {
             "nix.enableLanguageServer" = true;
+            "nix.serverPath" = "nil";
             "[nix]"."editor.tabSize" = 2;
             "files.autoSave" = "on";
           };

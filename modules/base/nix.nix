@@ -28,12 +28,13 @@ in {
       package = pkgs.nix-ld-rs; # only for NixOS 24.05
     };
 
+    environment.systemPackages = [(pkgs.writeShellScriptBin "reboot-kexec" (builtins.readFile ./reboot-kexec.sh))];
+
     nixpkgs = {
       # Configure your nixpkgs instance
       config = {
         # Disable if you don't want unfree packages
         allowUnfree = true;
-        cudaSupport = true;
       };
     };
 
