@@ -19,12 +19,12 @@
   networking.hostName = "victoria";
 
   # kernel patch until https://gitlab.gnome.org/GNOME/gdm/-/issues/974 is resolved
-  boot.kernelPatches = [
-    {
-      name = "gdm-amd-gpu-fix";
-      patch = ./boot_vga.patch;
-    }
-  ];
+  # boot.kernelPatches = [
+  #   {
+  #     name = "gdm-amd-gpu-fix";
+  #     patch = ./boot_vga.patch;
+  #   }
+  # ];
 
   networking.firewall.enable = true;
 

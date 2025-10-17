@@ -28,6 +28,7 @@ in {
       bat
       python314
       coreutils
+      groff
     ];
 
     home-manager.users.tiebe = {

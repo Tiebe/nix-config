@@ -21,6 +21,7 @@ in {
     home-manager.users.tiebe = {
       programs.vscode = {
         enable = true;
+        package = pkgs.vscodium;
 
         profiles.default = {
           extensions = with pkgs.vscode-extensions; [

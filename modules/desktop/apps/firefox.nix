@@ -97,6 +97,11 @@ in {
               install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/steam-database/latest.xpi";
               installation_mode = "force_installed";
             };
+
+            "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}" = {
+              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/violentmonkey/latest.xpi";
+              installation_mode = "force_installed";
+            };
           };
 
           /*
