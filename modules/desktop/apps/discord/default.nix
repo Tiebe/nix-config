@@ -37,6 +37,15 @@ in {
       home.packages = [
         wrapperScript
       ];
+
+      xdg.desktopEntries = {
+        discord = {
+          name = "Discord";
+          exec = "${wrapperScript}/bin/discord-wrapper";
+          terminal = false;
+          icon = ./discord-icon.svg;
+        };
+      };
     };
   };
 }

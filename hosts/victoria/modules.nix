@@ -54,6 +54,7 @@
         bitwarden.enable = true;
         steam.enable = true;
         intellij.enable = true;
+        localsend.enable = true;
       };
     };
 

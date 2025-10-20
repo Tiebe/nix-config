@@ -12,6 +12,7 @@
   electron_36,
   makeWrapper,
   nix-update-script,
+  ps
 }:
 
 let
@@ -76,6 +77,7 @@ stdenv.mkDerivation rec {
     nodejs
     electron_36
     udev
+    ps
   ];
 
   missingHashes = ./missing-hashes.json;

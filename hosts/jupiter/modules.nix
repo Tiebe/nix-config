@@ -78,6 +78,7 @@
         thunderbird.enable = true;
         obsidian.enable = true;
         httptoolkit.enable = true;
+        localsend.enable = true;
       };
     };
 

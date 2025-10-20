@@ -16,5 +16,6 @@
     ./legcord.nix
     ./intellij.nix
     ./discord
+    ./localsend.nix
   ];
 }
