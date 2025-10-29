@@ -39,11 +39,13 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      gnome.enable = true;
+      plasma.enable = true;
 
       apps = {
+        discord.enable = true;
+        discord.vencord = true;
         # vencord.enable = true;
-        legcord.enable = true;
+        # legcord.enable = true;
         vscode.enable = true;
         firefox.enable = true;
         wezterm.enable = true;
@@ -76,6 +78,7 @@
       lorri.enable = true;
       variety.enable = true;
       devenv.enable = true;
+      nextcloud.enable = true;
     };
   };
 }

@@ -26,6 +26,12 @@
   #   }
   # ];
 
+  services.pipewire.wireplumber.extraConfig.no-ucm = {
+    "monitor.alsa.properties" = {
+      "alsa.use-ucm" = false;
+    };
+  };
+
   networking.firewall.enable = true;
 
   system.stateVersion = "25.05";
