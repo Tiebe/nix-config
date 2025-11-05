@@ -25,7 +25,6 @@ in {
 
     programs.nix-ld = {
       enable = true;
-      package = pkgs.nix-ld-rs; # only for NixOS 24.05
     };
 
     environment.systemPackages = [(pkgs.writeShellScriptBin "reboot-kexec" (builtins.readFile ./reboot-kexec.sh))];

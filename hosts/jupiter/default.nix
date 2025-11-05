@@ -21,7 +21,10 @@
   networking.hostName = "jupiter";
   networking.hostId = "4ca1d14d";
 
+  networking.firewall.enable = false;
+
   hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true; # Replaced 'driSupport32Bit'
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 

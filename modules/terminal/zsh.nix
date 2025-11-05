@@ -53,7 +53,6 @@ in {
             "birdhackor/zsh-eza-ls-plugin"
             "aubreypwd/zsh-plugin-fd"
             "atuinsh/atuin"
-            "mfaerevaag/wd"
           ];
         };
 

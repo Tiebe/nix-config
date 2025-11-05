@@ -17,7 +17,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      onlyoffice-bin
+      onlyoffice-desktopeditors
     ];
   };
 }

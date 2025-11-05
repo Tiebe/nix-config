@@ -16,8 +16,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.wivrn = {
+    programs.alvr = {
       enable = true;
+      openFirewall = true;
+    };
+    
+    services.wivrn = {
+      enable = false;
       openFirewall = true;
 
       # Write information to /etc/xdg/openxr/1/active_runtime.json, VR applications

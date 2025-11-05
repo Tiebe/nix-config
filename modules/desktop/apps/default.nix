@@ -1,6 +1,6 @@
 {inputs, ...}: {
   imports = [
-    ./steam.nix
+    ./steam
     ./vencord.nix
     ./wezterm
     ./firefox.nix

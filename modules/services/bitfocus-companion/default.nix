@@ -23,20 +23,6 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = [ bitfocus-companion ];
-
-    systemd.user.services.bitfocus-companion = {
-      enable = true;
-      wantedBy = ["network.target"];
-      description = "Starts Bitfocus Companion";
-      serviceConfig = {
-        Type = "simple";
-        Restart = "always";
-        ExecStart = ''
-          ${bitfocus-companion}/bin/bitfocus-companion
-        '';
-      };
-    };
-
     home-manager.users.tiebe = {
       home.file.".local/share/gnome-shell/extensions/focus-watcher@tiebe.me".source = ./focus-watcher;
       dconf.settings."org/gnome/shell".enabled-extensions = ["focus-watcher@tiebe.me"];
@@ -46,6 +32,24 @@ in {
           name = "Bitfocus Companion";
           terminal = false;
           exec = "${pkgs.xdg-utils}/bin/xdg-open http://localhost:8000";
+        };
+      };
+
+      systemd.user.services.bitfocus-companion = {
+        Unit = {
+          Description = "Start bitfocus companion";
+        };
+
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+
+        Service = {
+          Type = "simple";
+          Restart = "always";
+          ExecStart = ''
+            ${bitfocus-companion}/bin/bitfocus-companion
+          '';
         };
       };
     };

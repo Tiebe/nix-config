@@ -36,20 +36,22 @@ in {
 
       programs.git = {
         enable = true;
-        userName = "Tiebe Groosman";
-        userEmail = "tiebe@tiebe.me";
+        settings.user = {
+          name = "Tiebe Groosman";
+          email = "tiebe@tiebe.me";
+          "url \"ssh://git@github.com/\"" = {insteadOf = "https://github.com/";};
+          "url \"ssh://forgejo@tiebe.me/\"" = {insteadOf = "https://git.tiebe.me/";};
+          init.defaultBranch = "main";
+        };
+        
         signing = {
           format = "openpgp";
           key = "53612C9FED81D4EE";
           signByDefault = true;
           signer = "${pkgs.gnupg}/bin/gpg";
         };
-        extraConfig = {
-          "url \"ssh://git@github.com/\"" = {insteadOf = "https://github.com/";};
-          "url \"ssh://forgejo@tiebe.me/\"" = {insteadOf = "https://git.tiebe.me/";};
-          init.defaultBranch = "main";
-        };
       };
+      
       programs.gh.enable = true;
     };
   };

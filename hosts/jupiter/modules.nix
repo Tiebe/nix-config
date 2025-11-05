@@ -79,6 +79,8 @@
         obsidian.enable = true;
         httptoolkit.enable = true;
         localsend.enable = true;
+        intellij.enable = true;
+
       };
     };
 
@@ -88,7 +90,7 @@
         basic.enable = true;
         advanced.enable = true;
 
-        neovim.enable = true;
+        # neovim.enable = true;
         fastfetch.enable = true;
       };
     };
