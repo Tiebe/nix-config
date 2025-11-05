@@ -36,9 +36,11 @@ in {
 
       programs.git = {
         enable = true;
-        settings.user = {
-          name = "Tiebe Groosman";
-          email = "tiebe@tiebe.me";
+        settings = {
+          user = {
+            name = "Tiebe Groosman";
+            email = "tiebe@tiebe.me";
+          };
           "url \"ssh://git@github.com/\"" = {insteadOf = "https://github.com/";};
           "url \"ssh://forgejo@tiebe.me/\"" = {insteadOf = "https://git.tiebe.me/";};
           init.defaultBranch = "main";
@@ -51,7 +53,7 @@ in {
           signer = "${pkgs.gnupg}/bin/gpg";
         };
       };
-      
+
       programs.gh.enable = true;
     };
   };
