@@ -20,7 +20,7 @@ in {
       services.gpg-agent = {
         enable = true;
         enableExtraSocket = true;
-        enableSshSupport = true;
+        # enableSshSupport = true;
       };
 
       programs.gpg = {

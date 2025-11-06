@@ -4,7 +4,7 @@
     ./printing.nix
     ./sshserver.nix
     ./sunshine.nix
-    ./vr.nix
+    ./vr
     ./winapps.nix
     ./gpg
     ./lorri.nix
