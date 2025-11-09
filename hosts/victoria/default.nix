@@ -26,6 +26,8 @@
   #   }
   # ];
 
+  security.pam.services.login.fprintAuth = false;
+
   services.pipewire.wireplumber.extraConfig.no-ucm = {
     "monitor.alsa.properties" = {
       "alsa.use-ucm" = false;

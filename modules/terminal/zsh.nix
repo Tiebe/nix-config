@@ -30,6 +30,7 @@ in {
           "dbe" = "distrobox enter";
           "cat" = "bat";
           "code" = "codium";
+          "reboot" = "systemctl reboot";
         };
 
         antidote = {
