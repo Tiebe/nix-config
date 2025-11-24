@@ -27,6 +27,8 @@ in {
       enable = true;
     };
 
+    services.envfs.enable = true;
+
     environment.systemPackages = [(pkgs.writeShellScriptBin "reboot-kexec" (builtins.readFile ./reboot-kexec.sh))];
 
     nixpkgs = {

@@ -34,6 +34,9 @@
     };
   };
 
+  hardware.rtl-sdr.enable = true;
+  users.users.tiebe.extraGroups = [ "plugdev" ];
+
   networking.firewall.enable = true;
 
   system.stateVersion = "25.05";
