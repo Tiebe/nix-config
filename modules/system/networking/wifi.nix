@@ -10,7 +10,7 @@
   cfg = config.tiebe.system.networking.wifi;
 
   # Define the maximum number of networks you expect.
-  networkCount = 205;
+  networkCount = 206;
 in {
   options = {
     tiebe.system.networking.wifi = {
