@@ -33,6 +33,8 @@
         email.enable = true;
       };
 
+      users.robbin.enable = true;
+
       sound.enable = true;
       ddc.enable = true;
     };
@@ -110,6 +112,7 @@
       devenv.enable = true;
       variety.enable = true;
       bitfocus-companion.enable = true;
+      ratbagd.enable = true;
       windows = {
         enable = false;
         uuid = "03560274-043c-0572-b206-1e0700080009";

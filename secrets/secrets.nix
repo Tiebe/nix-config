@@ -15,6 +15,7 @@ let
   all = yubikeys ++ hosts ++ [tiebe];
 in {
   "password.age".publicKeys = all;
+  "passwordrobbin.age".publicKeys = all;
   "tailscale.age".publicKeys = all;
   "wifi.age".publicKeys = all;
   "atuin.age".publicKeys = all;

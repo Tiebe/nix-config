@@ -9,6 +9,7 @@
     ./sound.nix
     ./users/tiebe
     ./users/tiebe/email.nix
+    ./users/robbin
     ./ddc.nix
     ./boot/erase-your-darlings
   ];

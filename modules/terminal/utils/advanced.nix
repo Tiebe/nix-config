@@ -8,6 +8,9 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.terminal.utils.advanced;
+
+  ayechat = import ./ayechat.nix { inherit (pkgs) python3Packages lib; };
+
 in {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
@@ -24,6 +27,7 @@ in {
 
     environment.systemPackages = with pkgs; [
       distrobox
+      ayechat
     ];
 
     programs.adb.enable = true;

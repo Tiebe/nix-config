@@ -34,6 +34,7 @@ in {
     age = {
       secrets = {
         password.file = agePath "password.age";
+        passwordRobbin.file = agePath "passwordrobbin.age";
         tailscale.file = agePath "tailscale.age";
         wifi.file = agePath "wifi.age";
         atuin.file = agePath "atuin.age";

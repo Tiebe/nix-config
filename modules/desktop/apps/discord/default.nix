@@ -16,6 +16,9 @@
 
   wrapperScript = pkgs.writeShellScriptBin "discord-wrapper" ''
     set -euxo pipefail
+
+    (sleep 15 && systemctl restart --user bitfocus-companion.service) &
+
     ${pkgs.findutils}/bin/find -L $HOME/.config/discord -name 'discord_krisp.node' -exec ${krisp-patcher}/bin/krisp-patcher {} +
     ${(pkgs.discord.override {
       withVencord = config.tiebe.desktop.apps.discord.vencord;
@@ -34,6 +37,21 @@ in {
   };
   config = lib.mkIf config.tiebe.desktop.apps.discord.enable {
     home-manager.users.tiebe = {
+      home.packages = [
+        wrapperScript
+      ];
+
+      xdg.desktopEntries = {
+        discord = {
+          name = "Discord";
+          exec = "${wrapperScript}/bin/discord-wrapper";
+          terminal = false;
+          icon = ./discord-icon.svg;
+        };
+      };
+    };
+
+    home-manager.users.robbin = {
       home.packages = [
         wrapperScript
       ];

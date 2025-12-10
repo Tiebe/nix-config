@@ -16,5 +16,6 @@
     ./devenv.nix
     ./variety
     ./bitfocus-companion
+    ./ratbagd
   ];
 }
