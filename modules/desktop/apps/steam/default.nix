@@ -38,6 +38,7 @@ in {
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [proton-ge-bin];
+      protontricks.enable = true;
       # For evict darlings: override HOME to config directory
       package =
         if evictCfg.enable

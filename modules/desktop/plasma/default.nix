@@ -41,7 +41,7 @@ in {
     ];
 
     home-manager.users.tiebe = {
-      imports = [./config];
+      imports = [./config.nix];
     };
   };
 

@@ -9,7 +9,7 @@
   yarn-berry_4,
   libusb1,
   dart-sass,
-  electron_36,
+  electron,
   makeWrapper,
   nix-update-script,
   ps,
@@ -67,14 +67,14 @@ in
       makeWrapper
     ];
 
-    buildInputs = [
-      libusb1
-      dart-sass
-      nodejs
-      electron_36
-      udev
-      ps
-    ];
+  buildInputs = [
+    libusb1
+    dart-sass
+    nodejs
+    electron
+    udev
+    ps
+  ];
 
     missingHashes = ./missing-hashes.json;
 

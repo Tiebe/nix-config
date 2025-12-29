@@ -5,7 +5,22 @@
   config,
   pkgs,
   ...
-}: {
+}: 
+let
+  lowpower = pkgs.writeShellScriptBin "lowpower" ''
+    #!/usr/bin/env bash
+    kscreen-doctor \
+      output.DisplayPort-0.mode.89 \
+      output.DisplayPort-2.mode.138
+  '';
+
+  highpower = pkgs.writeShellScriptBin "highpower" ''
+    #!/usr/bin/env bash
+    kscreen-doctor \
+      output.DisplayPort-0.mode.90 \
+      output.DisplayPort-2.mode.139
+  '';
+in {
   imports = [
     ./hardware-configuration.nix
     ./modules.nix
@@ -35,6 +50,13 @@
       libva-utils
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    lowpower
+    highpower
+  ];
+
+
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

@@ -9,7 +9,7 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.bitfocus-companion;
 
-  bitfocus-companion = import ./package.nix {inherit (pkgs) stdenv lib fetchFromGitHub nodejs git python3 udev yarn-berry_4 libusb1 dart-sass electron_36 makeWrapper nix-update-script ps;};
+  bitfocus-companion = import ./package.nix {inherit (pkgs) stdenv lib fetchFromGitHub nodejs git python3 udev yarn-berry_4 libusb1 dart-sass electron makeWrapper nix-update-script ps;};
   # bitfocus-companion = bitfocus-companion-original.overrideAttrs (finalAttrs: previousAttrs: {
   #   patches = [./import.patch];
   # });
@@ -26,6 +26,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = [bitfocus-companion];
+    
     home-manager.users.tiebe = {
       home.file.".local/share/gnome-shell/extensions/focus-watcher@tiebe.me".source = ./focus-watcher;
       dconf.settings."org/gnome/shell".enabled-extensions = ["focus-watcher@tiebe.me"];
