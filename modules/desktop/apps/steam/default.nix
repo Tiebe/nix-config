@@ -51,6 +51,6 @@ in {
         else pkgs.steam;
     };
 
-    # environment.systemPackages = with pkgs; [ gamescope-kbm gamemode bubblewrap ];
+    environment.systemPackages = with pkgs; [ gamescope gamemode bubblewrap ];
   };
 }

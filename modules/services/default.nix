@@ -18,6 +18,6 @@
     ./variety
     ./bitfocus-companion
     ./ratbagd
-    ./zerogravity
+    ./boinc.nix
   ];
 }

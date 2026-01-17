@@ -29,6 +29,7 @@ in {
       usbutils
       bat
       python314
+      conda
       coreutils
       groff
     ];

@@ -112,6 +112,7 @@
       variety.enable = true;
       bitfocus-companion.enable = true;
       ratbagd.enable = true;
+      boinc.enable = false;
       windows = {
         enable = false;
         uuid = "03560274-043c-0572-b206-1e0700080009";
