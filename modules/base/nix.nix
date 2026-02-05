@@ -35,7 +35,15 @@ in {
       # Configure your nixpkgs instance
       config = {
         # Disable if you don't want unfree packages
-        allowUnfree = true;
+        # allowUnfree = true;
+
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+             "discord"
+             "idea-ultimate"
+             "spotify"
+             "steam"
+             "steam-unwrapped"
+           ];
       };
     };
 

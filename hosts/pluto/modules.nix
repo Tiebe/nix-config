@@ -47,7 +47,7 @@
         firefox.enable = true;
         wezterm.enable = true;
         media.enable = true;
-        parsec.enable = true;
+        parsec.enable = false;
         office.enable = true;
         thunderbird.enable = true;
       };

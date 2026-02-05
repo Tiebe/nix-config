@@ -27,7 +27,7 @@ in {
           extensions = with pkgs.vscode-extensions; [
             #ms-python.python
             ms-python.pylint
-            ms-python.vscode-pylance
+            # ms-python.vscode-pylance
             ms-azuretools.vscode-docker
             jock.svg
             jnoortheen.nix-ide
