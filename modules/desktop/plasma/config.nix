@@ -90,8 +90,8 @@
       "kwin"."Switch to Screen to the Right" = [ ];
       "kwin"."Toggle Night Color" = [ ];
       "kwin"."Toggle Window Raise/Lower" = [ ];
-      "kwin"."Walk Through Windows" = ["" "Alt+Tab,Meta+Tab" "Alt+Tab,Walk Through Windows"];
-      "kwin"."Walk Through Windows (Reverse)" = ["" "Alt+Shift+Tab,Meta+Shift+Tab" "Alt+Shift+Tab,Walk Through Windows (Reverse)"];
+      "kwin"."Walk Through Windows" = "Alt+Tab";
+      "kwin"."Walk Through Windows (Reverse)" = "Alt+Shift+Tab";
       "kwin"."Walk Through Windows Alternative" = [ ];
       "kwin"."Walk Through Windows Alternative (Reverse)" = [ ];
       "kwin"."Walk Through Windows of Current Application" = ["\\, Meta+`" ",Meta+`" "Alt+`,Walk Through Windows of Current Application"];
