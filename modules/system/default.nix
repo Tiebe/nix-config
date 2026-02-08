@@ -5,7 +5,7 @@
     ./networking/bluetooth.nix
     ./networking/network.nix
     ./networking/tailscale.nix
-    ./networking/wifi.nix
+    ./networking/wifi
     ./sound.nix
     ./users/tiebe
     ./users/tiebe/email.nix

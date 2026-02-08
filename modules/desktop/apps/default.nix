@@ -17,5 +17,6 @@
     ./intellij.nix
     ./discord
     ./localsend.nix
+    ./lmstudio.nix
   ];
 }

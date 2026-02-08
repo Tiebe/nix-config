@@ -31,6 +31,6 @@ in {
       extraCompatPackages = with pkgs; [proton-ge-bin];
     };
 
-    environment.systemPackages = with pkgs; [ gamescope-kbm gamemode bubblewrap ];
+    # environment.systemPackages = with pkgs; [ gamescope-kbm gamemode bubblewrap ];
   };
 }

@@ -59,6 +59,7 @@
         steam.enable = true;
         intellij.enable = true;
         localsend.enable = true;
+        lmstudio.enable = true;
       };
     };
 

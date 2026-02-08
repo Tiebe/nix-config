@@ -25,10 +25,12 @@ in {
   };
 
   config = mkIf cfg.enable {
+    environment.etc."firefox/policies/policies.json".target = "librewolf/policies/policies.json";
+
     programs = {
       firefox = {
         enable = true;
-
+        #package = pkgs.librewolf;
         /*
         ---- POLICIES ----
         */

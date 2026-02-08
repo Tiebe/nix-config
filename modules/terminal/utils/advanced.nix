@@ -28,9 +28,9 @@ in {
     environment.systemPackages = with pkgs; [
       distrobox
       ayechat
+      android-tools
     ];
 
-    programs.adb.enable = true;
     users.users.tiebe.extraGroups = ["adbusers"];
   };
 }

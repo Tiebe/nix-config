@@ -39,10 +39,11 @@ in {
 
         allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
              "discord"
-             "idea-ultimate"
+             "idea"
              "spotify"
              "steam"
              "steam-unwrapped"
+             "lmstudio"
            ];
       };
     };

@@ -21,7 +21,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      pkgs.jetbrains.idea-ultimate
+      pkgs.jetbrains.idea
       pkgs.javaPackages.openjfx21
     ];
 

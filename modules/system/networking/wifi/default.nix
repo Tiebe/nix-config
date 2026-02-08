@@ -12,6 +12,10 @@
   # Define the maximum number of networks you expect.
   networkCount = 206;
 in {
+  imports = [
+    ./ns
+  ];
+
   options = {
     tiebe.system.networking.wifi = {
       enable = mkEnableOption "Wi-Fi support";
