@@ -44,6 +44,7 @@ in {
              "steam"
              "steam-unwrapped"
              "lmstudio"
+             "antigravity"
            ];
       };
     };

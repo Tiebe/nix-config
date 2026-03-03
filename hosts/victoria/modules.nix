@@ -82,6 +82,7 @@
       variety.enable = true;
       devenv.enable = true;
       nextcloud.enable = true;
+      # zerogravity.enable = true;
     };
   };
 }

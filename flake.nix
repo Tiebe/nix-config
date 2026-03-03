@@ -64,6 +64,12 @@
     catppuccin.url = "github:catppuccin/nix";
     nvf.url = "github:notashelf/nvf";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    zerogravity-src = {
+      url = "git+ssh://git@github.com/NikkeTryHard/zerogravity-src.git";
+      flake = false;
+    };
   };
 
   outputs = {

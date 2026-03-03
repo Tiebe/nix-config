@@ -21,6 +21,8 @@ in {
       dockerCompat = true;
     };
 
+    environment.systemPackages = with pkgs; [podman-compose];
+
     virtualisation.oci-containers.backend = "podman";
 
     users.users.tiebe.extraGroups = ["podman"];

@@ -17,5 +17,6 @@
     ./variety
     ./bitfocus-companion
     ./ratbagd
+    ./zerogravity
   ];
 }
