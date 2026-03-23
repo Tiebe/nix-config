@@ -1,22 +1,23 @@
 {inputs, ...}: {
   imports = [
     ./steam
-    ./vencord.nix
+    ./vencord
     ./wezterm
-    ./firefox.nix
-    ./vscode.nix
-    ./media.nix
-    ./minecraft.nix
-    ./office.nix
+    ./firefox
+    ./vscode
+    ./media
+    ./minecraft
+    ./office
     ./parsec
-    ./thunderbird.nix
-    ./obsidian.nix
+    ./thunderbird
+    ./obsidian
     ./httptoolkit
-    ./bitwarden.nix
-    ./legcord.nix
-    ./intellij.nix
+    ./bitwarden
+    ./legcord
+    ./intellij
     ./discord
-    ./localsend.nix
-    ./lmstudio.nix
+    ./localsend
+    ./lmstudio
+    ./opencode
   ];
 }

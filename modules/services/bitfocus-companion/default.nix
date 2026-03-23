@@ -15,6 +15,10 @@
   #   patches = [./import.patch];
   # });
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.bitfocus-companion = {
       enable = mkEnableOption "Bitfocus Companion";

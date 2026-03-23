@@ -77,6 +77,7 @@
       #docker.enable = true;
       podman.enable = true;
       printing.enable = true;
+      fingerprint.enable = true;
       gpg.enable = true;
       lorri.enable = true;
       variety.enable = true;

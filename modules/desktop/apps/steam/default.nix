@@ -8,6 +8,7 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.steam;
+  evictCfg = config.tiebe.system.boot.evictDarlings;
 
   gamescope-kbm = pkgs.gamescope.overrideAttrs (old: {
     patches = (old.patches or []) ++ [ (pkgs.fetchpatch {
@@ -16,6 +17,10 @@
     }) ];
   });
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.desktop.apps.steam = {
       enable = mkEnableOption "Steam";
@@ -29,6 +34,15 @@ in {
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [proton-ge-bin];
+      # For evict darlings: override HOME to config directory
+      package = if evictCfg.enable then
+        pkgs.steam.override {
+          extraEnv = {
+            HOME = evictCfg.configDir;
+          };
+        }
+      else
+        pkgs.steam;
     };
 
     # environment.systemPackages = with pkgs; [ gamescope-kbm gamemode bubblewrap ];

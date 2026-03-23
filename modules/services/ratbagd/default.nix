@@ -12,6 +12,10 @@ let
   piper = import ./piper.nix { inherit (pkgs) lib meson ninja pkg-config gettext fetchFromGitHub python3 wrapGAppsHook3 gtk3 glib desktop-file-utils appstream-glib adwaita-icon-theme gobject-introspection librsvg; };
 in
 {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.ratbagd = {
       enable = mkEnableOption "the ratbagd service for g502 mouse";

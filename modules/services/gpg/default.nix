@@ -9,6 +9,10 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.gpg;
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.gpg = {
       enable = mkEnableOption "GPG service";

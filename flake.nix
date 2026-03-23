@@ -115,6 +115,30 @@
         specialArgs = {inherit inputs outputs;};
         modules = [./hosts/mercury];
       };
+
+      victoria-test-vm = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./hosts/victoria/vm.nix];
+      };
     };
+
+    # VM image for testing erase darlings
+    packages.x86_64-linux.victoria-test-vm-image = inputs.nixos-generators.nixosGenerate {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [./hosts/victoria/vm.nix];
+      format = "vm";
+    };
+
+    # Checks for CI validation
+    checks = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      # Verify all NixOS configurations evaluate
+      jupiter = self.nixosConfigurations.jupiter.config.system.build.toplevel;
+      pluto = self.nixosConfigurations.pluto.config.system.build.toplevel;
+      victoria = self.nixosConfigurations.victoria.config.system.build.toplevel;
+      mercury = self.nixosConfigurations.mercury.config.system.build.toplevel;
+      victoria-test-vm = self.nixosConfigurations.victoria-test-vm.config.system.build.toplevel;
+    });
   };
 }

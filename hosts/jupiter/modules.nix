@@ -17,7 +17,7 @@
 
     system = {
       boot = {
-        erase-your-darlings.enable = false;
+        darlings.enable = false;
         systemd-boot.enable = true;
       };
 

@@ -8,6 +8,7 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.plasma;
+  darlings = config.tiebe.system.boot.darlings;
 in {
   options = {
     tiebe.desktop.plasma = {
@@ -18,7 +19,6 @@ in {
   config = mkIf cfg.enable {
     services.displayManager.sddm = {
       enable = true;
-      # wayland.enable = true;
     };
 
     services.xserver.enable = true;
@@ -31,7 +31,9 @@ in {
     ];
 
     home-manager.users.tiebe = {
-      imports = [./config.nix];
+      imports = [./config];
     };
   };
+
+  imports = [ ./darlings.nix ];
 }

@@ -9,6 +9,10 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.openvpn;
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.openvpn = {
       enable = mkEnableOption "OpenVPN";

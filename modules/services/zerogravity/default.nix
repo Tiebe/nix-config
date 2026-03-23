@@ -64,6 +64,10 @@
     '';
   };
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.zerogravity = {
       enable = mkEnableOption "ZeroGravity proxy";

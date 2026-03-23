@@ -1,16 +1,18 @@
 {inputs, ...}: {
   imports = [
-    ./boot/systemdboot.nix
-    ./boot/plymouth.nix
-    ./networking/bluetooth.nix
-    ./networking/network.nix
-    ./networking/tailscale.nix
+    ./boot/systemdboot
+    ./boot/plymouth
+    ./networking/bluetooth
+    ./networking/network
+    ./networking/tailscale
     ./networking/wifi
-    ./sound.nix
+    ./sound
     ./users/tiebe
-    ./users/tiebe/email.nix
+    ./users/tiebe/email
     ./users/robbin
-    ./ddc.nix
-    ./boot/erase-your-darlings
+    ./ddc
+    ./boot/darlings
+    ./boot/evict-darlings
+    ./darlings.nix
   ];
 }

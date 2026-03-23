@@ -1,8 +1,8 @@
 {inputs, ...}: {
   imports = [
     ./hyprland.nix
-    ./hypridle.nix
-    ./hyprlock.nix
+    ./hypridle
+    ./hyprlock
     ./config
     ./programs
   ];

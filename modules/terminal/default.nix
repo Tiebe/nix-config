@@ -1,9 +1,9 @@
 {inputs, ...}: {
   imports = [
-    ./zsh.nix
-    ./utils/basic.nix
-    ./utils/advanced.nix
-    ./utils/fastfetch.nix
-    ./utils/neovim.nix
+    ./zsh
+    ./utils/basic
+    ./utils/advanced
+    ./utils/fastfetch
+    ./utils/neovim
   ];
 }

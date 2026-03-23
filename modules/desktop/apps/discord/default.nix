@@ -25,6 +25,10 @@
     })}/bin/discord "$@"
   '';
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.desktop.apps.discord.enable = lib.mkOption {
       description = "Whether to install Discord, a voice and text chat platform.";
