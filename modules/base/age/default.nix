@@ -9,7 +9,7 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.base.age;
 
-  agePath = path: ../../secrets/${path};
+  agePath = path: ../../../secrets/${path};
 in {
   imports = [
     inputs.agenix.nixosModules.age
