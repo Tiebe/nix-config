@@ -2,7 +2,6 @@
 # Based on jupiter hardware-configuration.nix + victoria rollback pattern
 
 {
-  config,
   lib,
   ...
 }: let
@@ -17,7 +16,7 @@ in {
         partitions = {
           ESP = {
             type = "EF00";
-            size = "512M";
+            size = "16G";
             content = {
               type = "filesystem";
               format = "vfat";
