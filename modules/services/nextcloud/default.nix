@@ -46,7 +46,7 @@ in {
     ];
 
     age.secrets.davfs = {
-      file = ../../secrets/davfs.age;
+      file = ../../../secrets/davfs.age;
       mode = "600";
       path = "/etc/davfs2/secrets";
     };
