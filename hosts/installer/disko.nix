@@ -16,10 +16,10 @@ in {
         partitions = {
           ESP = {
             type = "EF00";
-            size = "16G";
+            size = "4G";
             content = {
               type = "filesystem";
-              format = "fat32";
+              format = "vfat";
               mountpoint = "/boot";
               mountOptions = ["umask=0077"];
             };
