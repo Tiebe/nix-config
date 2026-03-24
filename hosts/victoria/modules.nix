@@ -55,11 +55,12 @@
         parsec.enable = false;
         office.enable = true;
         thunderbird.enable = true;
-        bitwarden.enable = true;
+        #bitwarden.enable = true;
         steam.enable = true;
         intellij.enable = true;
         localsend.enable = true;
         lmstudio.enable = true;
+        opencode.enable = true;
       };
     };
 
@@ -83,6 +84,8 @@
       devenv.enable = true;
       nextcloud.enable = true;
       # zerogravity.enable = true;
+      ssh-server.enable = true;
+
     };
   };
 }

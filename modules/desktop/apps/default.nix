@@ -18,5 +18,6 @@
     ./discord
     ./localsend.nix
     ./lmstudio.nix
+    ./opencode.nix
   ];
 }

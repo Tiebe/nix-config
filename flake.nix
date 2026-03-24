@@ -66,10 +66,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
-    zerogravity-src = {
-      url = "git+ssh://git@github.com/NikkeTryHard/zerogravity-src.git";
-      flake = false;
-    };
+    opencode.url = "github:anomalyco/opencode";
+    opencode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

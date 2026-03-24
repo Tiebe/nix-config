@@ -29,6 +29,7 @@ in {
       distrobox
       ayechat
       android-tools
+      tmux
     ];
 
     users.users.tiebe.extraGroups = ["adbusers"];
