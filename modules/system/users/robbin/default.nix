@@ -23,7 +23,7 @@ in {
   config = mkIf cfg.enable {
     users.users = {
       robbin = {
-        hashedPasswordFile = config.age.secrets.passwordRobbin.path;
+        passwordFile = config.age.secrets.passwordRobbin.path;
         isNormalUser = true;
         extraGroups = ["wheel" "dialout" "input" ];
       };
