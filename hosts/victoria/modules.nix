@@ -19,6 +19,8 @@
       boot = {
         systemd-boot.enable = true;
         plymouth.enable = false;
+        darlings.enable = true;
+        evictDarlings.enable = true;
       };
 
       networking = {
