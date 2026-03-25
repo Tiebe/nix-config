@@ -81,8 +81,8 @@
       printing.enable = true;
       fingerprint.enable = true;
       gpg.enable = true;
-      lorri.enable = true;
-      variety.enable = true;
+      #lorri.enable = true;
+      #variety.enable = true;
       devenv.enable = true;
       nextcloud.enable = true;
       # zerogravity.enable = true;

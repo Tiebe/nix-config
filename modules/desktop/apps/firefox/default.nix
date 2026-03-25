@@ -23,8 +23,8 @@
   firefoxPackage = if evictCfg.enable then
     pkgs.firefox.overrideAttrs (oldAttrs: {
       buildCommand = oldAttrs.buildCommand + ''
-        wrapProgram "$out/bin/firefox" \
-          --set HOME "${evictCfg.configDir}"
+        wrapProgram "$executablePath" \
+          --set 'HOME' '${evictCfg.configDir}'
       '';
     })
   else

@@ -43,8 +43,6 @@ in {
     # Set the user's home to the base directory (services see this as HOME)
     users.users.${cfg.user} = {
       home = cfg.baseDir;
-      # Required for home outside /home until https://github.com/NixOS/nixpkgs/pull/324618
-      homeMode = "0755";
       createHome = true;
     };
 
@@ -54,59 +52,37 @@ in {
         "${cfg.homeDir}" = {
           d = {
             user = cfg.user;
-            group = "users";
+            group = "root";
             mode = "0700";
           };
         };
         "${cfg.configDir}" = {
           d = {
             user = cfg.user;
-            group = "users";
+            group = "root";
             mode = "0700";
-          };
-        };
-        # Create common XDG subdirectories
-        "${cfg.configDir}/cache" = {
-          d = {
-            user = cfg.user;
-            group = "users";
-            mode = "0755";
-          };
-        };
-        "${cfg.configDir}/local/share" = {
-          d = {
-            user = cfg.user;
-            group = "users";
-            mode = "0755";
-          };
-        };
-        "${cfg.configDir}/local/state" = {
-          d = {
-            user = cfg.user;
-            group = "users";
-            mode = "0755";
           };
         };
       };
     };
 
-    # Also ensure persist directories exist for evict darlings
-    fileSystems = mkIf config.tiebe.system.boot.darlings.enable {
-      "/persist${cfg.baseDir}" = {
-        device = "/persist${cfg.baseDir}";
-        options = [ "bind" ];
-        neededForBoot = true;
-      };
-      "/persist${cfg.homeDir}" = {
-        device = "/persist${cfg.homeDir}";
-        options = [ "bind" ];
-        neededForBoot = true;
-      };
-      "/persist${cfg.configDir}" = {
-        device = "/persist${cfg.configDir}";
-        options = [ "bind" ];
-        neededForBoot = true;
-      };
-    };
+    # # Also ensure persist directories exist for evict darlings
+    # fileSystems = mkIf config.tiebe.system.boot.darlings.enable {
+    #   "/persist${cfg.baseDir}" = {
+    #     device = "/persist${cfg.baseDir}";
+    #     options = [ "bind" ];
+    #     neededForBoot = true;
+    #   };
+    #   "/persist${cfg.homeDir}" = {
+    #     device = "/persist${cfg.homeDir}";
+    #     options = [ "bind" ];
+    #     neededForBoot = true;
+    #   };
+    #   "/persist${cfg.configDir}" = {
+    #     device = "/persist${cfg.configDir}";
+    #     options = [ "bind" ];
+    #     neededForBoot = true;
+    #   };
+    # };
   };
 }

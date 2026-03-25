@@ -24,9 +24,6 @@ in {
         enable = true;
         enableCompletion = false;
 
-        # Note: dotDir must be within HOME for home-manager
-        # With evict darlings, zsh config is persisted via systemd.tmpfiles symlinks
-
         shellAliases = {
           "fullupdate" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix flake update && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
           "update" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
@@ -65,14 +62,6 @@ in {
           ];
         };
 
-        # For evict darlings: Set ZDOTDIR early in zshenv
-        envExtra = mkIf evictCfg.enable ''
-          # Set ZDOTDIR for evict darlings setup
-          export ZDOTDIR="${evictCfg.configDir}/zsh"
-          # Keep HOME at baseDir during shell initialization
-          export HOME="${evictCfg.baseDir}"
-        '';
-
         initContent = lib.mkMerge [
           (lib.mkBefore ''
             export WEZTERM_SHELL_SKIP_ALL=1
@@ -82,16 +71,6 @@ in {
             bindkey '^[[1;5D' backward-word
             bindkey '^[[1;5C' forward-word
           ''
-
-          # Switch HOME to homeDir after shell is fully initialized (for evict darlings)
-          (mkIf evictCfg.enable ''
-            # Switch HOME to the actual home directory for user session
-            export HOME="${evictCfg.homeDir}"
-            # Navigate to home directory on interactive login
-            if [[ -o interactive ]]; then
-              cd ~ 2>/dev/null || true
-            fi
-          '')
         ];
       };
 

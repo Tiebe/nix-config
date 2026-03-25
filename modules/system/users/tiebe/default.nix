@@ -63,7 +63,7 @@ in {
             username = "tiebe";
             # Use evict darlings home directory if enabled, otherwise fall back to /home/tiebe
             # Use mkForce to override the home-manager default which detects from users.users.tiebe.home
-            homeDirectory = lib.mkForce (if evictCfg.enable then evictCfg.homeDir else "/home/tiebe");
+            # homeDirectory = lib.mkForce (if evictCfg.enable then evictCfg.baseDir else "/home/tiebe");
           };
           
           # XDG configuration for evict darlings
@@ -73,6 +73,23 @@ in {
             cacheHome = "${evictCfg.configDir}/cache";
             dataHome = "${evictCfg.configDir}/local/share";
             stateHome = "${evictCfg.configDir}/local/state";
+
+            userDirs = {
+              setSessionVariables = true;
+              enable = true;
+              createDirectories = true;
+              videos = null;
+              templates = null;
+              publicShare = null;
+              pictures = null;
+              music = null;
+              download = null;
+              documents = null;
+              desktop = null;
+                        extraConfig = {
+              XDG_REHOME = "${evictCfg.homeDir}";
+            };
+            };
           };
           
           # Move face files to config directory when using evict darlings
