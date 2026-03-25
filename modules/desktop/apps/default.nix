@@ -16,8 +16,8 @@
     ./legcord
     ./intellij
     ./discord
-    ./localsend
-    ./lmstudio
-    ./opencode
+    ./localsend.nix
+    ./lmstudio.nix
+    ./opencode.nix
   ];
 }
