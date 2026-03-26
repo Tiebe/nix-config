@@ -131,6 +131,13 @@ When `tiebe.system.boot.evictDarlings.enable = true`:
 - `home/` - User documents and personal files
 - Applications may need HOME override (see firefox example)
 
+**⚠️ CRITICAL: DO NOT use systemd tmpfiles for /users/ directory**
+
+Tmpfiles rules create files/directories as root:root before the user exists, causing permission errors. For evict-darlings persistence:
+- Use `home-manager` to create directories on first login
+- Use systemd user services with proper `User=` directives
+- NEVER use `systemd.tmpfiles.rules` for paths under `/users/`
+
 ## Module Categories
 
 ```

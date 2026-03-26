@@ -20,15 +20,18 @@
   };
 
   # Wrap Firefox with HOME override for evict darlings
-  firefoxPackage = if evictCfg.enable then
-    pkgs.firefox.overrideAttrs (oldAttrs: {
-      buildCommand = oldAttrs.buildCommand + ''
-        wrapProgram "$executablePath" \
-          --set 'HOME' '${evictCfg.configDir}'
-      '';
-    })
-  else
-    pkgs.firefox;
+  firefoxPackage =
+    if evictCfg.enable
+    then
+      pkgs.firefox.overrideAttrs (oldAttrs: {
+        buildCommand =
+          oldAttrs.buildCommand
+          + ''
+            wrapProgram "$executablePath" \
+              --set 'HOME' '${evictCfg.configDir}'
+          '';
+      })
+    else pkgs.firefox;
 in {
   imports = [./darlings.nix];
 
@@ -39,7 +42,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.etc."firefox/policies/policies.json".target = "librewolf/policies/policies.json";
+    #environment.etc."firefox/policies/policies.json".target = "firefox/policies/policies.json";
 
     programs = {
       firefox = {
@@ -82,11 +85,6 @@ in {
             # uBlock Origin:
             "uBlock0@raymondhill.net" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-              installation_mode = "force_installed";
-            };
-            # Privacy Badger:
-            "jid1-MnnxcxisBPnSXQ@jetpack" = {
-              install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
               installation_mode = "force_installed";
             };
             # Bitwarden:
