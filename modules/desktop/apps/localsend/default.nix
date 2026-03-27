@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.localsend;
-in
-{
+in {
   imports = [./darlings.nix];
 
   options = {

@@ -12,25 +12,25 @@ in {
   options = {
     tiebe.system.boot.evictDarlings = {
       enable = mkEnableOption "Evict your darlings - two-tier home directory structure";
-      
+
       user = mkOption {
         type = types.str;
         default = "tiebe";
         description = "The username for the evict darlings setup";
       };
-      
+
       baseDir = mkOption {
         type = types.str;
         default = "/users/${cfg.user}";
         description = "Base directory for the two-tier home structure (contains config/ and home/)";
       };
-      
+
       configDir = mkOption {
         type = types.str;
         default = "${cfg.baseDir}/config";
         description = "Directory for application configuration files";
       };
-      
+
       homeDir = mkOption {
         type = types.str;
         default = "${cfg.baseDir}/home";

@@ -12,51 +12,51 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" "virtio_pci" "virtio_blk" "virtio_scsi" ];
-  boot.initrd.kernelModules = [ "kvm-amd" ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" "virtio_pci" "virtio_blk" "virtio_scsi"];
+  boot.initrd.kernelModules = ["kvm-amd"];
+  boot.kernelModules = ["kvm-amd"];
+  boot.extraModulePackages = [];
 
   # Virtual disk with btrfs subvolumes for erase darlings testing
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-test";
     fsType = "btrfs";
-    options = [ "subvol=root" "noatime" ];
+    options = ["subvol=root" "noatime"];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-label/nixos-test";
     fsType = "btrfs";
-    options = [ "subvol=home" "noatime" ];
+    options = ["subvol=home" "noatime"];
   };
 
   fileSystems."/persist" = {
     device = "/dev/disk/by-label/nixos-test";
     fsType = "btrfs";
-    options = [ "subvol=persist" "noatime" ];
+    options = ["subvol=persist" "noatime"];
     neededForBoot = true;
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/nixos-test";
     fsType = "btrfs";
-    options = [ "subvol=nix" "noatime" ];
+    options = ["subvol=nix" "noatime"];
   };
 
   fileSystems."/var/log" = {
     device = "/dev/disk/by-label/nixos-test";
     fsType = "btrfs";
-    options = [ "subvol=log" "noatime" "compress=zstd" ];
+    options = ["subvol=log" "noatime" "compress=zstd"];
     neededForBoot = true;
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/ESP";
     fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+    options = ["fmask=0077" "dmask=0077"];
   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

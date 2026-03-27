@@ -12,8 +12,8 @@
     # Use plaintext passwords for testing
     # Force hashedPassword to override hashedPasswordFile from main config
     users.users.tiebe = {
-      hashedPassword = lib.mkForce "$y$j9T$uh5tSq/V7t/Af3v/mfCDT1$2Xnbhm.bqsE3k5A0g5fIW.aM/7sJ5pQ2y0.F.PXPoAA";  # "test"
-      hashedPasswordFile = lib.mkForce null;  # Disable the agenix password file
+      hashedPassword = lib.mkForce "$y$j9T$uh5tSq/V7t/Af3v/mfCDT1$2Xnbhm.bqsE3k5A0g5fIW.aM/7sJ5pQ2y0.F.PXPoAA"; # "test"
+      hashedPasswordFile = lib.mkForce null; # Disable the agenix password file
     };
 
     # Ensure applications appear in Plasma menu - explicitly add them to system
@@ -65,7 +65,7 @@
 
     tiebe = {
       base = {
-        age.enable = true;  # Keep enabled but with forced empty secrets above
+        age.enable = true; # Keep enabled but with forced empty secrets above
         locale.enable = true;
         nix.enable = true;
       };
@@ -74,22 +74,22 @@
         boot = {
           systemd-boot.enable = true;
           plymouth.enable = false;
-          darlings.enable = true;  # Enable erase darlings
+          darlings.enable = true; # Enable erase darlings
         };
 
         networking = {
           network.enable = true;
-          wifi.enable = false;  # Disable for VM
-          bluetooth.enable = false;  # Disable for VM
-          tailscale.enable = false;  # Disable for VM
+          wifi.enable = false; # Disable for VM
+          bluetooth.enable = false; # Disable for VM
+          tailscale.enable = false; # Disable for VM
         };
 
         users.tiebe = {
           enable = true;
-          email.enable = false;  # Disable for VM (requires secrets)
+          email.enable = false; # Disable for VM (requires secrets)
         };
 
-        users.robbin.enable = lib.mkForce false;  # Disable robbin for VM
+        users.robbin.enable = lib.mkForce false; # Disable robbin for VM
 
         sound.enable = true;
       };
@@ -100,14 +100,14 @@
         plasma.enable = true;
 
         apps = {
-          discord.enable = false;  # Disabled - requires robbin user setup
+          discord.enable = false; # Disabled - requires robbin user setup
           vscode.enable = true;
           firefox.enable = true;
-          wezterm.enable = false;  # Disabled - conflicts with persistence symlinks in VM
+          wezterm.enable = false; # Disabled - conflicts with persistence symlinks in VM
           office.enable = true;
-          thunderbird.enable = false;  # Requires secrets
-          bitwarden.enable = false;  # Requires persistence
-          steam.enable = false;  # Too heavy for VM
+          thunderbird.enable = false; # Requires secrets
+          bitwarden.enable = false; # Requires persistence
+          steam.enable = false; # Too heavy for VM
           localsend.enable = false;
         };
       };
@@ -123,19 +123,19 @@
 
       services = {
         podman.enable = true;
-        printing.enable = false;  # Disable for VM
-        gpg.enable = false;  # Requires secrets
+        printing.enable = false; # Disable for VM
+        gpg.enable = false; # Requires secrets
         lorri.enable = false;
         variety.enable = false;
         devenv.enable = false;
-        nextcloud.enable = false;  # Requires secrets
+        nextcloud.enable = false; # Requires secrets
       };
     };
 
     # Ensure home-manager applications appear in Plasma menu
     home-manager.users.tiebe = {
       xdg.enable = true;
-      
+
       # Make sure home-manager desktop files are discoverable
       # The key is setting XDG_DATA_DIRS before Plasma starts
       home.sessionVariables = {

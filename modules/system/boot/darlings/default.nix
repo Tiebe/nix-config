@@ -64,6 +64,5 @@ in {
       # we can unmount /mnt and continue on the boot process.
       umount /mnt
     '';
-
   };
 }

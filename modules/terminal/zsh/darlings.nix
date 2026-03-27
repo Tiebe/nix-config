@@ -1,4 +1,8 @@
-{ config, lib, ... }: let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf;
   cfg = config.tiebe.terminal.zsh;
   darlings = config.tiebe.system.boot.darlings;
@@ -30,14 +34,14 @@ in {
           export HOME="${evictCfg.baseDir}"
         '';
 
-        initContent = (lib.mkAfter ''
-            # Switch HOME to the actual home directory for user session
-            export HOME="${evictCfg.homeDir}"
-            # Navigate to home directory on interactive login
-            if [[ -o interactive ]]; then
-              cd ~ 2>/dev/null || true
-            fi
-            '');
+        initContent = lib.mkAfter ''
+          # Switch HOME to the actual home directory for user session
+          export HOME="${evictCfg.homeDir}"
+          # Navigate to home directory on interactive login
+          if [[ -o interactive ]]; then
+            cd ~ 2>/dev/null || true
+          fi
+        '';
       };
     };
   };

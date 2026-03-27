@@ -1,4 +1,8 @@
-{ config, lib, ... }: let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkDefault mkIf;
   cfg = config.tiebe.services.windows;
   darlings = config.tiebe.system.boot.darlings;

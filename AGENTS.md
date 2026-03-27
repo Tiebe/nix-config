@@ -198,6 +198,45 @@ systemd.tmpfiles.rules = [
 ];
 ```
 
+### Home Manager Persistence with mkOutOfStoreSymlink
+
+When using `home.file` or `xdg.dataFile` with `mkOutOfStoreSymlink` to persist directories to `/persist`, **you MUST also create the target directories in `/persist`** before the symlinks are set up.
+
+**Problem**: `mkOutOfStoreSymlink` only creates the symlink, not the target directory. If the target doesn't exist, the symlink will be broken.
+
+**Solution**: Use `home.activation` to create directories before the `writeBoundary`:
+
+```nix
+# In darlings.nix
+{ config, lib, pkgs, ... }: let
+  inherit (lib) mkIf;
+  cfg = config.tiebe.<category>.<name>;
+  darlings = config.tiebe.system.boot.darlings;
+  evictCfg = config.tiebe.system.boot.evictDarlings;
+in {
+  config = mkIf (darlings.enable && cfg.enable) {
+    home-manager.users.tiebe = { config, ... }: {
+      home.file."<path>".source =
+        config.lib.file.mkOutOfStoreSymlink "/persist/<target-path>";
+
+      # CRITICAL: Create /persist directories BEFORE symlinks are created
+      home.activation.create<Name>PersistDirs = lib.hm.dag.entryBefore ["writeBoundary"] ''
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p $VERBOSE_ARG \
+          "/persist/<target-path>"
+      '';
+    };
+  };
+}
+```
+
+**Key points**:
+- Use `lib.hm.dag.entryBefore ["writeBoundary"]` to ensure directories exist before home-manager creates symlinks
+- Import `pkgs` in the module arguments to access `coreutils`
+- Create ALL target directories that are symlinked via `mkOutOfStoreSymlink`
+- Handle both evict-darlings and standard paths with conditional logic
+
+**See examples**: `modules/desktop/apps/opencode/darlings.nix`, `modules/desktop/apps/steam/darlings.nix`
+
 ### Package Overrides
 ```nix
 firefoxPackage = pkgs.firefox.overrideAttrs (oldAttrs: {
@@ -210,9 +249,14 @@ firefoxPackage = pkgs.firefox.overrideAttrs (oldAttrs: {
 
 ## Testing Changes
 
+**Use `victoria` host for testing** - Victoria has `opencode.enable = true` and `steam.enable = true` with both `darlings` and `evictDarlings` enabled, making it a comprehensive test case for persistence modules.
+
 1. Format: `nix fmt`
 2. Check evaluation: `nix flake check`
-3. Dry-run build: `nix build .#<host>.config.system.build.toplevel --dry-run`
+3. Dry-run build (use victoria for testing):
+   ```bash
+   nix build .#nixosConfigurations.victoria.config.system.build.toplevel --dry-run
+   ```
 4. Test on target host: `sudo nixos-rebuild switch --flake .#<host>`
 
 ## External Resources

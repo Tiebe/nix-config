@@ -11,10 +11,14 @@
   evictCfg = config.tiebe.system.boot.evictDarlings;
 
   gamescope-kbm = pkgs.gamescope.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [ (pkgs.fetchpatch {
-      url = "https://patch-diff.githubusercontent.com/raw/ValveSoftware/gamescope/pull/1897.diff";
-      hash = "sha256-qe8BKKj97aaugjE5Ug1RO2uU7+iDdC5JpOFkGYLjV6Q=";
-    }) ];
+    patches =
+      (old.patches or [])
+      ++ [
+        (pkgs.fetchpatch {
+          url = "https://patch-diff.githubusercontent.com/raw/ValveSoftware/gamescope/pull/1897.diff";
+          hash = "sha256-qe8BKKj97aaugjE5Ug1RO2uU7+iDdC5JpOFkGYLjV6Q=";
+        })
+      ];
   });
 in {
   imports = [
@@ -35,14 +39,15 @@ in {
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [proton-ge-bin];
       # For evict darlings: override HOME to config directory
-      package = if evictCfg.enable then
-        pkgs.steam.override {
-          extraEnv = {
-            HOME = evictCfg.configDir;
-          };
-        }
-      else
-        pkgs.steam;
+      package =
+        if evictCfg.enable
+        then
+          pkgs.steam.override {
+            extraEnv = {
+              HOME = evictCfg.configDir;
+            };
+          }
+        else pkgs.steam;
     };
 
     # environment.systemPackages = with pkgs; [ gamescope-kbm gamemode bubblewrap ];

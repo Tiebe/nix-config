@@ -1,4 +1,8 @@
-{ config, lib, ... }: let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf;
   cfg = config.tiebe.base.locale;
   darlings = config.tiebe.system.boot.darlings;

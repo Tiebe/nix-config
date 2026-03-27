@@ -31,7 +31,7 @@ in {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq tiebe"
         ];
-        extraGroups = ["wheel" "dialout" "input" ];
+        extraGroups = ["wheel" "dialout" "input"];
       };
     };
 
@@ -65,7 +65,7 @@ in {
             # Use mkForce to override the home-manager default which detects from users.users.tiebe.home
             # homeDirectory = lib.mkForce (if evictCfg.enable then evictCfg.baseDir else "/home/tiebe");
           };
-          
+
           # XDG configuration for evict darlings
           xdg = mkIf evictCfg.enable {
             enable = true;
@@ -77,7 +77,7 @@ in {
             userDirs = {
               setSessionVariables = true;
               enable = true;
-              createDirectories = true;
+              createDirectories = false;
               videos = null;
               templates = null;
               publicShare = null;
@@ -86,14 +86,19 @@ in {
               download = null;
               documents = null;
               desktop = null;
-                        extraConfig = {
-              XDG_REHOME = "${evictCfg.homeDir}";
-            };
+              extraConfig = {
+                XDG_REHOME = "${evictCfg.homeDir}";
+              };
             };
           };
-          
+
           # Move face files to config directory when using evict darlings
-          home.file."${if evictCfg.enable then "config/face.jpg" else ".config/face.jpg"}".source = ./profile.jpg;
+          home.file."${
+            if evictCfg.enable
+            then "config/face.jpg"
+            else ".config/face.jpg"
+          }".source =
+            ./profile.jpg;
 
           home.stateVersion = "23.11";
         };

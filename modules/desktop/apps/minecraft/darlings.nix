@@ -1,4 +1,8 @@
-{ config, lib, ... }: let
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf;
   cfg = config.tiebe.desktop.apps.minecraft;
   darlings = config.tiebe.system.boot.darlings;

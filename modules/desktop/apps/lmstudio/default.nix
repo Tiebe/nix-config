@@ -5,12 +5,16 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.lmstudio;
-in
-{
+  evictCfg = config.tiebe.system.boot.evictDarlings;
+
+  browsersDir =
+    if evictCfg.enable
+    then "${evictCfg.configDir}/.browsers"
+    else "/home/tiebe/.browsers";
+in {
   imports = [./darlings.nix];
 
   options = {
@@ -30,7 +34,7 @@ in
     system.activationScripts.playwrightFirefoxSymlink.text = ''
       set -e
 
-      TARGET_DIR="/home/tiebe/.browsers"
+      TARGET_DIR="${browsersDir}"
       LINK_NAME="$TARGET_DIR/mcp-firefox"
       SOURCE_GLOB="${pkgs.playwright-driver.browsers}/firefox*/"
 

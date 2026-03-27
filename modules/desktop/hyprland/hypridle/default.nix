@@ -43,5 +43,5 @@ in {
     };
   };
 
-  imports = [ ./darlings.nix ];
+  imports = [./darlings.nix];
 }

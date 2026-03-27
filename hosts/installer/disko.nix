@@ -1,10 +1,6 @@
 # BTRFS partitioning with erase-your-darlings support
 # Based on jupiter hardware-configuration.nix + victoria rollback pattern
-
-{
-  lib,
-  ...
-}: let
+{lib, ...}: let
   inherit (lib) mkDefault;
 in {
   disko.devices = {

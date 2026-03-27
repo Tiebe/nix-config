@@ -25,7 +25,7 @@ in {
       robbin = {
         hashedPasswordFile = config.age.secrets.passwordRobbin.path;
         isNormalUser = true;
-        extraGroups = ["wheel" "dialout" "input" ];
+        extraGroups = ["wheel" "dialout" "input"];
       };
     };
 

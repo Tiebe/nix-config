@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -9,7 +10,11 @@
   evictCfg = config.tiebe.system.boot.evictDarlings;
 in {
   config = mkIf (darlings.enable && cfg.enable) {
-    home-manager.users.tiebe = { config, ... }: {
+    home-manager.users.tiebe = {
+      config,
+      lib,
+      ...
+    }: {
       home.file =
         if evictCfg.enable
         then {
@@ -36,6 +41,24 @@ in {
             config.lib.file.mkOutOfStoreSymlink
             "/persist/home/tiebe/.local/state/opencode";
         };
+
+      # Create the target directories in /persist before symlinks are set up
+      home.activation.createOpencodePersistDirs = lib.hm.dag.entryBefore ["writeBoundary"] ''
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p $VERBOSE_ARG \
+          ${
+          if evictCfg.enable
+          then ''
+            "/persist${evictCfg.configDir}/local/share/opencode" \
+            "/persist${evictCfg.configDir}/local/share/ai.opencode.desktop" \
+            "/persist${evictCfg.configDir}/local/state/opencode"
+          ''
+          else ''
+            "/persist/home/tiebe/.local/share/opencode" \
+            "/persist/home/tiebe/.local/share/ai.opencode.desktop" \
+            "/persist/home/tiebe/.local/state/opencode"
+          ''
+        }
+      '';
     };
   };
 }

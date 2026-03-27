@@ -39,15 +39,16 @@ in {
         # Disable if you don't want unfree packages
         # allowUnfree = true;
 
-        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-          "discord"
-          "idea"
-          "spotify"
-          "steam"
-          "steam-unwrapped"
-          "lmstudio"
-          "antigravity"
-        ];
+        allowUnfreePredicate = pkg:
+          builtins.elem (lib.getName pkg) [
+            "discord"
+            "idea"
+            "spotify"
+            "steam"
+            "steam-unwrapped"
+            "lmstudio"
+            "antigravity"
+          ];
       };
     };
 

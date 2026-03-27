@@ -82,7 +82,6 @@
         httptoolkit.enable = true;
         localsend.enable = true;
         intellij.enable = true;
-
       };
     };
 

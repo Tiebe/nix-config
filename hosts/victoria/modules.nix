@@ -35,7 +35,6 @@
         email.enable = true;
       };
 
-
       users.robbin.enable = true;
       sound.enable = true;
     };
@@ -88,7 +87,6 @@
       nextcloud.enable = true;
       # zerogravity.enable = true;
       ssh-server.enable = true;
-
     };
   };
 }
