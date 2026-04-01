@@ -55,6 +55,10 @@
         owner = "tiebe";
         path = "/home/tiebe/.ssh/id_ed25519.pub";
       };
+      wgHome = {
+        file = builtins.toFile "dummy-wg" "[Interface]\nPrivateKey = dummy\nAddress = 10.0.0.2/24\n\n[Peer]\nPublicKey = dummy\nAllowedIPs = 0.0.0.0/0\nEndpoint = 1.2.3.4:51820";
+        path = "/run/agenix/wg-home.conf";
+      };
     };
 
     # Override identity paths to not use YubiKey files
@@ -82,6 +86,7 @@
           wifi.enable = false; # Disable for VM
           bluetooth.enable = false; # Disable for VM
           tailscale.enable = false; # Disable for VM
+          wireguard.enable = true; # Enable WireGuard VPN
         };
 
         users.tiebe = {

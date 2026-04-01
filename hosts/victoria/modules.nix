@@ -28,6 +28,7 @@
         wifi.enable = true;
         bluetooth.enable = true;
         tailscale.enable = true;
+        wireguard.enable = true;
       };
 
       users.tiebe = {
@@ -62,6 +63,7 @@
         localsend.enable = true;
         lmstudio.enable = true;
         opencode.enable = true;
+        rofi.enable = true;
       };
     };
 

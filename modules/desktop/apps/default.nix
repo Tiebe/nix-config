@@ -19,5 +19,6 @@
     ./localsend
     ./lmstudio
     ./opencode
+    ./rofi
   ];
 }

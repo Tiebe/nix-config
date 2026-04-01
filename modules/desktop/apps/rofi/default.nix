@@ -7,18 +7,19 @@
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.tiebe.desktop.hyprland.programs.rofi;
+  cfg = config.tiebe.desktop.apps.rofi;
 
   script = pkgs.writeShellScriptBin "rofi-launcher" ''
-    # check if rofi is already running
+    # toggle: if rofi is already running, close it; otherwise launch it
     if pidof rofi > /dev/null; then
       pkill rofi
+    else
+      rofi -show drun
     fi
-    rofi -show drun
   '';
 in {
   options = {
-    tiebe.desktop.hyprland.programs.rofi = {
+    tiebe.desktop.apps.rofi = {
       enable = mkEnableOption "Rofi";
     };
   };
@@ -34,16 +35,16 @@ in {
       programs = {
         rofi = {
           enable = true;
-          package = pkgs.rofi-wayland;
+          package = pkgs.rofi;
           extraConfig = {
             modi = "drun,filebrowser,run";
             show-icons = true;
             icon-theme = "Papirus";
             font = "JetBrainsMono Nerd Font Mono 12";
             drun-display-format = "{icon} {name}";
-            display-drun = " Apps";
-            display-run = " Run";
-            display-filebrowser = " File";
+            display-drun = " Apps";
+            display-run = " Run";
+            display-filebrowser = " File";
           };
           theme = let
             inherit (config.lib.formats.rasi) mkLiteral;
@@ -127,7 +128,7 @@ in {
             "textbox-prompt-colon" = {
               enabled = true;
               expand = false;
-              str = "";
+              str = "";
               background-color = mkLiteral "inherit";
               text-color = mkLiteral "inherit";
             };

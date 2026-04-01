@@ -66,6 +66,15 @@ in {
           owner = "tiebe";
           path = "/home/tiebe/.ssh/id_ed25519.pub";
         };
+
+        "wgHome.conf" = {
+          file = agePath "wg-home.age";
+        };
+
+        apiproKey = {
+          file = agePath "opencode/apipro-key.age";
+          owner = "tiebe";
+        };
       };
 
       identityPaths = [

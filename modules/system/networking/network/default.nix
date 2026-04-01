@@ -9,7 +9,10 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.networking.network;
 in {
-  imports = [./darlings.nix];
+  imports = [
+    ./darlings.nix
+    ../wireguard
+  ];
 
   options = {
     tiebe.system.networking.network = {

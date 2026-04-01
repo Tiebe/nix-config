@@ -38,4 +38,8 @@ in {
   "attic.age".publicKeys = all;
 
   "davfs.age".publicKeys = all;
+
+  "wg-home.age".publicKeys = all;
+
+  "opencode/apipro-key.age".publicKeys = all;
 }

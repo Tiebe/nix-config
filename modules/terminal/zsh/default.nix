@@ -110,7 +110,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.tiebe = {
+    home-manager.users.tiebe = {lib, ...}: {
       programs.zsh = {
         enable = true;
         enableCompletion = true;
@@ -190,6 +190,13 @@ in {
           daemon.enabled = true;
         };
       };
+
+      # Fix zsh completion directory permissions (required for evict-darlings)
+      home.activation.fixZshPermissions = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        if [ -d "$HOME/.zsh/plugins" ]; then
+          $DRY_RUN_CMD chmod -R go-w $VERBOSE_ARG "$HOME/.zsh/plugins"
+        fi
+      '';
     };
 
     systemd.user.services.atuind = {

@@ -45,6 +45,12 @@
     if evictCfg.enable
     then "${evictCfg.configDir}/opencode"
     else "/home/tiebe/.config/opencode";
+
+  # Determine local/share directory based on evict-darlings
+  opencodeLocalDir =
+    if evictCfg.enable
+    then "${evictCfg.configDir}/local/share/opencode"
+    else "/home/tiebe/.local/share/opencode";
 in {
   imports = [./darlings.nix];
 
@@ -60,12 +66,31 @@ in {
       desktopPackage
     ];
 
-    home-manager.users.tiebe = {
+    home-manager.users.tiebe = {hmConfig, lib, ...}: {
       home.file = {
         "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
         "${opencodeConfigDir}/oh-my-opencode.json".source = ./config/oh-my-opencode.json;
         "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
       };
+
+      # Merge API key into existing auth.json (preserving OAuth tokens)
+      home.activation.mergeOpencodeAuthJson = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${opencodeLocalDir}"
+        API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.apiproKey.path})"
+        AUTH_FILE="${opencodeLocalDir}/auth.json"
+
+        if [ -f "$AUTH_FILE" ]; then
+          # Merge into existing file at top level
+          $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" \
+            '.anthropic = {type: "api", key: $apiKey} | ."apipro-openai" = {type: "api", key: $apiKey}' \
+            "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
+        else
+          # Create new file with top-level key
+          $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY" \
+            '{anthropic: {type: "api", key: $apiKey}, "apipro-openai": {type: "api", key: $apiKey}}' \
+            > "$AUTH_FILE"
+        fi
+      '';
     };
   };
 }
