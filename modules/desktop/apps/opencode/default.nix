@@ -66,7 +66,11 @@ in {
       desktopPackage
     ];
 
-    home-manager.users.tiebe = {hmConfig, lib, ...}: {
+    home-manager.users.tiebe = {
+      hmConfig,
+      lib,
+      ...
+    }: {
       home.file = {
         "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
         "${opencodeConfigDir}/oh-my-opencode.json".source = ./config/oh-my-opencode.json;

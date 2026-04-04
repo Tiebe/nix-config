@@ -19,15 +19,25 @@ in {
   config = mkIf cfg.enable {
     services.displayManager.sddm = {
       enable = true;
+      wayland.enable = true;
     };
 
-    services.xserver.enable = true;
-
-    services.displayManager.defaultSession = "plasmax11";
     services.desktopManager.plasma6.enable = true;
+    services.displayManager.defaultSession = "plasma";
 
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       plasma-browser-integration
+    ];
+
+    fonts.packages = with pkgs; [
+      inter
+      jetbrains-mono
+    ];
+
+    environment.systemPackages = with pkgs; [
+      papirus-icon-theme
+      libsForQt5.qtstyleplugin-kvantum
+      kdePackages.qtstyleplugin-kvantum
     ];
 
     home-manager.users.tiebe = {
