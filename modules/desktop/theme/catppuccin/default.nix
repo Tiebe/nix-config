@@ -13,11 +13,11 @@
   Dark/light toggle script — switches between Mocha and Latte
   */
   toggle-theme = pkgs.writeShellScriptBin "toggle-catppuccin" ''
-    current=$(${pkgs.plasma-workspace}/bin/plasma-apply-colorscheme --list-schemes 2>/dev/null | grep '^\*' | sed 's/^\* //')
+    current=$(${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-colorscheme --list-schemes 2>/dev/null | grep '^\*' | sed 's/^\* //')
     if echo "$current" | grep -qi "latte"; then
-      ${pkgs.plasma-workspace}/bin/plasma-apply-colorscheme CatppuccinMochaMauve
+      ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-colorscheme CatppuccinMochaMauve
     else
-      ${pkgs.plasma-workspace}/bin/plasma-apply-colorscheme CatppuccinLatteMauve
+      ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-colorscheme CatppuccinLatteMauve
     fi
   '';
 in {

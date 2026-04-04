@@ -93,7 +93,10 @@ in {
             };
           }
           "org.kde.plasma.panelspacer"
-          "org.kde.plasma.systemmonitor"
+          {
+            name = "org.kde.plasma.systemmonitor";
+            config = {};
+          }
           "org.kde.plasma.systemtray"
         ];
       }
