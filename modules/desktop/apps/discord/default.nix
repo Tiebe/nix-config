@@ -6,7 +6,7 @@
   ...
 }: let
   krisp-patcher = pkgs.writers.writePython3Bin "krisp-patcher" {
-    libraries = with pkgs.python3Packages; [ capstone pyelftools ];
+    libraries = with pkgs.python3Packages; [capstone pyelftools];
     flakeIgnore = [
       "E501" # line too long (82 > 79 characters)
       "F403" # ‘from module import *’ used; unable to detect undefined names
@@ -25,6 +25,10 @@
     })}/bin/discord "$@"
   '';
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.desktop.apps.discord.enable = lib.mkOption {
       description = "Whether to install Discord, a voice and text chat platform.";

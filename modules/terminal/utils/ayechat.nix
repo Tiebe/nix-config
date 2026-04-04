@@ -1,7 +1,7 @@
-{ python3Packages
-, lib ? python3Packages.lib
+{
+  python3Packages,
+  lib ? python3Packages.lib,
 }:
-
 python3Packages.buildPythonApplication rec {
   pname = "ayechat";
   version = "0.31.0";
@@ -16,7 +16,7 @@ python3Packages.buildPythonApplication rec {
     if [ -f requirements.txt ]; then
       sed -i 's/==.*$//g' requirements.txt
     fi
-    
+
     if [ -f pyproject.toml ]; then
       sed -i -E 's/(>=|==)[^"]*/>=0/g' pyproject.toml
     fi
@@ -37,7 +37,7 @@ python3Packages.buildPythonApplication rec {
   doCheck = false;
 
   pyproject = true;
-  build-system = [ python3Packages.setuptools-scm ];
+  build-system = [python3Packages.setuptools-scm];
 
   meta = with lib; {
     description = "My Python application from PyPI";

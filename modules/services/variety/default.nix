@@ -9,6 +9,10 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.variety;
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.variety = {
       enable = mkEnableOption "Variety wallpaper changer";

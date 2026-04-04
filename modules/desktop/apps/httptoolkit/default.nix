@@ -9,6 +9,10 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.httptoolkit;
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.desktop.apps.httptoolkit = {
       enable = mkEnableOption "HTTP Toolkit";

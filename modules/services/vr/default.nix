@@ -14,6 +14,10 @@
     kernel = config.boot.kernelPackages.kernel;
   };
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.vr = {
       enable = mkEnableOption "VR services, like WiVRn and StardustXR";

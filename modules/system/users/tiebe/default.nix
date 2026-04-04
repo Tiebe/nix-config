@@ -8,9 +8,11 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.users.tiebe;
+  evictCfg = config.tiebe.system.boot.evictDarlings;
 in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ./darlings.nix
   ];
 
   options = {
@@ -29,7 +31,7 @@ in {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIle0zbHzFaTojB7DJU5LL76pPSSRY5S+tusC/ZNbi2 tiebe"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJCxANoXEguBulOVdL1jCNJYQs/SVUEE1Iq2rokl21lq tiebe"
         ];
-        extraGroups = ["wheel" "dialout" "input" ];
+        extraGroups = ["wheel" "dialout" "input"];
       };
     };
 
@@ -59,11 +61,44 @@ in {
 
           home = {
             username = "tiebe";
-            homeDirectory = "/home/tiebe";
-            file.".face".source = ./profile.jpg;
-            file.".face.icon".source = ./profile.jpg;
-            file.".config/face.jpg".source = ./profile.jpg;
+            # Use evict darlings home directory if enabled, otherwise fall back to /home/tiebe
+            # Use mkForce to override the home-manager default which detects from users.users.tiebe.home
+            # homeDirectory = lib.mkForce (if evictCfg.enable then evictCfg.baseDir else "/home/tiebe");
           };
+
+          # XDG configuration for evict darlings
+          xdg = mkIf evictCfg.enable {
+            enable = true;
+            configHome = "${evictCfg.configDir}";
+            cacheHome = "${evictCfg.configDir}/cache";
+            dataHome = "${evictCfg.configDir}/local/share";
+            stateHome = "${evictCfg.configDir}/local/state";
+
+            userDirs = {
+              setSessionVariables = true;
+              enable = true;
+              createDirectories = false;
+              videos = null;
+              templates = null;
+              publicShare = null;
+              pictures = null;
+              music = null;
+              download = null;
+              documents = null;
+              desktop = null;
+              extraConfig = {
+                XDG_REHOME = "${evictCfg.homeDir}";
+              };
+            };
+          };
+
+          # Move face files to config directory when using evict darlings
+          home.file."${
+            if evictCfg.enable
+            then "config/face.jpg"
+            else ".config/face.jpg"
+          }".source =
+            ./profile.jpg;
 
           home.stateVersion = "23.11";
         };

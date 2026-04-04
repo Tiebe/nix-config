@@ -9,6 +9,10 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.wezterm;
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.desktop.apps.wezterm = {
       enable = mkEnableOption "Wezterm";

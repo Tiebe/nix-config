@@ -14,6 +14,7 @@
 in {
   imports = [
     ./ns
+    ./darlings.nix
   ];
 
   options = {

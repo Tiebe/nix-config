@@ -19,6 +19,8 @@
       boot = {
         systemd-boot.enable = true;
         plymouth.enable = false;
+        darlings.enable = true;
+        evictDarlings.enable = true;
       };
 
       networking = {
@@ -26,13 +28,13 @@
         wifi.enable = true;
         bluetooth.enable = true;
         tailscale.enable = true;
+        wireguard.enable = true;
       };
 
       users.tiebe = {
         enable = true;
         email.enable = true;
       };
-
 
       users.robbin.enable = true;
       sound.enable = true;
@@ -61,6 +63,7 @@
         localsend.enable = true;
         lmstudio.enable = true;
         opencode.enable = true;
+        rofi.enable = true;
       };
     };
 
@@ -78,14 +81,14 @@
       #docker.enable = true;
       podman.enable = true;
       printing.enable = true;
+      fingerprint.enable = true;
       gpg.enable = true;
-      lorri.enable = true;
-      variety.enable = true;
+      #lorri.enable = true;
+      #variety.enable = true;
       devenv.enable = true;
       nextcloud.enable = true;
       # zerogravity.enable = true;
       ssh-server.enable = true;
-
     };
   };
 }

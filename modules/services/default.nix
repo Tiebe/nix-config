@@ -1,19 +1,20 @@
 {inputs, ...}: {
   imports = [
-    ./docker.nix
-    ./printing.nix
-    ./sshserver.nix
-    ./sunshine.nix
+    ./docker
+    ./fingerprint
+    ./printing
+    ./ssh-server
+    ./sunshine
     ./vr
-    ./winapps.nix
+    ./winapps
     ./gpg
-    ./lorri.nix
-    ./podman.nix
-    ./cachix.nix
+    ./lorri
+    ./podman
+    ./cachix
     ./openvpn
     ./windows
-    ./nextcloud.nix
-    ./devenv.nix
+    ./nextcloud
+    ./devenv
     ./variety
     ./bitfocus-companion
     ./ratbagd

@@ -27,6 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     winapps = {
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -82,6 +87,7 @@
     nvf,
     nixvirt,
     nixos-hardware,
+    disko,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -113,6 +119,47 @@
         specialArgs = {inherit inputs outputs;};
         modules = [./hosts/mercury];
       };
+
+      victoria-test-vm = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./hosts/victoria/vm.nix];
+      };
     };
+
+    # VM image for testing erase darlings
+    packages.x86_64-linux.victoria-test-vm-image = inputs.nixos-generators.nixosGenerate {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [./hosts/victoria/vm.nix];
+      format = "vm";
+    };
+
+    # Installer ISO with erase-your-darlings support
+    packages.x86_64-linux.installer-iso = inputs.nixos-generators.nixosGenerate {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        disko.nixosModules.disko
+        ./hosts/installer
+        ./hosts/installer/disko.nix
+        ./hosts/installer/install-script.nix
+        ./hosts/installer/persist-setup.nix
+        {
+          tiebe.installer.enable = true;
+        }
+      ];
+      format = "iso";
+    };
+
+    # Checks for CI validation
+    checks = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      # Verify all NixOS configurations evaluate
+      jupiter = self.nixosConfigurations.jupiter.config.system.build.toplevel;
+      pluto = self.nixosConfigurations.pluto.config.system.build.toplevel;
+      victoria = self.nixosConfigurations.victoria.config.system.build.toplevel;
+      mercury = self.nixosConfigurations.mercury.config.system.build.toplevel;
+      victoria-test-vm = self.nixosConfigurations.victoria-test-vm.config.system.build.toplevel;
+    });
   };
 }

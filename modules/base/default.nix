@@ -1,7 +1,7 @@
 {inputs, ...}: {
   imports = [
-    ./age.nix
-    ./locale.nix
-    ./nix.nix
+    ./age
+    ./locale
+    ./nix
   ];
 }

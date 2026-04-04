@@ -64,6 +64,10 @@
     '';
   };
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.services.zerogravity = {
       enable = mkEnableOption "ZeroGravity proxy";
@@ -143,11 +147,13 @@ in {
         StandardError = "journal";
       };
 
-      environment = {
-        RUST_LOG = "info";
-      } // lib.optionalAttrs (cfg.lsBinaryPath != "") {
-        ZEROGRAVITY_LS_PATH = cfg.lsBinaryPath;
-      };
+      environment =
+        {
+          RUST_LOG = "info";
+        }
+        // lib.optionalAttrs (cfg.lsBinaryPath != "") {
+          ZEROGRAVITY_LS_PATH = cfg.lsBinaryPath;
+        };
     };
   };
 }

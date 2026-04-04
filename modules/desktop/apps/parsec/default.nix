@@ -10,6 +10,10 @@
   cfg = config.tiebe.desktop.apps.parsec;
   parsec-custom = pkgs.callPackage ./parsec-wrapper.nix {};
 in {
+  imports = [
+    ./darlings.nix
+  ];
+
   options = {
     tiebe.desktop.apps.parsec = {
       enable = mkEnableOption "Parsec";

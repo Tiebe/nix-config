@@ -10,6 +10,7 @@
   cfg = config.tiebe.services.windows;
 in {
   imports = [
+    ./darlings.nix
     ./scopedHooks.nix
     inputs.nixvirt.nixosModules.default
     ./vm.nix

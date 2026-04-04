@@ -11,6 +11,7 @@
 in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ./darlings.nix
   ];
 
   options = {
@@ -24,7 +25,7 @@ in {
       robbin = {
         hashedPasswordFile = config.age.secrets.passwordRobbin.path;
         isNormalUser = true;
-        extraGroups = ["wheel" "dialout" "input" ];
+        extraGroups = ["wheel" "dialout" "input"];
       };
     };
 

@@ -3,12 +3,11 @@
     ./base
     ./desktop/gnome
     ./desktop/plasma
-    #    ./desktop/theme
+    ./desktop/theme/catppuccin
     ./desktop/apps
     ./desktop/hyprland
     ./terminal
     ./system
     ./services
-    ./desktop/theme/catppuccin.nix
   ];
 }
