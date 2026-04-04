@@ -7,7 +7,9 @@
   cfg = config.tiebe.desktop.plasma;
   darlings = config.tiebe.system.boot.darlings;
 in {
+  imports = [./config/darlings.nix];
+
   config = mkIf (darlings.enable && cfg.enable) {
-    # Plasma-specific persistence configuration
+    # NixOS-level plasma persistence (user state handled in config/darlings.nix)
   };
 }
