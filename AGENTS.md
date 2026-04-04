@@ -1,21 +1,44 @@
 # Agent Guidelines for nix-config
 
-This is a NixOS configuration repository using flakes. It manages multiple hosts (jupiter, victoria, pluto, mercury) with a modular architecture.
+## CRITICAL RULE
 
-## Build/Lint/Test Commands
+**Always commit after every change.** No exceptions. Every file edit, addition, or
+deletion must be followed by a `git add` and `git commit` before moving on.
+Use descriptive commit messages (see Git section below).
+
+---
+
+## Project Overview
+
+NixOS flake-based system configuration using flakes. Pure Nix — no other languages. Manages multiple hosts with a modular architecture.
+
+- **Hosts**: jupiter, pluto, victoria, mercury (all x86_64-linux)
+- **Modules**: `modules/{base,desktop,system,services,terminal}/`
+- **Host configs**: `hosts/<hostname>/`
+- **Overlays**: `overlays/`
+- **Secrets**: `secrets/` (agenix/ragenix — do NOT modify without explicit instruction)
+- **CI**: `.forgejo/workflows/`
+
+---
+
+## Build, Format & Validate
 
 ```bash
-# Format all nix files (uses alejandra)
+# Format all Nix files (alejandra)
 nix fmt
 
-# Validate flake evaluates
+# Validate the flake (evaluates all outputs, catches syntax/eval errors)
 nix flake check
 
 # Build a specific host configuration (dry-run)
 nix build .#nixosConfigurations.<host>.config.system.build.toplevel --dry-run
+# Replace <host> with: jupiter, pluto, victoria, mercury
 
 # Build and switch on the current host
 sudo nixos-rebuild switch --flake .#<host>
+
+# Apply config on the current host
+sudo nixos-rebuild switch --flake .
 
 # Update flake inputs
 nix flake update
@@ -24,13 +47,51 @@ nix flake update
 nix flake check --no-build
 ```
 
+**There are no tests.** Validation is `nix fmt` + `nix flake check`.
+Always run both before committing.
+
+---
+
+## Git Workflow
+
+### Commit Rules
+
+1. **Commit after every change** — atomic commits, one logical change each
+2. Run `nix fmt` before committing
+3. Run `nix flake check` before committing
+4. Never leave uncommitted changes
+
+### Commit Message Style
+
+Use conventional commits when the scope is clear:
+
+```
+feat(desktop): add Firefox PWA support
+fix(services): correct Docker network config
+chore(flake): bump inputs
+refactor(base): simplify locale module
+```
+
+For simple changes, a short descriptive message is acceptable.
+
+---
+
 ## Code Style Guidelines
 
 ### Formatting
+
 - **Formatter**: `alejandra` (configured in `flake.nix`)
 - Always run `nix fmt` before committing
-- 2-space indentation
-- No tabs
+- **Indentation**: 2 spaces, no tabs
+- **No trailing commas** in attribute sets or lists
+- **Lists** (2+ items): one item per line
+- **Lists** (1 item): inline is fine
+- **Attribute sets**: one key-value pair per line; inline only for single short entries
+- **`with pkgs;`**: used on the same line as `[` for package lists
+- **Multiline strings**: use `'' ... ''` for embedded shell scripts
+- **String interpolation**: `${pkgs.package}/bin/executable`
+- **Comments**: `#` for inline/above; `/* */` for section headers
+- Always run `nix fmt` (alejandra) — it handles most formatting automatically
 
 ### Module Structure
 
@@ -63,6 +124,60 @@ in {
     # Main module configuration
   };
 }
+```
+
+Key rules:
+- Function arguments: one per line, full list
+- `}: let` on the same line as the closing brace
+- Always `inherit (lib) ...;` — never `with lib;`
+- Always gate config with `mkIf cfg.enable`
+- Options live under `tiebe.<category>.<module>`
+
+### Complex Options
+
+For options beyond a simple enable toggle:
+
+```nix
+options.tiebe.<category>.<module> = {
+  enable = mkEnableOption "<description>";
+  someOption = lib.mkOption {
+    type = types.str;
+    description = "What this option does";
+  };
+};
+```
+
+### Aggregator Files (default.nix)
+
+Aggregator files that just import submodules use a minimal signature:
+
+```nix
+{inputs, ...}: {
+  imports = [
+    (import ./submodule.nix {inherit inputs;})
+  ];
+}
+```
+
+### lib Usage
+
+- Use `lib.mkMerge`, `lib.mkBefore`, `lib.mkForce`, `lib.mkDefault` with the `lib.` prefix
+- Use `inherit (lib) ...;` in let-bindings for frequently used functions
+- Do NOT use `with lib;` at the top level
+- Do NOT define custom lib functions — use nixpkgs lib exclusively
+
+### home-manager Integration
+
+home-manager config goes inside the same `mkIf` block:
+
+```nix
+config = mkIf cfg.enable {
+  # NixOS-level config here
+
+  home-manager.users.tiebe = {
+    # home-manager config here
+  };
+};
 ```
 
 ### Darlings Pattern (Persistence)
@@ -99,13 +214,21 @@ in {
 - Parent `default.nix` files import child folders: `./docker` not `./docker.nix`
 - Import order doesn't matter but keep alphabetical when possible
 
-### Secrets Management
+---
 
-- Uses `agenix` (ragenix) for encrypted secrets
+## Secrets Management
+
+Managed by **agenix** (ragenix). Encrypted with yubikey + host SSH keys.
+
 - Secrets stored in `secrets/` directory with `.age` extension
+- Secret declarations: `secrets/secrets.nix`
 - Public keys defined in `secrets/secrets.nix`
 - YubiKey-based encryption with age-plugin-yubikey
+- **Do NOT edit secrets** unless explicitly asked
+- **Do NOT commit unencrypted secret material**
 - Never commit plaintext secrets
+
+---
 
 ## Erase Your Darlings (Ephemeral Root)
 
@@ -138,6 +261,8 @@ Tmpfiles rules create files/directories as root:root before the user exists, cau
 - Use systemd user services with proper `User=` directives
 - NEVER use `systemd.tmpfiles.rules` for paths under `/users/`
 
+---
+
 ## Module Categories
 
 ```
@@ -166,11 +291,15 @@ Each host has:
 - `hardware-configuration.nix` - Generated hardware config
 - `modules.nix` - Which modules are enabled for this host
 
+---
+
 ## CI/CD
 
 - **Platform**: Forgejo (`.forgejo/workflows/update.yml`)
 - **Schedule**: Weekly flake.lock updates
 - **Auto-merge**: Enabled for lock file updates
+
+---
 
 ## Common Patterns
 
@@ -247,6 +376,8 @@ firefoxPackage = pkgs.firefox.overrideAttrs (oldAttrs: {
 });
 ```
 
+---
+
 ## Testing Changes
 
 **Use `victoria` host for testing** - Victoria has `opencode.enable = true` and `steam.enable = true` with both `darlings` and `evictDarlings` enabled, making it a comprehensive test case for persistence modules.
@@ -258,6 +389,19 @@ firefoxPackage = pkgs.firefox.overrideAttrs (oldAttrs: {
    nix build .#nixosConfigurations.victoria.config.system.build.toplevel --dry-run
    ```
 4. Test on target host: `sudo nixos-rebuild switch --flake .#<host>`
+
+---
+
+## Things to Avoid
+
+- Adding new flake inputs without explicit permission
+- Modifying `flake.lock` manually (use `nix flake update`)
+- Using `with lib;` at module top level
+- Leaving broken configurations — always validate with `nix flake check`
+- Editing files in `secrets/` or `.forgejo/workflows/` without being asked
+- Creating overly complex module structures — keep it flat and simple
+
+---
 
 ## External Resources
 
