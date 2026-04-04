@@ -49,6 +49,17 @@ in {
         inputs.catppuccin.homeModules.catppuccin
       ];
 
+      /*
+      KDE color schemes + window decorations (both flavors for toggle)
+      */
+      home.packages = [
+        (pkgs.catppuccin-kde.override {
+          flavour = ["mocha" "latte"];
+          accents = ["mauve"];
+          winDecStyles = ["modern"];
+        })
+      ];
+
       catppuccin = {
         flavor = "mocha";
         accent = "mauve";
