@@ -135,6 +135,13 @@
       comment = "Launch WezTerm terminal";
     };
 
+    hotkeys.commands.toggle-theme = {
+      name = "Toggle Dark/Light Theme";
+      key = "Meta+Shift+T";
+      command = "toggle-catppuccin";
+      comment = "Switch between Catppuccin Mocha (dark) and Latte (light)";
+    };
+
     /*
     ── Escape-hatch config ───────────────────────────────────────
     */
