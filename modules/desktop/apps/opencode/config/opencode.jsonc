@@ -30,11 +30,6 @@
           "options": {
             "maxContextWindow": 200000
           }
-        },
-        "claude-haiku-4.5": {
-          "options": {
-            "maxContextWindow": 200000
-          }
         }
       }
     },

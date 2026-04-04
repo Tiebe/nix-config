@@ -80,13 +80,6 @@
     sha256 = "sha256-Q3CE6+jxan0nczF5tIvmYKHBfR08eqd86Zogieh8YVU=";
   };
 
-  zsh-direnv = zshPlugin {
-    owner = "ptavares";
-    repo = "zsh-direnv";
-    rev = "da53dfcd57af83de8d052b74661c7d06c4dff723";
-    sha256 = "sha256-V/x424mUyzJeA/t6QVQ3eS51S8zlk3vaestKybJOSIo=";
-  };
-
   zsh-eza-ls-plugin = zshPlugin {
     owner = "birdhackor";
     repo = "zsh-eza-ls-plugin";
@@ -114,6 +107,7 @@ in {
       programs.zsh = {
         enable = true;
         enableCompletion = true;
+        completionInit = "autoload -U compinit && compinit -u";
 
         shellAliases = {
           "fullupdate" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix flake update && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
@@ -160,9 +154,11 @@ in {
             source ${copy-pasta}/share/zsh/site-functions/copy-pasta/copy-pasta.plugin.zsh
             source ${zsh-interactive-cd}/share/zsh/site-functions/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
             source ${wd}/share/zsh/site-functions/wd/wd.plugin.zsh
-            source ${zsh-direnv}/share/zsh/site-functions/zsh-direnv/zsh-direnv.plugin.zsh
             source ${zsh-eza-ls-plugin}/share/zsh/site-functions/zsh-eza-ls-plugin/zsh-eza-ls-plugin.plugin.zsh
             source ${zsh-plugin-fd}/share/zsh/site-functions/zsh-plugin-fd/zsh-plugin-fd.plugin.zsh
+
+            # Hook direnv into zsh (direnv installed via systemPackages)
+            eval "$(direnv hook zsh)"
           '')
 
           ''
