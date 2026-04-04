@@ -1,4 +1,9 @@
-{
+{pkgs, ...}: let
+  wallpaper = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/zhichaoh/catppuccin-wallpapers/main/landscapes/evening-sky.png";
+    sha256 = "0kb87w736abdf794dk9fvqln56axzskxia1g6zdjrqzl7v539035";
+  };
+in {
   programs.plasma = {
     enable = true;
 
@@ -8,6 +13,7 @@
     workspace = {
       colorScheme = "CatppuccinMochaMauve";
       iconTheme = "Papirus-Dark";
+      wallpaper = "${wallpaper}";
       splashScreen = {
         theme = "None";
       };
