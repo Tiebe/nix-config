@@ -86,7 +86,7 @@
     # NOTE: Removed kwinrc.Desktops/Tiling UUID entries — now managed by kwin.nix virtualDesktops
     # NOTE: Removed plasmarc.Theme.name = "default" — now managed by workspace colorScheme
 
-    "kwinrc"."Xwayland"."Scale" = 1.35;
+    "kwinrc"."Xwayland"."Scale" = 1.0;
     "plasma-localerc"."Formats"."LANG" = "en_US.UTF-8";
 
     # ── Notifications ──────────────────────────────────────────────

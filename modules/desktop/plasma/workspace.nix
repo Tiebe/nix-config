@@ -9,6 +9,7 @@
   programs.plasma = {
     workspace = {
       colorScheme = "CatppuccinMochaBlue";
+      theme = "catppuccin-mocha-blue";
       iconTheme = "Papirus-Dark";
       cursor = {
         theme = "Bibata-Modern-Ice";

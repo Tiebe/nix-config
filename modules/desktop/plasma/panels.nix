@@ -8,6 +8,7 @@
       alignment = "center";
       lengthMode = "fill";
       hiding = "none";
+      opacity = "translucent";
       widgets = [
         "org.kde.plasma.kickoff"
         "org.kde.plasma.pager"
