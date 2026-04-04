@@ -12,6 +12,7 @@ in {
     */
     workspace = {
       colorScheme = "CatppuccinMochaMauve";
+      theme = "catppuccin-mocha-blue";
       iconTheme = "Papirus-Dark";
       wallpaper = "${wallpaper}";
       splashScreen = {
@@ -179,6 +180,7 @@ in {
       Double-click to open
       */
       "kdeglobals"."KDE".SingleClick = false;
+      "kwinrc"."Xwayland"."Scale" = 1.0;
     };
   };
 }
