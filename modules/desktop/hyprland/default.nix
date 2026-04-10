@@ -136,12 +136,6 @@ in {
             new_status = "master";
           };
 
-          # Gestures
-          gestures = {
-            workspace_swipe = true;
-            workspace_swipe_fingers = 3;
-          };
-
           # Misc
           misc = {
             force_default_wallpaper = 0;
