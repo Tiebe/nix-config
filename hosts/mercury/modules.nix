@@ -35,6 +35,7 @@
       utils = {
         basic.enable = true;
         advanced.enable = true;
+        helix.enable = true;
       };
     };
 
