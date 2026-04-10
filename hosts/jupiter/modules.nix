@@ -44,24 +44,24 @@
     desktop = {
       plasma.enable = true;
 
-      # hyprland = {
-      #   enable = true;
-      #   idle.enable = true;
-      #   lock.enable = true;
+      hyprland = {
+        enable = true;
+        idle.enable = true;
+        lock.enable = true;
 
-      #   animations.enable = true;
-      #   binds.enable = true;
-      #   windowrules.enable = true;
+        animations.enable = true;
+        binds.enable = true;
+        windowrules.enable = true;
 
-      #   greetd.enable = true;
+        greetd.enable = true;
 
-      #   programs = {
-      #     waybar.enable = true;
-      #     rofi.enable = true;
-      #     swaync.enable = true;
-      #     wlogout.enable = true;
-      #   };
-      # };
+        programs = {
+          waybar.enable = true;
+          rofi.enable = true;
+          swaync.enable = true;
+          wlogout.enable = true;
+        };
+      };
 
       apps = {
         steam.enable = true;
