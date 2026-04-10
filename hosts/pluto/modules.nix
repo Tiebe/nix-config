@@ -59,6 +59,7 @@
         basic.enable = true;
         advanced.enable = true;
         fastfetch.enable = true;
+        helix.enable = true;
       };
     };
 
