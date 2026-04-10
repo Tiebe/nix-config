@@ -72,11 +72,15 @@ in {
           "https://nix-community.cachix.org?priority=20"
           "https://cache.nixos.org?priority=30"
           "https://hyprland.cachix.org"
+          "https://attic.xuyh0120.win/lantian"
+          "https://cache.garnix.io"
         ];
         trusted-public-keys = [
           "main:S9W2CMEkPauQRH8eQQUk4QMzOa1hr9+KCZRCzqPZJls="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+          "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+          "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
         ];
 
         trusted-users = ["root" "tiebe"];
