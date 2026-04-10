@@ -16,9 +16,9 @@
     "kwin"."Walk Through Windows (Reverse)" = "Alt+Shift+Tab";
     "kwin"."Window Close" = ["Alt+F4" "Meta+Q"];
     "kwin"."Window Fullscreen" = "Shift+F11";
-    "kwin"."Window Grow Horizontal" = [ ];
-    "kwin"."Window Grow Vertical" = [ ];
-    "kwin"."Window Lower" = [ ];
+    "kwin"."Window Grow Horizontal" = [];
+    "kwin"."Window Grow Vertical" = [];
+    "kwin"."Window Lower" = [];
     "kwin"."Window Maximize" = "Meta+PgUp";
     "kwin"."Window Minimize" = "Meta+PgDown";
 
@@ -26,7 +26,6 @@
     "kwin"."Window One Desktop Up" = "Meta+Ctrl+Shift+Up";
     "kwin"."Window One Desktop to the Left" = "Meta+Ctrl+Shift+Left";
     "kwin"."Window One Desktop to the Right" = "Meta+Ctrl+Shift+Right";
-
 
     "kwin"."Window Quick Tile Bottom" = "Meta+Down";
     "kwin"."Window Quick Tile Left" = "Meta+Left";
@@ -55,7 +54,6 @@
     "org_kde_powerdevil"."Sleep" = "Sleep";
     "org_kde_powerdevil"."Toggle Keyboard Backlight" = "Keyboard Light On/Off";
 
-
     "plasmashell"."activate application launcher" = "Meta";
     "plasmashell"."activate task manager entry 1" = "Meta+1";
     "plasmashell"."activate task manager entry 2" = "Meta+2";
@@ -67,7 +65,6 @@
     "plasmashell"."activate task manager entry 8" = "Meta+8";
     "plasmashell"."activate task manager entry 9" = "Meta+9";
 
-    
     "services/org.wezfurlong.wezterm.desktop"."_launch" = ["Meta+Return" "Ctrl+Alt+T"];
   };
 }

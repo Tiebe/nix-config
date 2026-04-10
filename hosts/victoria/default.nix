@@ -14,7 +14,8 @@
 
   services.fwupd.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages =
+    inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-latest-lto-zen4;
 
   networking.hostName = "victoria";
 
