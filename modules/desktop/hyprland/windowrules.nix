@@ -19,81 +19,74 @@ in {
   config = mkIf (cfg.enable && wrCfg.enable) {
     home-manager.users.tiebe = {
       wayland.windowManager.hyprland.settings = {
-        windowrulev2 = [
+        windowrule = [
           # Float dialogs and popups
-          "float, title:^(Open File)(.*)$"
-          "float, title:^(Open Folder)(.*)$"
-          "float, title:^(Save As)(.*)$"
-          "float, title:^(Save File)(.*)$"
-          "float, title:^(Confirm)(.*)$"
-          "float, title:^(dialog)(.*)$"
-          "float, title:^(About)(.*)$"
-          "float, title:^(Preferences)(.*)$"
-          "float, title:^(Settings)(.*)$"
-          "float, class:^(file_progress)$"
-          "float, class:^(confirm)$"
-          "float, class:^(dialog)$"
-          "float, class:^(download)$"
-          "float, class:^(notification)$"
-          "float, class:^(error)$"
-          "float, class:^(splash)$"
-          "float, class:^(confirmreset)$"
-          "float, class:^(xdg-desktop-portal)(.*)$"
+          "match:title ^(Open File)(.*)$, float on"
+          "match:title ^(Open Folder)(.*)$, float on"
+          "match:title ^(Save As)(.*)$, float on"
+          "match:title ^(Save File)(.*)$, float on"
+          "match:title ^(Confirm)(.*)$, float on"
+          "match:title ^(dialog)(.*)$, float on"
+          "match:title ^(About)(.*)$, float on"
+          "match:title ^(Preferences)(.*)$, float on"
+          "match:title ^(Settings)(.*)$, float on"
+          "match:class ^(file_progress)$, float on"
+          "match:class ^(confirm)$, float on"
+          "match:class ^(dialog)$, float on"
+          "match:class ^(download)$, float on"
+          "match:class ^(notification)$, float on"
+          "match:class ^(error)$, float on"
+          "match:class ^(splash)$, float on"
+          "match:class ^(confirmreset)$, float on"
+          "match:class ^(xdg-desktop-portal)(.*)$, float on"
 
           # Float system apps
-          "float, class:^(pavucontrol)$"
-          "float, class:^(nm-connection-editor)$"
-          "float, class:^(.blueman-manager-wrapped)$"
-          "float, class:^(blueman-manager)$"
-          "float, class:^(org.gnome.Calculator)$"
-          "float, class:^(org.gnome.Nautilus)$"
-          "float, class:^(org.gnome.Settings)$"
-          "float, class:^(org.kde.polkit-kde-authentication-agent-1)$"
-          "float, class:^(polkit-gnome-authentication-agent-1)$"
+          "match:class ^(pavucontrol)$, float on"
+          "match:class ^(nm-connection-editor)$, float on"
+          "match:class ^(.blueman-manager-wrapped)$, float on"
+          "match:class ^(blueman-manager)$, float on"
+          "match:class ^(org.gnome.Calculator)$, float on"
+          "match:class ^(org.gnome.Nautilus)$, float on"
+          "match:class ^(org.gnome.Settings)$, float on"
+          "match:class ^(org.kde.polkit-kde-authentication-agent-1)$, float on"
+          "match:class ^(polkit-gnome-authentication-agent-1)$, float on"
 
           # Float size constraints for system apps
-          "size 800 600, class:^(pavucontrol)$"
-          "size 800 600, class:^(nm-connection-editor)$"
-          "size 700 500, class:^(.blueman-manager-wrapped)$"
-          "size 700 500, class:^(blueman-manager)$"
+          "match:class ^(pavucontrol)$, size 800 600"
+          "match:class ^(nm-connection-editor)$, size 800 600"
+          "match:class ^(.blueman-manager-wrapped)$, size 700 500"
+          "match:class ^(blueman-manager)$, size 700 500"
 
           # Opacity rules
-          "opacity 0.95 0.85, class:^(wezterm)$"
-          "opacity 0.95 0.85, class:^(org.wezfurlong.wezterm)$"
-          "opacity 0.95 0.85, class:^(Code)$"
-          "opacity 0.95 0.85, class:^(code-url-handler)$"
-          "opacity 1.0 0.9, class:^(firefox)$"
-          "opacity 1.0 0.9, class:^(chromium-browser)$"
-          "opacity 0.9 0.8, class:^(thunar)$"
-          "opacity 0.9 0.8, class:^(org.gnome.Nautilus)$"
+          "match:class ^(wezterm)$, opacity 0.95 0.85"
+          "match:class ^(org.wezfurlong.wezterm)$, opacity 0.95 0.85"
+          "match:class ^(Code)$, opacity 0.95 0.85"
+          "match:class ^(code-url-handler)$, opacity 0.95 0.85"
+          "match:class ^(firefox)$, opacity 1.0 0.9"
+          "match:class ^(chromium-browser)$, opacity 1.0 0.9"
+          "match:class ^(thunar)$, opacity 0.9 0.8"
+          "match:class ^(org.gnome.Nautilus)$, opacity 0.9 0.8"
 
           # Picture-in-picture
-          "float, title:^(Picture-in-Picture)$"
-          "pin, title:^(Picture-in-Picture)$"
-          "size 480 270, title:^(Picture-in-Picture)$"
-          "move 100%-490 50, title:^(Picture-in-Picture)$"
-          "opacity 1.0 override 1.0 override, title:^(Picture-in-Picture)$"
+          "match:title ^(Picture-in-Picture)$, float on, pin on, size 480 270, move 100%-490 50, opacity 1.0"
 
           # wlogout
-          "float, class:^(wlogout)$"
-          "fullscreen, class:^(wlogout)$"
+          "match:class ^(wlogout)$, float on, fullscreen on"
 
           # Inhibit idle for fullscreen apps
-          "idleinhibit fullscreen, class:^(.*)$"
-
-          # Layer rules for rofi, waybar, etc.
+          "match:class .*, idle_inhibit fullscreen"
         ];
 
         layerrule = [
-          "blur, waybar"
-          "ignorezero, waybar"
-          "blur, rofi"
-          "ignorezero, rofi"
-          "blur, swaync-control-center"
-          "blur, swaync-notification-window"
-          "ignorezero, swaync-control-center"
-          "ignorezero, swaync-notification-window"
-          "blur, logout_dialog"
+          "blur on, match:namespace waybar"
+          "ignore_alpha 0.0, match:namespace waybar"
+          "blur on, match:namespace rofi"
+          "ignore_alpha 0.0, match:namespace rofi"
+          "blur on, match:namespace swaync-control-center"
+          "blur on, match:namespace swaync-notification-window"
+          "ignore_alpha 0.0, match:namespace swaync-control-center"
+          "ignore_alpha 0.0, match:namespace swaync-notification-window"
+          "blur on, match:namespace logout_dialog"
         ];
       };
     };

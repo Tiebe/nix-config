@@ -51,7 +51,7 @@ in {
           "$mod SHIFT, F, fullscreen, 1" # maximize
           "$mod, V, togglefloating,"
           "$mod, P, pseudo," # dwindle
-          "$mod, S, togglesplit," # dwindle
+          "$mod, S, layoutmsg, togglesplit" # dwindle
 
           # Lock / logout
           "$mod, L, exec, hyprlock"
