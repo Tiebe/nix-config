@@ -75,7 +75,7 @@ in {
         location = "top";
         height = 28;
         hiding = "none";
-        floating = false;
+        floating = true;
         opacity = "translucent";
         widgets = [
           {
@@ -125,6 +125,13 @@ in {
       };
       "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
       "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" = "Meta+Alt+K";
+      /*
+      Workaround for plasma-manager hotkeys bug (#526/#571):
+      explicitly register shortcuts so they actually bind
+      */
+      "services/plasma-manager-commands.desktop".rofi-launcher = "Meta+Shift+Return";
+      "services/plasma-manager-commands.desktop".wezterm = "Meta+Return";
+      "services/plasma-manager-commands.desktop".toggle-theme = "Meta+Shift+T";
     };
 
     /*
@@ -152,6 +159,28 @@ in {
     };
 
     /*
+    ── Window rules ──────────────────────────────────────────────
+    */
+    window-rules = [
+      {
+        description = "WezTerm - no titlebar";
+        match = {
+          window-class = {
+            value = "org.wezfurlong.wezterm";
+            type = "exact";
+          };
+          window-types = ["normal"];
+        };
+        apply = {
+          noborder = {
+            value = true;
+            apply = "force";
+          };
+        };
+      }
+    ];
+
+    /*
     ── Escape-hatch config ───────────────────────────────────────
     */
     configFile = {
@@ -174,7 +203,13 @@ in {
       "kdeglobals"."General" = {
         TerminalApplication = "wezterm";
         TerminalService = "org.wezfurlong.wezterm.desktop";
+        forceFontDPI = 96;
       };
+      /*
+      Ensure 1× scaling (Wayland)
+      */
+      "kdeglobals"."KScreen".ScaleFactor = 1;
+      "kwinrc"."Xwayland".Scale = 1;
       /*
       Double-click to open
       */
