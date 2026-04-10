@@ -5,8 +5,7 @@
   config,
   pkgs,
   ...
-}: 
-let
+}: let
   lowpower = pkgs.writeShellScriptBin "lowpower" ''
     #!/usr/bin/env bash
     kscreen-doctor \
@@ -25,6 +24,9 @@ in {
     ./hardware-configuration.nix
     ./modules.nix
   ];
+
+  boot.kernelPackages =
+    inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-latest-lto-x86_64-v3;
 
   boot.initrd = {
     kernelModules = ["amdgpu"];
@@ -57,7 +59,6 @@ in {
   ];
 
   services.esphome.enable = true;
-
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
