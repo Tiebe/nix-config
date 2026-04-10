@@ -12,16 +12,12 @@
 in {
   options = {
     tiebe.desktop.hyprland.programs.rofi = {
-      enable = mkEnableOption "rofi-wayland for Hyprland";
+      enable = mkEnableOption "rofi for Hyprland";
     };
   };
 
   config = mkIf (cfg.enable && rofiCfg.enable) {
-    # Enable the existing rofi module and override the package to wayland
+    # Enable the existing rofi module (rofi has native Wayland support)
     tiebe.desktop.apps.rofi.enable = true;
-
-    home-manager.users.tiebe = {
-      programs.rofi.package = lib.mkForce pkgs.rofi-wayland;
-    };
   };
 }
