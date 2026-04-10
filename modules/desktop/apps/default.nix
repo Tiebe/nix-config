@@ -20,5 +20,6 @@
     ./lmstudio
     ./opencode
     ./rofi
+    ./opendeck.nix
   ];
 }

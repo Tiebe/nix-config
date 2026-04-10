@@ -56,16 +56,6 @@
     options = ["fmask=0022" "dmask=0022"];
   };
 
-  fileSystems."/run/media/tiebe/Data" = {
-    device = "/dev/disk/by-uuid/5dd4afd3-69b9-e6b1-9162-0f07bc9cca28";
-    fsType = "btrfs";
-  };
-
-  fileSystems."/run/media/tiebe/Games" = {
-    device = "/dev/disk/by-uuid/f1caf7db-1e19-dda4-d177-45e2f0feb0b8";
-    fsType = "btrfs";
-  };
-
   # TODO!! when switching to erase your darlings, make sure to first recreate root snapshot with /run/media folders for mounts. otherwise no boot
 
   swapDevices = [
