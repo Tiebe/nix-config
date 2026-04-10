@@ -39,8 +39,6 @@ in {
         defaultEditor = true;
 
         settings = {
-          theme = "catppuccin_mocha";
-
           editor = {
             auto-save = {
               focus-lost = true;
