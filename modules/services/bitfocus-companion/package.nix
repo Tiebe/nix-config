@@ -67,14 +67,14 @@ in
       makeWrapper
     ];
 
-  buildInputs = [
-    libusb1
-    dart-sass
-    nodejs
-    electron
-    udev
-    ps
-  ];
+    buildInputs = [
+      libusb1
+      dart-sass
+      nodejs
+      electron
+      udev
+      ps
+    ];
 
     missingHashes = ./missing-hashes.json;
 

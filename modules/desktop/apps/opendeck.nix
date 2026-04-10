@@ -5,8 +5,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.opendeck;
 
@@ -16,8 +15,7 @@ let
   };
 
   opendeckPkgs = import opendeckSrc {};
-in
-{
+in {
   options = {
     tiebe.desktop.apps.opendeck = {
       enable = mkEnableOption "opendeck";
@@ -25,14 +23,14 @@ in
   };
 
   config = mkIf cfg.enable {
-      nixpkgs.overlays = [
-    (final: prev: {
-      opendeck = opendeckPkgs.opendeck;
-    })
-  ];
+    nixpkgs.overlays = [
+      (final: prev: {
+        opendeck = opendeckPkgs.opendeck;
+      })
+    ];
 
-  environment.systemPackages = with pkgs; [
-    opendeck
-  ];
+    environment.systemPackages = with pkgs; [
+      opendeck
+    ];
   };
 }
