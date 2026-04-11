@@ -58,8 +58,8 @@ in {
           "match:class ^(blueman-manager)$, size 700 500"
 
           # Opacity rules
-          "match:class ^(wezterm)$, opacity 0.95 0.85"
-          "match:class ^(org.wezfurlong.wezterm)$, opacity 0.95 0.85"
+          "match:class ^(wezterm)$, opacity 1.0 0.95"
+          "match:class ^(org.wezfurlong.wezterm)$, opacity 1.0 0.95"
           "match:class ^(Code)$, opacity 0.95 0.85"
           "match:class ^(code-url-handler)$, opacity 0.95 0.85"
           "match:class ^(firefox)$, opacity 1.0 0.9"
