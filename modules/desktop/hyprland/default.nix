@@ -34,7 +34,6 @@ in {
       cliphist
       grim
       slurp
-      hyprpaper
       brightnessctl
       playerctl
       libnotify
@@ -63,6 +62,8 @@ in {
     programs.dconf.enable = true;
 
     home-manager.users.tiebe = {
+      services.hyprpaper.enable = true;
+
       wayland.windowManager.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -149,7 +150,6 @@ in {
           exec-once = [
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
-            "hyprpaper"
             "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
           ];
 
