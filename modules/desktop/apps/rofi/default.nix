@@ -17,6 +17,11 @@
       rofi -show drun
     fi
   '';
+
+  cheatsheet-opener = name:
+    pkgs.writeShellScript "open-${name}" ''
+      exec xdg-open "$HOME/.local/share/cheatsheets/${name}.pdf"
+    '';
 in {
   options = {
     tiebe.desktop.apps.rofi = {
@@ -31,6 +36,41 @@ in {
       ...
     }: {
       home.packages = [script];
+
+      xdg.dataFile = {
+        "cheatsheets/helix-cheatsheet.pdf" = {
+          source = ./cheatsheets/helix-cheatsheet.pdf;
+        };
+        "cheatsheets/tridactyl-cheatsheet.pdf" = {
+          source = ./cheatsheets/tridactyl-cheatsheet.pdf;
+        };
+        "applications/helix-cheatsheet.desktop" = {
+          text = ''
+            [Desktop Entry]
+            Name=Helix Cheat Sheet
+            Comment=Helix editor keyboard shortcut reference
+            Exec=${cheatsheet-opener "helix-cheatsheet"}
+            Icon=accessories-dictionary
+            Terminal=false
+            Type=Application
+            Categories=Documentation;
+            Keywords=helix;cheatsheet;editor;keybindings;
+          '';
+        };
+        "applications/tridactyl-cheatsheet.desktop" = {
+          text = ''
+            [Desktop Entry]
+            Name=Tridactyl Cheat Sheet
+            Comment=Tridactyl Firefox extension keyboard shortcut reference
+            Exec=${cheatsheet-opener "tridactyl-cheatsheet"}
+            Icon=accessories-dictionary
+            Terminal=false
+            Type=Application
+            Categories=Documentation;
+            Keywords=tridactyl;cheatsheet;firefox;vim;keybindings;
+          '';
+        };
+      };
 
       programs = {
         rofi = {
