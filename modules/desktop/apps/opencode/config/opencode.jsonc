@@ -23,14 +23,12 @@
       "models": {
         "claude-opus-4.6": {
           "options": {
-            "maxContextWindow": 200000,
-            "maxOutputTokens": 16384
+            "maxContextWindow": 200000
           }
         },
         "claude-sonnet-4.6": {
           "options": {
-            "maxContextWindow": 200000,
-            "maxOutputTokens": 16384
+            "maxContextWindow": 200000
           }
         }
       }
@@ -43,52 +41,40 @@
       },
       "models": {
         "gpt-5": {
-          "name": "GPT-5",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5"
         },
         "gpt-5-codex": {
-          "name": "GPT-5 Codex",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5 Codex"
         },
         "gpt-5-codex-mini": {
-          "name": "GPT-5 Codex Mini",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5 Codex Mini"
         },
         "gpt-5.1": {
-          "name": "GPT-5.1",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.1"
         },
         "gpt-5.1-codex": {
-          "name": "GPT-5.1 Codex",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.1 Codex"
         },
         "gpt-5.1-codex-max": {
-          "name": "GPT-5.1 Codex Max",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.1 Codex Max"
         },
         "gpt-5.1-codex-mini": {
-          "name": "GPT-5.1 Codex Mini",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.1 Codex Mini"
         },
         "gpt-5.2": {
-          "name": "GPT-5.2",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.2"
         },
         "gpt-5.2-codex": {
-          "name": "GPT-5.2 Codex",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.2 Codex"
         },
         "gpt-5.3-codex": {
-          "name": "GPT-5.3 Codex",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.3 Codex"
         },
         "gpt-5.4": {
-          "name": "GPT-5.4",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.4"
         },
         "gpt-5.4-mini": {
-          "name": "GPT-5.4 Mini",
-          "options": { "maxOutputTokens": 16384 }
+          "name": "GPT-5.4 Mini"
         }
       }
     }
