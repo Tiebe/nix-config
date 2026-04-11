@@ -32,7 +32,10 @@ in {
       vscode-langservers-extracted # JSON
       marksman # Markdown
       tinymist # Typst
+      typstyle # Typst formatter
+      typst # Typst compiler (typst watch)
       texlab # LaTeX
+      zathura # PDF viewer
     ];
 
     home-manager.users.tiebe = {
@@ -205,6 +208,7 @@ in {
             {
               name = "typst";
               auto-format = true;
+              formatter.command = "typstyle";
               language-servers = ["tinymist"];
             }
             {
