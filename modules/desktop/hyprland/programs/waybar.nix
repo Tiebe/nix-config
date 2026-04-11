@@ -9,6 +9,68 @@
   inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.desktop.hyprland;
   waybarCfg = config.tiebe.desktop.hyprland.programs.waybar;
+
+  # Brightness control script
+  # - DDC/CI (ddcutil) for Gigabyte GS32Q and AOC Q27G2SG4
+  # - Software gamma dimming (wl-gammarelay-rs) for HP 22cwa
+  brightness-control = pkgs.writeShellScriptBin "brightness-control" ''
+    STATE_FILE="/tmp/brightness-state"
+    DDC_STEP=10
+
+    # Initialize state if missing
+    if [ ! -f "$STATE_FILE" ]; then
+      echo "100" > "$STATE_FILE"
+    fi
+
+    get_brightness() {
+      cat "$STATE_FILE"
+    }
+
+    set_brightness() {
+      local val="$1"
+      # Clamp 5-100
+      [ "$val" -gt 100 ] && val=100
+      [ "$val" -lt 5 ] && val=5
+      echo "$val" > "$STATE_FILE"
+
+      # DDC monitors (hardware brightness)
+      # Detect buses at runtime — filter by Gigabyte GS32Q and AOC Q27G2SG4
+      for bus in $(${pkgs.ddcutil}/bin/ddcutil detect --brief 2>/dev/null \
+        | ${pkgs.gawk}/bin/awk '/^Display/{bus=""} /I2C bus:/{bus=$NF} /GS32Q|Q27G2SG4/{if(bus!="") print bus}'); do
+        busnum="''${bus##*/dev/i2c-}"
+        ${pkgs.ddcutil}/bin/ddcutil --bus "$busnum" setvcp 10 "$val" --noverify &
+      done
+
+      # HP monitor (software brightness via wl-gammarelay-rs over DBus)
+      # Map 0-100 brightness to 0.0-1.0 gamma brightness
+      local gamma_val
+      gamma_val=$(${pkgs.bc}/bin/bc -l <<< "scale=2; $val / 100")
+      busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d "$gamma_val" 2>/dev/null || true
+
+      wait
+    }
+
+    case "''${1:-get}" in
+      up)
+        cur=$(get_brightness)
+        set_brightness $((cur + DDC_STEP))
+        ;;
+      down)
+        cur=$(get_brightness)
+        set_brightness $((cur - DDC_STEP))
+        ;;
+      get)
+        get_brightness
+        ;;
+      set)
+        set_brightness "$2"
+        ;;
+      *)
+        echo "Usage: brightness-control {up|down|get|set <value>}"
+        exit 1
+        ;;
+    esac
+  '';
 in {
   options = {
     tiebe.desktop.hyprland.programs.waybar = {
@@ -18,6 +80,23 @@ in {
 
   config = mkIf (cfg.enable && waybarCfg.enable) {
     home-manager.users.tiebe = {
+      # Start wl-gammarelay-rs daemon for software brightness on HP monitor
+      systemd.user.services.wl-gammarelay-rs = {
+        Unit = {
+          Description = "wl-gammarelay-rs — software brightness via Wayland gamma";
+          PartOf = ["graphical-session.target"];
+          After = ["graphical-session.target"];
+        };
+        Service = {
+          ExecStart = "${pkgs.wl-gammarelay-rs}/bin/wl-gammarelay-rs";
+          Restart = "on-failure";
+          RestartSec = 2;
+        };
+        Install.WantedBy = ["graphical-session.target"];
+      };
+
+      home.packages = [brightness-control];
+
       programs.waybar = {
         enable = true;
         systemd = {
@@ -44,6 +123,7 @@ in {
 
             modules-right = [
               "mpris"
+              "custom/brightness"
               "cpu"
               "memory"
               "temperature"
@@ -149,6 +229,17 @@ in {
               };
               on-click = "pavucontrol";
               scroll-step = 5;
+            };
+
+            "custom/brightness" = {
+              format = "☀ {}%";
+              exec = "${brightness-control}/bin/brightness-control get";
+              on-scroll-up = "${brightness-control}/bin/brightness-control up";
+              on-scroll-down = "${brightness-control}/bin/brightness-control down";
+              on-click = "${brightness-control}/bin/brightness-control set 100";
+              on-click-right = "${brightness-control}/bin/brightness-control set 50";
+              interval = 5;
+              tooltip-format = "Brightness: {}% (scroll to adjust)";
             };
 
             battery = {
@@ -300,6 +391,10 @@ in {
             color: @overlay0;
           }
 
+          #custom-brightness {
+            color: @yellow;
+          }
+
           #battery {
             color: @green;
           }
@@ -342,6 +437,7 @@ in {
 
           /* Module spacing */
           #mpris,
+          #custom-brightness,
           #cpu,
           #memory,
           #temperature,
