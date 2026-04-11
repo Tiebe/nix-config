@@ -36,6 +36,7 @@
       users.robbin.enable = true;
 
       sound.enable = true;
+      sound.deepFilter.enable = true;
       ddc.enable = true;
     };
 
