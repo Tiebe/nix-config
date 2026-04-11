@@ -9,6 +9,96 @@
   inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.desktop.hyprland;
   waybarCfg = config.tiebe.desktop.hyprland.programs.waybar;
+
+  # Brightness control script
+  # - Auto-detects DDC-capable monitors via ddcutil → hardware brightness
+  # - Non-DDC monitors get per-output software dimming via wl-gammarelay-rs
+  # - Works on any host/monitor combination without hardcoded model names
+  brightness-control = pkgs.writeShellScriptBin "brightness-control" ''
+    set -uo pipefail
+
+    STATE_FILE="/tmp/brightness-state"
+    CACHE_FILE="/tmp/brightness-ddc-cache"
+    CACHE_MAX_AGE=600 # 10 minutes
+    STEP=10
+
+    # Initialize state if missing
+    [[ -f "$STATE_FILE" ]] || echo 100 > "$STATE_FILE"
+
+    # Detect all DDC-capable monitors via ddcutil
+    # Parses I2C bus numbers and DRM connector names (e.g. DP-1, HDMI-A-1)
+    # Cache format: bus_number:connector_name per line
+    refresh_cache() {
+      local bus="" connector=""
+      : > "$CACHE_FILE"
+      while IFS= read -r line; do
+        if [[ "$line" =~ I2C\ bus:.*i2c-([0-9]+) ]]; then
+          bus="''${BASH_REMATCH[1]}"
+        fi
+        if [[ "$line" =~ DRM\ connector:.*card[0-9]+-([A-Za-z0-9-]+) ]]; then
+          connector="''${BASH_REMATCH[1]}"
+          [[ -n "$bus" ]] && echo "$bus:$connector" >> "$CACHE_FILE"
+          bus="" connector=""
+        fi
+      done < <(${pkgs.ddcutil}/bin/ddcutil detect 2>/dev/null)
+    }
+
+    ensure_cache() {
+      if [[ ! -f "$CACHE_FILE" ]]; then
+        refresh_cache
+        return
+      fi
+      local now age
+      now=$(date +%s)
+      age=$(( now - $(stat -c %Y "$CACHE_FILE") ))
+      (( age > CACHE_MAX_AGE )) && refresh_cache
+    }
+
+    get_brightness() { cat "$STATE_FILE"; }
+
+    set_brightness() {
+      local val=$1
+      (( val > 100 )) && val=100
+      (( val < 5 )) && val=5
+      echo "$val" > "$STATE_FILE"
+
+      ensure_cache
+
+      # Build set of DDC-capable connectors & send hardware brightness
+      declare -A ddc_connectors=()
+      while IFS=: read -r bus connector; do
+        [[ -z "$bus" ]] && continue
+        ddc_connectors["$connector"]=1
+        ${pkgs.ddcutil}/bin/ddcutil --bus "$bus" setvcp 10 "$val" --noverify &
+      done < "$CACHE_FILE"
+
+      # Software brightness for non-DDC outputs via wl-gammarelay-rs per-output DBus
+      local gamma_val
+      gamma_val=$(${pkgs.bc}/bin/bc -l <<< "scale=2; $val / 100")
+
+      while IFS= read -r output; do
+        [[ -z "$output" ]] && continue
+        # Skip outputs that have DDC — they're handled by ddcutil above
+        if [[ -z "''${ddc_connectors[$output]+x}" ]]; then
+          # wl-gammarelay-rs DBus path: /outputs/<name> with dashes replaced by underscores
+          local dbus_path="/outputs/''${output//-/_}"
+          busctl --user set-property rs.wl-gammarelay "$dbus_path" \
+            rs.wl.gammarelay Brightness d "$gamma_val" 2>/dev/null || true
+        fi
+      done < <(hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '.[].name')
+
+      wait
+    }
+
+    case "''${1:-get}" in
+      up)   cur=$(get_brightness); set_brightness $((cur + STEP)) ;;
+      down) cur=$(get_brightness); set_brightness $((cur - STEP)) ;;
+      get)  get_brightness ;;
+      set)  set_brightness "''${2:?Usage: brightness-control set <0-100>}" ;;
+      refresh) refresh_cache; echo "DDC cache refreshed" ;;
+      *)    echo "Usage: brightness-control {up|down|get|set <value>|refresh}"; exit 1 ;;
+    esac
+  '';
 in {
   options = {
     tiebe.desktop.hyprland.programs.waybar = {
@@ -18,6 +108,23 @@ in {
 
   config = mkIf (cfg.enable && waybarCfg.enable) {
     home-manager.users.tiebe = {
+      # Start wl-gammarelay-rs daemon for per-output software brightness (non-DDC monitors)
+      systemd.user.services.wl-gammarelay-rs = {
+        Unit = {
+          Description = "wl-gammarelay-rs — software brightness via Wayland gamma";
+          PartOf = ["graphical-session.target"];
+          After = ["graphical-session.target"];
+        };
+        Service = {
+          ExecStart = "${pkgs.wl-gammarelay-rs}/bin/wl-gammarelay-rs";
+          Restart = "on-failure";
+          RestartSec = 2;
+        };
+        Install.WantedBy = ["graphical-session.target"];
+      };
+
+      home.packages = [brightness-control];
+
       programs.waybar = {
         enable = true;
         systemd = {
@@ -44,6 +151,7 @@ in {
 
             modules-right = [
               "mpris"
+              "custom/brightness"
               "cpu"
               "memory"
               "temperature"
@@ -149,6 +257,17 @@ in {
               };
               on-click = "pavucontrol";
               scroll-step = 5;
+            };
+
+            "custom/brightness" = {
+              format = "☀ {}%";
+              exec = "${brightness-control}/bin/brightness-control get";
+              on-scroll-up = "${brightness-control}/bin/brightness-control up";
+              on-scroll-down = "${brightness-control}/bin/brightness-control down";
+              on-click = "${brightness-control}/bin/brightness-control set 100";
+              on-click-right = "${brightness-control}/bin/brightness-control set 50";
+              interval = 5;
+              tooltip-format = "Brightness: {}% (scroll to adjust)";
             };
 
             battery = {
@@ -300,6 +419,10 @@ in {
             color: @overlay0;
           }
 
+          #custom-brightness {
+            color: @yellow;
+          }
+
           #battery {
             color: @green;
           }
@@ -342,6 +465,7 @@ in {
 
           /* Module spacing */
           #mpris,
+          #custom-brightness,
           #cpu,
           #memory,
           #temperature,
