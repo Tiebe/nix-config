@@ -497,7 +497,7 @@
         exec ${pkgs.waybar}/bin/waybar -c "$RUNTIME_DIR/config.json" -s "$RUNTIME_DIR/style.css"
   '';
 
-  # Monitor listener: restarts waybar when displays are added/removed
+  # Monitor listener: restarts waybar-wrapper when displays are added/removed
   monitor-listener = pkgs.writeShellScriptBin "hyprland-monitor-listener" ''
     set -euo pipefail
 
@@ -521,7 +521,12 @@
           sleep 2
           # Invalidate DDC cache — monitor set changed
           rm -f /tmp/brightness-ddc-cache
-          systemctl --user restart waybar-dynamic.service
+          # Kill existing waybar-wrapper and waybar instances, then relaunch
+          ${pkgs.procps}/bin/pkill -f waybar-wrapper || true
+          ${pkgs.procps}/bin/pkill waybar || true
+          sleep 1
+          ${waybar-wrapper}/bin/waybar-wrapper &
+          disown
           ;;
       esac
     done
@@ -550,38 +555,13 @@ in {
         Install.WantedBy = ["graphical-session.target"];
       };
 
-      # Waybar with runtime-detected brightness modules
-      systemd.user.services.waybar-dynamic = {
-        Unit = {
-          Description = "Waybar with dynamic per-monitor brightness widgets";
-          PartOf = ["hyprland-session.target"];
-          After = ["hyprland-session.target"];
-        };
-        Service = {
-          ExecStart = "${waybar-wrapper}/bin/waybar-wrapper";
-          Restart = "on-failure";
-          RestartSec = 2;
-          TimeoutStopSec = 5;
-        };
-        Install.WantedBy = ["hyprland-session.target"];
-      };
-
-      # Restart waybar when monitors are added/removed
-      systemd.user.services.hyprland-monitor-listener = {
-        Unit = {
-          Description = "Restart waybar on Hyprland monitor hotplug";
-          PartOf = ["hyprland-session.target"];
-          After = ["hyprland-session.target"];
-        };
-        Service = {
-          ExecStart = "${monitor-listener}/bin/hyprland-monitor-listener";
-          Restart = "always";
-          RestartSec = 5;
-        };
-        Install.WantedBy = ["hyprland-session.target"];
-      };
-
       home.packages = [brightness-control];
+
+      # Launch waybar-wrapper and monitor listener via Hyprland exec-once
+      wayland.windowManager.hyprland.settings.exec-once = [
+        "${waybar-wrapper}/bin/waybar-wrapper"
+        "${monitor-listener}/bin/hyprland-monitor-listener"
+      ];
 
       # Keep programs.waybar.enable for catppuccin module compatibility
       # Config and CSS are managed by waybar-wrapper at runtime
