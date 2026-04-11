@@ -65,6 +65,7 @@
       };
 
       apps = {
+        opencode.enable = true;
         steam.enable = true;
         discord = {
           enable = true;

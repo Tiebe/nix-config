@@ -93,6 +93,13 @@
     rev = "ac092b930fa0ff29d4384c8ff9ef30896bf024b3";
     sha256 = "sha256-H9g3ZLm2gaRaFNfQW0SGzWS3SIulbDkYgQokEaPuDC4=";
   };
+
+  zsh-ask-opencode = zshPlugin {
+    owner = "andreacasarin";
+    repo = "zsh-ask-opencode";
+    rev = "cb52060500d7ee512755522fb1e57fb92d74424f";
+    sha256 = lib.fakeHash;
+  };
 in {
   imports = [./darlings.nix];
 
@@ -156,6 +163,7 @@ in {
             source ${wd}/share/zsh/site-functions/wd/wd.plugin.zsh
             source ${zsh-eza-ls-plugin}/share/zsh/site-functions/zsh-eza-ls-plugin/zsh-eza-ls-plugin.plugin.zsh
             source ${zsh-plugin-fd}/share/zsh/site-functions/zsh-plugin-fd/zsh-plugin-fd.plugin.zsh
+            source ${zsh-ask-opencode}/share/zsh/site-functions/zsh-ask-opencode/zsh-ask-opencode.plugin.zsh
 
             # Hook direnv into zsh (direnv installed via systemPackages)
             eval "$(direnv hook zsh)"
