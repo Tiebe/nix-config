@@ -31,6 +31,8 @@ in {
       yaml-language-server # YAML
       vscode-langservers-extracted # JSON
       marksman # Markdown
+      tinymist # Typst
+      texlab # LaTeX
     ];
 
     home-manager.users.tiebe = {
@@ -116,6 +118,12 @@ in {
               command = "marksman";
               args = ["server"];
             };
+            tinymist = {
+              command = "tinymist";
+            };
+            texlab = {
+              command = "texlab";
+            };
           };
 
           language = [
@@ -193,6 +201,16 @@ in {
               name = "markdown";
               auto-format = true;
               language-servers = ["marksman"];
+            }
+            {
+              name = "typst";
+              auto-format = true;
+              language-servers = ["tinymist"];
+            }
+            {
+              name = "latex";
+              auto-format = true;
+              language-servers = ["texlab"];
             }
           ];
         };
