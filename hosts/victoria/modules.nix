@@ -38,6 +38,7 @@
 
       users.robbin.enable = true;
       sound.enable = true;
+      sound.deepFilter.enable = true;
     };
 
     theme.catppuccin.enable = true;
