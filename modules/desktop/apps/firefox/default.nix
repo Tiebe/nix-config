@@ -127,6 +127,12 @@ in {
               install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/darkreader/latest.xpi";
               installation_mode = "force_installed";
             };
+
+            # Tridactyl
+            "tridactyl.vim@cmcaine.co.uk" = {
+              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/tridactyl-vim/latest.xpi";
+              installation_mode = "force_installed";
+            };
           };
 
           /*
