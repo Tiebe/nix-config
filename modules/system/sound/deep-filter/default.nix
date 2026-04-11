@@ -5,19 +5,26 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.tiebe.system.sound.deepFilter;
   dfPlugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
-in {
-  imports = [./darlings.nix];
+in
+{
+  imports = [ ./darlings.nix ];
 
   options = {
     tiebe.system.sound.deepFilter = {
       enable = mkEnableOption "DeepFilterNet noise suppression via PipeWire filter-chain";
       attenuationLimit = mkOption {
         type = types.int;
-        default = 100;
+        default = 24;
         description = "Attenuation limit in dB (0 = bypass, 100 = max suppression). 6-12 for subtle, 18-24 for moderate.";
       };
     };
@@ -45,7 +52,7 @@ in {
               ];
             };
             "audio.rate" = 48000;
-            "audio.position" = ["MONO"];
+            "audio.position" = [ "MONO" ];
             "capture.props" = {
               "node.passive" = true;
             };
