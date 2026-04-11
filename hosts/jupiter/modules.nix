@@ -57,24 +57,7 @@
         greetd.enable = true;
 
         programs = {
-          waybar = {
-            enable = true;
-            # Connector names: run `hyprctl monitors` to verify
-            brightnessMonitors = [
-              {
-                name = "DP-1";
-                label = "GS32Q";
-              }
-              {
-                name = "DP-2";
-                label = "AOC";
-              }
-              {
-                name = "HDMI-A-1";
-                label = "HP";
-              }
-            ];
-          };
+          waybar.enable = true;
           rofi.enable = true;
           swaync.enable = true;
           wlogout.enable = true;
