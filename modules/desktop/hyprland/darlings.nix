@@ -27,12 +27,6 @@ in {
         then config.lib.file.mkOutOfStoreSymlink "/persist${evictCfg.configDir}/waybar"
         else config.lib.file.mkOutOfStoreSymlink "/persist/home/tiebe/.config/waybar";
 
-      # Persist swaync config
-      xdg.configFile."swaync".source =
-        if evictCfg.enable
-        then config.lib.file.mkOutOfStoreSymlink "/persist${evictCfg.configDir}/swaync"
-        else config.lib.file.mkOutOfStoreSymlink "/persist/home/tiebe/.config/swaync";
-
       # Create persist directories before symlinks
       home.activation.createHyprlandPersistDirs = lib.hm.dag.entryBefore ["writeBoundary"] ''
         $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p $VERBOSE_ARG \
@@ -40,13 +34,11 @@ in {
           if evictCfg.enable
           then ''
             "/persist${evictCfg.configDir}/hypr" \
-            "/persist${evictCfg.configDir}/waybar" \
-            "/persist${evictCfg.configDir}/swaync"
+            "/persist${evictCfg.configDir}/waybar"
           ''
           else ''
             "/persist/home/tiebe/.config/hypr" \
-            "/persist/home/tiebe/.config/waybar" \
-            "/persist/home/tiebe/.config/swaync"
+            "/persist/home/tiebe/.config/waybar"
           ''
         }
       '';
