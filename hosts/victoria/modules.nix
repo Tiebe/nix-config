@@ -44,7 +44,26 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      plasma.enable = true;
+      plasma.enable = false;
+
+      hyprland = {
+        enable = true;
+        idle.enable = true;
+        lock.enable = true;
+
+        animations.enable = true;
+        binds.enable = true;
+        windowrules.enable = true;
+
+        greetd.enable = true;
+
+        programs = {
+          waybar.enable = true;
+          rofi.enable = true;
+          swaync.enable = true;
+          wlogout.enable = true;
+        };
+      };
 
       apps = {
         discord.enable = true;
@@ -64,7 +83,6 @@
         localsend.enable = true;
         lmstudio.enable = true;
         opencode.enable = true;
-        rofi.enable = true;
       };
     };
 
