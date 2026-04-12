@@ -8,19 +8,36 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.rofi;
+  evictCfg = config.tiebe.system.boot.evictDarlings;
+
+  # Wrap rofi with XDG_CONFIG_HOME for evict-darlings hosts where
+  # config lives at /users/tiebe/config instead of ~/.config
+  rofiPackage =
+    if evictCfg.enable
+    then
+      pkgs.symlinkJoin {
+        name = "rofi-wrapped";
+        paths = [pkgs.rofi];
+        buildInputs = [pkgs.makeWrapper];
+        postBuild = ''
+          wrapProgram $out/bin/rofi \
+            --set XDG_CONFIG_HOME '${evictCfg.configDir}'
+        '';
+      }
+    else pkgs.rofi;
 
   script = pkgs.writeShellScriptBin "rofi-launcher" ''
     # toggle: if rofi is already running, close it; otherwise launch it
     if pidof rofi > /dev/null; then
       pkill rofi
     else
-      rofi -show drun
+      ${rofiPackage}/bin/rofi -show drun
     fi
   '';
 
   cheatsheet-opener = name:
     pkgs.writeShellScript "open-${name}" ''
-      exec xdg-open "$HOME/.local/share/cheatsheets/${name}.pdf"
+      exec xdg-open "''${XDG_DATA_HOME:-$HOME/.local/share}/cheatsheets/${name}.pdf"
     '';
 in {
   options = {
@@ -75,7 +92,7 @@ in {
       programs = {
         rofi = {
           enable = true;
-          package = pkgs.rofi;
+          package = rofiPackage;
           extraConfig = {
             modi = "drun,filebrowser,run";
             show-icons = true;
@@ -297,8 +314,8 @@ in {
         };
       };
 
-      home.file.".config/rofi/config-long.rasi".text = ''
-        @import "~/.config/rofi/config.rasi"
+      xdg.configFile."rofi/config-long.rasi".text = ''
+        @import "config.rasi"
         window {
           width: 750px;
           border-radius: 20px;
