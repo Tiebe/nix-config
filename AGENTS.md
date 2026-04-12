@@ -8,6 +8,25 @@ Use descriptive commit messages (see Git section below).
 
 ---
 
+## AGENTS.MD MAINTENANCE
+
+**Update AGENTS.md files whenever the project structure changes.** This includes:
+- Adding new files or modules
+- Removing files or modules
+- Renaming or moving files
+- Adding new hosts
+- Changing module categories or option namespaces
+
+When making structural changes, update the relevant AGENTS.md file(s):
+- Root `AGENTS.md` — for project-wide changes (new hosts, categories, flake inputs)
+- `modules/desktop/apps/AGENTS.md` — for desktop app module changes
+- `modules/services/AGENTS.md` — for service module changes
+- `hosts/AGENTS.md` — for host configuration changes
+
+Keep AGENTS.md accurate. Stale documentation is worse than no documentation.
+
+---
+
 ## Project Overview
 
 NixOS flake-based system configuration using flakes. Pure Nix — no other languages. Manages multiple hosts with a modular architecture.
@@ -281,15 +300,19 @@ modules/
 
 ## Host Configurations
 
-- **jupiter**: Main desktop (AMD GPU, Plasma)
-- **victoria**: Laptop (Intel/AMD hybrid)
-- **pluto**: Server/minimal
-- **mercury**: Additional host
+- **jupiter**: Main desktop — Intel CPU, AMD GPU, CachyOS kernel, btrfs, Plasma + Hyprland, darlings=false, stateVersion 24.05
+- **victoria**: Framework AMD laptop — CachyOS kernel zen4, btrfs, Hyprland, darlings=true + evictDarlings=true (FULL ephemeral), stateVersion 25.05. **Designated test host.**
+- **pluto**: Laptop — Intel CPU+GPU, DisplayLink dock, ext4, GNOME, no darlings, stateVersion 23.11
+- **mercury**: WSL2 — GNOME (WSLg), minimal, YubiKey USB passthrough, no hardware-configuration.nix, stateVersion 24.05
 
 Each host has:
-- `default.nix` - Host-specific hardware and config
-- `hardware-configuration.nix` - Generated hardware config
-- `modules.nix` - Which modules are enabled for this host
+- `default.nix` — hardware-specific config ONLY (kernel, hostname, GPU, stateVersion). No module toggles.
+- `hardware-configuration.nix` — generated, not hand-edited (absent on mercury/WSL)
+- `modules.nix` — imports `../../modules` and sets ALL `config.tiebe.*` toggles in one flat attrset
+
+**Import chain**: flake.nix → hosts/\<host\>/default.nix → modules.nix → ../../modules → all categories. ALL modules are always imported; features are opt-in via `tiebe.*` options.
+
+See `hosts/AGENTS.md` for detailed per-host matrix.
 
 ---
 
