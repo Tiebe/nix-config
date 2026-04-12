@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
@@ -15,9 +15,8 @@ let
     ;
   cfg = config.tiebe.system.sound.deepFilter;
   dfPlugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
-in
-{
-  imports = [ ./darlings.nix ];
+in {
+  imports = [./darlings.nix];
 
   options = {
     tiebe.system.sound.deepFilter = {
@@ -52,7 +51,7 @@ in
               ];
             };
             "audio.rate" = 48000;
-            "audio.position" = [ "MONO" ];
+            "audio.position" = ["MONO"];
             "capture.props" = {
               "node.passive" = true;
             };

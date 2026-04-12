@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
@@ -17,13 +17,12 @@ let
   evictCfg = config.tiebe.system.boot.evictDarlings;
 
   # Helper to fetch zsh plugins from GitHub
-  zshPlugin =
-    {
-      owner,
-      repo,
-      rev,
-      sha256,
-    }:
+  zshPlugin = {
+    owner,
+    repo,
+    rev,
+    sha256,
+  }:
     pkgs.stdenvNoCC.mkDerivation {
       name = "zsh-${repo}";
       src = pkgs.fetchFromGitHub {
@@ -112,9 +111,8 @@ let
     rev = "cb52060500d7ee512755522fb1e57fb92d74424f";
     sha256 = "sha256-EYRAN3aggA0U4QFbs5dsK3ck8W8pKASPst8XDKr95GY=";
   };
-in
-{
-  imports = [ ./darlings.nix ];
+in {
+  imports = [./darlings.nix];
 
   options = {
     tiebe.terminal.zsh = {
@@ -123,102 +121,98 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.tiebe =
-      { lib, ... }:
-      {
-        programs.zsh = {
-          enable = true;
-          enableCompletion = true;
-          completionInit = "autoload -U compinit && compinit -u";
+    home-manager.users.tiebe = {lib, ...}: {
+      programs.zsh = {
+        enable = true;
+        enableCompletion = true;
+        completionInit = "autoload -U compinit && compinit -u";
 
-          shellAliases = {
-            "fullupdate" =
-              "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix flake update && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
-            "update" =
-              "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
-            "o" = "xdg-open";
-            "db" = "distrobox";
-            "dbe" = "distrobox enter";
-            "cat" = "bat";
-            "code" = "codium";
-            "reboot" = "systemctl reboot";
-            "shutdown" = "systemctl poweroff";
-            "poweroff" = "systemctl poweroff";
-          };
-
-          # Nixpkgs plugins
-          plugins = [
-            {
-              name = "zsh-autosuggestions";
-              src = "${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions";
-            }
-            {
-              name = "zsh-syntax-highlighting";
-              src = "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting";
-            }
-            {
-              name = "zsh-completions";
-              src = "${pkgs.zsh-completions}/share/zsh-completions";
-            }
-            {
-              name = "zsh-history-substring-search";
-              src = "${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search";
-            }
-          ];
-
-          initContent = lib.mkMerge [
-            (lib.mkBefore ''
-              export WEZTERM_SHELL_SKIP_ALL=1
-
-              # Source custom plugins
-              source ${zsh-256color}/share/zsh/site-functions/zsh-256color/zsh-256color.plugin.zsh
-              source ${alias-tips}/share/zsh/site-functions/alias-tips/alias-tips.plugin.zsh
-              source ${zsh-bd}/share/zsh/site-functions/zsh-bd/bd.plugin.zsh
-              source ${cd-reminder}/share/zsh/site-functions/cd-reminder/cd-reminder.plugin.zsh
-              source ${copy-pasta}/share/zsh/site-functions/copy-pasta/copy-pasta.plugin.zsh
-              source ${zsh-interactive-cd}/share/zsh/site-functions/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-              source ${wd}/share/zsh/site-functions/wd/wd.plugin.zsh
-              source ${zsh-eza-ls-plugin}/share/zsh/site-functions/zsh-eza-ls-plugin/zsh-eza-ls-plugin.plugin.zsh
-              source ${zsh-plugin-fd}/share/zsh/site-functions/zsh-plugin-fd/zsh-plugin-fd.plugin.zsh
-              source ${zsh-ask-opencode}/share/zsh/site-functions/zsh-ask-opencode/zsh-ask-opencode.plugin.zsh
-
-              # Hook direnv into zsh (direnv installed via systemPackages)
-              eval "$(direnv hook zsh)"
-            '')
-
-            ''
-              bindkey '^[[1;5D' backward-word
-              bindkey '^[[1;5C' forward-word
-            ''
-          ];
+        shellAliases = {
+          "fullupdate" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix flake update && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
+          "update" = "sudo ls /dev/null > /dev/null 2>&1 && cd /etc/nixos && git pull && nix fmt && sudo nixos-rebuild switch --flake . |& nom && cd -";
+          "o" = "xdg-open";
+          "db" = "distrobox";
+          "dbe" = "distrobox enter";
+          "cat" = "bat";
+          "code" = "codium";
+          "reboot" = "systemctl reboot";
+          "shutdown" = "systemctl poweroff";
+          "poweroff" = "systemctl poweroff";
         };
 
-        home.file.".rm_recycle_home".text = "";
+        # Nixpkgs plugins
+        plugins = [
+          {
+            name = "zsh-autosuggestions";
+            src = "${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions";
+          }
+          {
+            name = "zsh-syntax-highlighting";
+            src = "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting";
+          }
+          {
+            name = "zsh-completions";
+            src = "${pkgs.zsh-completions}/share/zsh-completions";
+          }
+          {
+            name = "zsh-history-substring-search";
+            src = "${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search";
+          }
+        ];
 
-        programs.starship = {
-          enable = true;
-          settings = {
-            add_newline = false;
-            format = "$username$hostname$nix_shell$git_branch$git_commit$git_state$git_status$directory$jobs$cmd_duration$character";
-          };
-        };
+        initContent = lib.mkMerge [
+          (lib.mkBefore ''
+            export WEZTERM_SHELL_SKIP_ALL=1
 
-        programs.atuin = {
-          enable = true;
-          flags = [ "--disable-up-arrow" ];
-          settings = {
-            key_path = config.age.secrets.atuin.path;
-            daemon.enabled = true;
-          };
-        };
+            # Source custom plugins
+            source ${zsh-256color}/share/zsh/site-functions/zsh-256color/zsh-256color.plugin.zsh
+            source ${alias-tips}/share/zsh/site-functions/alias-tips/alias-tips.plugin.zsh
+            source ${zsh-bd}/share/zsh/site-functions/zsh-bd/bd.plugin.zsh
+            source ${cd-reminder}/share/zsh/site-functions/cd-reminder/cd-reminder.plugin.zsh
+            source ${copy-pasta}/share/zsh/site-functions/copy-pasta/copy-pasta.plugin.zsh
+            source ${zsh-interactive-cd}/share/zsh/site-functions/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+            source ${wd}/share/zsh/site-functions/wd/wd.plugin.zsh
+            source ${zsh-eza-ls-plugin}/share/zsh/site-functions/zsh-eza-ls-plugin/zsh-eza-ls-plugin.plugin.zsh
+            source ${zsh-plugin-fd}/share/zsh/site-functions/zsh-plugin-fd/zsh-plugin-fd.plugin.zsh
+            source ${zsh-ask-opencode}/share/zsh/site-functions/zsh-ask-opencode/zsh-ask-opencode.plugin.zsh
 
-        # Fix zsh completion directory permissions (required for evict-darlings)
-        home.activation.fixZshPermissions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          if [ -d "$HOME/.zsh/plugins" ]; then
-            $DRY_RUN_CMD chmod -R go-w $VERBOSE_ARG "$HOME/.zsh/plugins"
-          fi
-        '';
+            # Hook direnv into zsh (direnv installed via systemPackages)
+            eval "$(direnv hook zsh)"
+          '')
+
+          ''
+            bindkey '^[[1;5D' backward-word
+            bindkey '^[[1;5C' forward-word
+          ''
+        ];
       };
+
+      home.file.".rm_recycle_home".text = "";
+
+      programs.starship = {
+        enable = true;
+        settings = {
+          add_newline = false;
+          format = "$username$hostname$nix_shell$git_branch$git_commit$git_state$git_status$directory$jobs$cmd_duration$character";
+        };
+      };
+
+      programs.atuin = {
+        enable = true;
+        flags = ["--disable-up-arrow"];
+        settings = {
+          key_path = config.age.secrets.atuin.path;
+          daemon.enabled = true;
+        };
+      };
+
+      # Fix zsh completion directory permissions (required for evict-darlings)
+      home.activation.fixZshPermissions = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        if [ -d "$HOME/.zsh/plugins" ]; then
+          $DRY_RUN_CMD chmod -R go-w $VERBOSE_ARG "$HOME/.zsh/plugins"
+        fi
+      '';
+    };
 
     systemd.user.services.atuind = {
       enable = true;
@@ -229,8 +223,8 @@ in
       serviceConfig = {
         ExecStart = "${pkgs.atuin}/bin/atuin daemon";
       };
-      after = [ "network.target" ];
-      wantedBy = [ "default.target" ];
+      after = ["network.target"];
+      wantedBy = ["default.target"];
     };
   };
 }
