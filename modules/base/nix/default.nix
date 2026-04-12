@@ -48,6 +48,7 @@ in {
             "steam-unwrapped"
             "lmstudio"
             "antigravity"
+            "parsec-bin"
             "obsidian"
           ];
       };

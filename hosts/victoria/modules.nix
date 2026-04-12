@@ -55,7 +55,7 @@
         firefox.enable = true;
         wezterm.enable = true;
         media.enable = true;
-        parsec.enable = false;
+        parsec.enable = true;
         office.enable = true;
         thunderbird.enable = true;
         #bitwarden.enable = true;
