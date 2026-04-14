@@ -103,7 +103,7 @@
       printing.enable = true;
       fingerprint.enable = true;
       gpg.enable = true;
-      nova-chatmix.enable = true;
+      nova-chatmix.enable = false;
       #lorri.enable = true;
       #variety.enable = true;
       devenv.enable = true;
