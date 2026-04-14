@@ -19,6 +19,18 @@ Each host has three files: `default.nix` (hardware only), `modules.nix` (all `ti
 - **installer/** — Not a real machine. Generates ISO with disko partitioning via `nixos-generators`.
 - **victoria-test-vm** — VM variant defined in flake.nix for testing. Uses `lib.mkForce` + `builtins.toFile` to bypass real secrets.
 
+## JUPITER HARDWARE INVENTORY
+
+- Steelseries Nova Arctis Pro Wireless
+- Three monitors:
+  - 1× 1440p 27" 155Hz
+  - 1× 1440p 32" 165Hz
+  - 1× 1080p 22" 60Hz
+- HyperX Solocast microphone
+- 8BitDo Ultimate 2 controller
+- Stream Deck
+- Logitech Brio webcam
+
 ## WHERE TO LOOK
 
 | Task | File | Notes |

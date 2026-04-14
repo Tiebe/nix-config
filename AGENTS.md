@@ -4,6 +4,7 @@
 
 **Always commit after every change.** No exceptions. Every file edit, addition, or
 deletion must be followed by a `git add` and `git commit` before moving on.
+This is mandatory for every change, no matter how small.
 Use descriptive commit messages (see Git section below).
 
 ---
@@ -16,6 +17,9 @@ Use descriptive commit messages (see Git section below).
 - Renaming or moving files
 - Adding new hosts
 - Changing module categories or option namespaces
+- Any other structural or documentation change that affects agent guidance
+
+**When in doubt: update AGENTS.md, then commit immediately.**
 
 When making structural changes, update the relevant AGENTS.md file(s):
 - Root `AGENTS.md` — for project-wide changes (new hosts, categories, flake inputs)
