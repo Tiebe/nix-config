@@ -115,6 +115,7 @@
       variety.enable = true;
       bitfocus-companion.enable = true;
       ratbagd.enable = true;
+      nova-chatmix.enable = true;
       boinc.enable = false;
       windows = {
         enable = false;
