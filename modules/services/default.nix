@@ -18,6 +18,7 @@
     ./variety
     ./bitfocus-companion
     ./ratbagd
+    ./nova-chatmix
     ./boinc.nix
   ];
 }

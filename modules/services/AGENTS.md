@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-21 service modules under `tiebe.services.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+22 service modules under `tiebe.services.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -17,6 +17,7 @@
 | gpg | medium | YubiKey agent, SSH integration |
 | lorri | simple | Nix shell manager |
 | nextcloud | simple | Self-hosted cloud |
+| nova-chatmix | medium | SteelSeries Nova Pro Wireless ChatMix daemon (headless user service + udev rule) |
 | openvpn | simple | VPN client |
 | podman | simple | Container runtime (rootless) |
 | printing | simple | CUPS |
