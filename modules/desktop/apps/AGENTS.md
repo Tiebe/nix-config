@@ -20,6 +20,7 @@
 | obsidian | simple | Notes |
 | office | simple | LibreOffice |
 | opencode | complex | Tauri build from source (`inputs.opencode`), custom derivation |
+| forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
 | opendeck | simple | Stream deck — **loose file** (`opendeck.nix`, not in subfolder) |
 | parsec | simple | Remote desktop |
 | piper | simple | Mouse config (libratbag) |
