@@ -14,9 +14,15 @@
     types
     ;
   cfg = config.tiebe.desktop.apps.forgecode;
+  evictCfg = config.tiebe.system.boot.evictDarlings;
 
   forgePackage =
     inputs.forgecode.packages.${pkgs.stdenv.hostPlatform.system}.default or null;
+
+  forgeConfigDir =
+    if evictCfg.enable
+    then "${evictCfg.configDir}/.forge"
+    else "/home/tiebe/.forge";
 in {
   imports = [./darlings.nix];
 
@@ -35,7 +41,7 @@ in {
       lib,
       ...
     }: {
-      home.file.".forge/.forge.toml".source = ./config/.forge.toml;
+      home.file."${forgeConfigDir}/.forge.toml".source = ./config/.forge.toml;
     };
   };
 }
