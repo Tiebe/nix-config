@@ -83,6 +83,7 @@
         localsend.enable = true;
         lmstudio.enable = true;
         opencode.enable = true;
+        forgecode.enable = true;
       };
     };
 
