@@ -73,6 +73,9 @@
 
     opencode.url = "github:anomalyco/opencode";
     opencode.inputs.nixpkgs.follows = "nixpkgs";
+
+    forgecode.url = "github:antinomyhq/forge";
+    forgecode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

@@ -66,6 +66,7 @@
 
       apps = {
         opencode.enable = true;
+        forgecode.enable = true;
         steam.enable = true;
         discord = {
           enable = true;

@@ -19,6 +19,7 @@
     ./localsend
     ./lmstudio
     ./opencode
+    ./forgecode
     ./rofi
     ./opendeck.nix
   ];
