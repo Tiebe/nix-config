@@ -13,6 +13,7 @@
     mkOption
     types
     ;
+
   cfg = config.tiebe.desktop.apps.forgecode;
   evictCfg = config.tiebe.system.boot.evictDarlings;
 
@@ -21,7 +22,7 @@
 
   forgeConfigDir =
     if evictCfg.enable
-    then "${evictCfg.configDir}/.forge"
+    then "${evictCfg.baseDir}/.forge"
     else "/home/tiebe/.forge";
 in {
   imports = [./darlings.nix];
