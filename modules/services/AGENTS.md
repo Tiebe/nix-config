@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-22 service modules under `tiebe.services.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+23 service modules under `tiebe.services.<name>`. Each folder contains `default.nix` + `darlings.nix` except legacy loose files noted below.
 
 ## MODULE CATALOG
 
@@ -26,6 +26,7 @@
 | sunshine | medium | Game streaming server |
 | variety | simple | Wallpaper manager |
 | vr | simple | VR headset support |
+| waydroid | medium | Android container runtime with `/var/lib/waydroid` persistence for darlings |
 | winapps | complex | Docker + RDP Windows app integration |
 | windows | complex | **VFIO GPU passthrough** — `scopedHooks.nix` + `vm.nix` (3 files) |
 | zerogravity | complex | Custom Rust build — **orphaned** (not imported by `services/default.nix`) |

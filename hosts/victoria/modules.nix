@@ -109,6 +109,7 @@
       #variety.enable = true;
       devenv.enable = true;
       nextcloud.enable = true;
+      waydroid.enable = true;
       # zerogravity.enable = true;
       ssh-server.enable = true;
     };

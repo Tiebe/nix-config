@@ -6,6 +6,7 @@
     ./ssh-server
     ./sunshine
     ./vr
+    ./waydroid
     ./winapps
     ./gpg
     ./lorri
