@@ -5,10 +5,12 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.services.waydroid;
-in {
+in
+{
   imports = [
     ./darlings.nix
   ];
@@ -26,7 +28,7 @@ in {
       wl-clipboard
     ];
 
-    users.users.tiebe.extraGroups = ["adbusers"];
-    programs.adb.enable = true;
+    users.users.tiebe.extraGroups = [ "adbusers" ];
+
   };
 }
