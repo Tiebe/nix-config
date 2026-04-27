@@ -5,8 +5,9 @@
   config,
   pkgs,
   ...
-}: {
-  imports = [../../modules];
+}:
+{
+  imports = [ ../../modules ];
 
   config.tiebe = {
     base = {
