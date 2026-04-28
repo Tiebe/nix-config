@@ -5,10 +5,17 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.tiebe.desktop.hyprland;
-in {
+in
+{
   options = {
     tiebe.desktop.hyprland = {
       enable = mkEnableOption "the Hyprland compositor";
@@ -19,13 +26,14 @@ in {
     programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      portalPackage =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
 
     # XDG portal for screen sharing, file pickers, etc.
     xdg.portal = {
       enable = true;
-      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
     # Essential Wayland session packages
@@ -46,9 +54,9 @@ in {
     # Polkit agent for auth dialogs
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = ["graphical-session.target"];
-      wants = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -69,7 +77,7 @@ in {
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
         systemd = {
           enable = true;
-          variables = ["--all"];
+          variables = [ "--all" ];
         };
         settings = {
           # Monitor configuration
@@ -127,7 +135,8 @@ in {
 
           # Dwindle layout
           dwindle = {
-            pseudotile = true;
+            # pseudotile = true;
+            smart_split = true;
             preserve_split = true;
             force_split = 2;
           };

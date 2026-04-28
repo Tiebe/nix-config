@@ -66,7 +66,7 @@
       };
 
       apps = {
-        opencode.enable = true;
+        # opencode.enable = true;
         forgecode.enable = true;
         steam.enable = true;
         discord = {
@@ -107,12 +107,12 @@
       printing.enable = true;
       ssh-server.enable = true;
       # sunshine.enable = true;
-      vr.enable = true;
+      # vr.enable = true;
       gpg.enable = true;
       lorri.enable = true;
       cachix.enable = true;
       openvpn.enable = true;
-      nextcloud.enable = true;
+      # nextcloud.enable = true;
       devenv.enable = true;
       variety.enable = true;
       bitfocus-companion.enable = true;
