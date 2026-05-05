@@ -45,7 +45,7 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      plasma.enable = false;
+      # plasma.enable = true;
 
       hyprland = {
         enable = true;
