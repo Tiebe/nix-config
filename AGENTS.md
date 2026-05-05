@@ -395,9 +395,10 @@ in {
 
 ### Package Overrides
 Use package overrides only when an application needs runtime environment changes
-that cannot be expressed through its NixOS or home-manager module options. Prefer
-profile/data persistence through module-specific `darlings.nix` files over
-overriding `HOME` for desktop applications.
+that cannot be expressed through its NixOS or home-manager module options. For
+applications that require a runtime `HOME` override, keep profile/data
+persistence aligned with the overridden `HOME` path in the module-specific
+`darlings.nix` file.
 
 ---
 
