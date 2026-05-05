@@ -5,11 +5,18 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.tiebe.desktop.apps.vscode;
-in {
-  imports = [./darlings.nix];
+in
+{
+  imports = [ ./darlings.nix ];
 
   options = {
     tiebe.desktop.apps.vscode = {
@@ -18,12 +25,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [nil];
+    environment.systemPackages = with pkgs; [ nil ];
 
     home-manager.users.tiebe = {
-      programs.vscode = {
+      programs.vscodium = {
         enable = true;
-        package = pkgs.vscodium;
 
         profiles.default = {
           extensions = with pkgs.vscode-extensions; [

@@ -45,24 +45,24 @@
     theme.catppuccin.enable = true;
 
     desktop = {
-      # plasma.enable = true;
+      plasma.enable = true;
 
       hyprland = {
-        enable = true;
-        idle.enable = true;
-        lock.enable = true;
+        # enable = true;
+        # idle.enable = true;
+        # lock.enable = true;
 
-        animations.enable = true;
-        binds.enable = true;
-        windowrules.enable = true;
+        # animations.enable = true;
+        # binds.enable = true;
+        # windowrules.enable = true;
 
-        greetd.enable = true;
+        # greetd.enable = true;
 
         programs = {
-          waybar.enable = true;
+          # waybar.enable = true;
           rofi.enable = true;
-          swaync.enable = true;
-          wlogout.enable = true;
+          # swaync.enable = true;
+          # wlogout.enable = true;
         };
       };
 
