@@ -18,8 +18,8 @@ in {
       home.file =
         if evictCfg.enable
         then {
-          # Firefox runs with HOME=configDir, so it looks at configDir/.mozilla/firefox
-          "${evictCfg.configDir}/.mozilla/firefox".source =
+          # Keep the profile on persistent storage without moving Firefox's HOME.
+          ".mozilla/firefox".source =
             config.lib.file.mkOutOfStoreSymlink
             "/persist${evictCfg.configDir}/.mozilla/firefox";
         }
