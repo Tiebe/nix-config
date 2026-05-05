@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib) getExe' mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.system.boot.darlings;
 in {
   options = {
@@ -33,18 +33,14 @@ in {
       before = ["sysroot.mount"];
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
-      path = with pkgs; [
-        btrfs-progs
-        coreutils
-        gawk
-        util-linux
-      ];
       script = ''
+        export PATH="${pkgs.btrfs-progs}/bin:${pkgs.coreutils}/bin:${pkgs.gawk}/bin:${pkgs.util-linux}/bin"
+
         mkdir -p /mnt
 
         # We first mount the btrfs root to /mnt
         # so we can manipulate btrfs subvolumes.
-        mount -o subvol=/ ${config.fileSystems."/".device} /mnt
+        ${getExe' pkgs.util-linux "mount"} -o subvol=/ ${config.fileSystems."/".device} /mnt
 
         # While we're tempted to just delete /root and create
         # a new snapshot from /root-blank, /root is already
@@ -75,7 +71,7 @@ in {
 
         # Once we're done rolling back to a blank snapshot,
         # we can unmount /mnt and continue on the boot process.
-        umount /mnt
+        ${getExe' pkgs.util-linux "umount"} /mnt
       '';
     };
   };
