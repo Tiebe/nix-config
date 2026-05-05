@@ -394,14 +394,10 @@ in {
 **See examples**: `modules/desktop/apps/opencode/darlings.nix`, `modules/desktop/apps/steam/darlings.nix`
 
 ### Package Overrides
-```nix
-firefoxPackage = pkgs.firefox.overrideAttrs (oldAttrs: {
-  buildCommand = oldAttrs.buildCommand + ''
-    wrapProgram "$out/bin/firefox" \
-      --set HOME "${evictCfg.configDir}"
-  '';
-});
-```
+Use package overrides only when an application needs runtime environment changes
+that cannot be expressed through its NixOS or home-manager module options. Prefer
+profile/data persistence through module-specific `darlings.nix` files over
+overriding `HOME` for desktop applications.
 
 ---
 

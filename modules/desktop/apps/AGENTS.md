@@ -10,7 +10,7 @@
 |--------|-----------|-------|
 | bitwarden | simple | Password manager |
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
-| firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
+| firefox | complex | profile persistence via `mkOutOfStoreSymlink` for evict-darlings |
 | httptoolkit | simple | HTTP debugging proxy |
 | lmstudio | simple | LLM interface |
 | legcord | simple | Discord client |
@@ -39,7 +39,7 @@
 | Add new app module | Create `<name>/default.nix` + `<name>/darlings.nix` | Follow docker module as template |
 | Import new module | `modules/desktop/apps/default.nix` | Add to imports list |
 | Enable for a host | `hosts/<host>/modules.nix` | `tiebe.desktop.apps.<name>.enable = true` |
-| evict-darlings HOME wrapping | See `firefox/default.nix` | `overrideAttrs` + `wrapProgram` pattern |
+| evict-darlings profile persistence | See `firefox/darlings.nix` | `mkOutOfStoreSymlink` + activation script |
 | Dual-path persistence | See `steam/darlings.nix` | `if evictCfg.enable then ... else ...` |
 | mkOutOfStoreSymlink + activation | See `opencode/darlings.nix` | `lib.hm.dag.entryBefore ["writeBoundary"]` |
 
