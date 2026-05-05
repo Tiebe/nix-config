@@ -22,6 +22,7 @@
     device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
     fsType = "btrfs";
     options = ["subvol=root" "noatime"];
+    neededForBoot = true;
   };
 
   fileSystems."/home" = {

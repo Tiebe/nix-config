@@ -18,7 +18,8 @@
 
     system = {
       boot = {
-        darlings.enable = false;
+        darlings.enable = true;
+        evictDarlings.enable = true;
         systemd-boot.enable = true;
       };
 
@@ -67,7 +68,7 @@
 
       apps = {
         # opencode.enable = true;
-        forgecode.enable = true;
+        forgecode.enable = false;
         steam.enable = true;
         discord = {
           enable = true;

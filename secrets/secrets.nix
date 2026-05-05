@@ -2,7 +2,7 @@ let
   yubikey_5c = "age1yubikey1qgjdwvurkzt96kq0ru2wwvpemcpemc2xdldxaas4fv6kf5w5s820ql6mvra";
   yubikey_5 = "age1yubikey1qtz92pnpac4tgeehratk52syxylpwftlujl8ey5curz4h62mam4kyw5jlsd";
 
-  jupiter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILe8Jk8t8kaqGr5UG9jr3Q70/CSMHcvWi8gARskxQ6dz";
+  jupiter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOo3hqDpH8V/FNbLVLhegt9hlbPxMEvMCjUiP8Cr/s4W";
   pluto = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDEvOgR7VedJwRvKO9wD8am7K388emFAgMk31NMzn2di";
   mercury = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOy/tfffA9oA8uP2WSBonNHsaOjwGmQApGUmlYY7M2rg";
   victoria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINH8VnAkXWIeo7FsDte9mgtBxFvu8N8XG1SYURUYM5Pe";

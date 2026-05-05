@@ -5,8 +5,14 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.tiebe.desktop.apps.firefox;
   evictCfg = config.tiebe.system.boot.evictDarlings;
 
@@ -21,19 +27,18 @@
 
   # Wrap Firefox with HOME override for evict darlings
   firefoxPackage =
-    if evictCfg.enable
-    then
+    if evictCfg.enable then
       pkgs.firefox.overrideAttrs (oldAttrs: {
-        buildCommand =
-          oldAttrs.buildCommand
-          + ''
-            wrapProgram "$executablePath" \
-              --set 'HOME' '${evictCfg.configDir}'
-          '';
+        buildCommand = oldAttrs.buildCommand + ''
+          wrapProgram "$executablePath" \
+            --set 'HOME' '${evictCfg.configDir}'
+        '';
       })
-    else pkgs.firefox;
-in {
-  imports = [./darlings.nix];
+    else
+      pkgs.firefox;
+in
+{
+  imports = [ ./darlings.nix ];
 
   options = {
     tiebe.desktop.apps.firefox = {
@@ -49,9 +54,7 @@ in {
         enable = true;
         package = firefoxPackage;
         #package = pkgs.librewolf;
-        /*
-        ---- POLICIES ----
-        */
+        # ---- POLICIES ----
         # Check about:policies#documentation for options.
         policies = {
           DisableTelemetry = true;
@@ -74,9 +77,7 @@ in {
           SearchBar = "unified"; # alternative: "separate"
           PasswordManagerEnabled = false;
 
-          /*
-          ---- EXTENSIONS ----
-          */
+          # ---- EXTENSIONS ----
           # Check about:support for extension/add-on ID strings.
           # Valid strings for installation_mode are "allowed", "blocked",
           # "force_installed" and "normal_installed".
@@ -119,25 +120,24 @@ in {
             };
 
             "search@kagi.com" = {
-              "install_url" = "https://addons.mozilla.org/en-US/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
+              "install_url" =
+                "https://addons.mozilla.org/en-US/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
               installation_mode = "force_installed";
             };
 
-            "addon@darkreader.org" = {
-              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/darkreader/latest.xpi";
-              installation_mode = "force_installed";
-            };
+            #"addon@darkreader.org" = {
+            #  install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/darkreader/latest.xpi";
+            #  installation_mode = "force_installed";
+            #};
 
             # Tridactyl
-            "tridactyl.vim@cmcaine.co.uk" = {
-              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/tridactyl-vim/latest.xpi";
-              installation_mode = "force_installed";
-            };
+            #"tridactyl.vim@cmcaine.co.uk" = {
+            #  install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/tridactyl-vim/latest.xpi";
+            #  installation_mode = "force_installed";
+            #};
           };
 
-          /*
-          ---- PREFERENCES ----
-          */
+          # ---- PREFERENCES ----
           # Check about:config for options.
           Preferences = {
             "extensions.pocket.enabled" = lock-false;
