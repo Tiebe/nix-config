@@ -77,7 +77,7 @@
         vencord.enable = false;
         wezterm.enable = true;
         vscode.enable = true;
-        firefox.enable = true;
+        # firefox.enable = true;
         media.enable = true;
         parsec.enable = false;
         office.enable = true;

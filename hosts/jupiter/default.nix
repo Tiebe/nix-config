@@ -5,7 +5,8 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   lowpower = pkgs.writeShellScriptBin "lowpower" ''
     #!/usr/bin/env bash
     kscreen-doctor \
@@ -19,7 +20,8 @@
       output.DisplayPort-0.mode.90 \
       output.DisplayPort-2.mode.139
   '';
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ./modules.nix
@@ -29,11 +31,14 @@ in {
     inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-latest-lto-x86_64-v3;
 
   boot.initrd = {
-    kernelModules = ["amdgpu"];
+    kernelModules = [ "amdgpu" ];
     verbose = false;
   };
 
-  services.xserver.videoDrivers = ["amdgpu" "modesetting"];
+  services.xserver.videoDrivers = [
+    "amdgpu"
+    "modesetting"
+  ];
 
   networking.hostName = "jupiter";
   networking.hostId = "4ca1d14d";
@@ -45,13 +50,15 @@ in {
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 
-  systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
+  systemd.tmpfiles.rules = [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
   hardware.graphics = {
     extraPackages = with pkgs; [
       libva
       libva-utils
     ];
   };
+
+  programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
     lowpower
