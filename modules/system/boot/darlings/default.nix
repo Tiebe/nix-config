@@ -19,7 +19,7 @@ let
 
     ROOT_SOURCE=$(findmnt -no SOURCE /)
     ROOT_FSTYPE=$(findmnt -no FSTYPE /)
-    ROOT_SOURCE="''${ROOT_SOURCE%%[*]"
+    ROOT_SOURCE="''${ROOT_SOURCE%%[[]*}"
 
     if [ "$ROOT_FSTYPE" != "btrfs" ]; then
       echo "fs-diff: / is not mounted on btrfs" >&2
