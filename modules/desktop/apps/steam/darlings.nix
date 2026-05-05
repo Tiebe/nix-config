@@ -16,61 +16,54 @@ in {
       lib,
       ...
     }: let
-      homePrefix =
+      homeRoot =
         if evictCfg.enable
-        then "${evictCfg.configDir}/"
-        else "";
+        then evictCfg.configDir
+        else "/home/tiebe";
 
       persistRoot =
         if evictCfg.enable
         then "/persist${evictCfg.configDir}"
         else "/persist/home/tiebe";
 
-      steamPath = path: "${homePrefix}${path}";
-      persistPath = path: "${persistRoot}${path}";
+      steamStateRoot = "${homeRoot}/.steam";
+      steamDataRoot = "${homeRoot}/.local/share/Steam";
+      steamConfigRoot = "${homeRoot}/.config/steam";
+      daedalicRoot = "${homeRoot}/.local/share/Daedalic Entertainment GmbH";
+
+      steamStatePersistRoot = "${persistRoot}/.steam";
+      steamDataPersistRoot = "${persistRoot}/.local/share/Steam";
+      steamConfigPersistRoot = "${persistRoot}/.config/steam";
+      daedalicPersistRoot = "${persistRoot}/.local/share/Daedalic Entertainment GmbH";
     in {
-      home.file."${steamPath ".steam/exportedsettings.json"}".source =
-        config.lib.file.mkOutOfStoreSymlink "${persistPath "/.steam/exportedsettings.json"}";
-
-      home.file."${steamPath ".steam/registry.vdf"}".source =
-        config.lib.file.mkOutOfStoreSymlink "${persistPath "/.steam/registry.vdf"}";
-
-      home.file."${steamPath ".steam/steam.pid"}".source =
-        config.lib.file.mkOutOfStoreSymlink "${persistPath "/.steam/steam.pid"}";
-
-      home.file."${steamPath ".steam/steam.token"}".source =
-        config.lib.file.mkOutOfStoreSymlink "${persistPath "/.steam/steam.token"}";
-
-      home.file."${steamPath ".local/share/Daedalic Entertainment GmbH"}".source =
-        config.lib.file.mkOutOfStoreSymlink "${persistPath "/.local/share/Daedalic Entertainment GmbH"}";
-
-      xdg.dataFile."Steam".source =
-        if evictCfg.enable
-        then config.lib.file.mkOutOfStoreSymlink "/persist${evictCfg.configDir}/local/share/Steam"
-        else config.lib.file.mkOutOfStoreSymlink "/persist/home/tiebe/.local/share/Steam";
-      xdg.configFile."steam".source =
-        if evictCfg.enable
-        then config.lib.file.mkOutOfStoreSymlink "/persist${evictCfg.configDir}/steam"
-        else config.lib.file.mkOutOfStoreSymlink "/persist/home/tiebe/.config/steam";
-
-      # Create the target directories in /persist before symlinks are set up
+      # Create the target directories in /persist and the live symlink parents
       home.activation.createSteamPersistDirs = lib.hm.dag.entryBefore ["writeBoundary"] ''
         $DRY_RUN_CMD ${pkgs.coreutils}/bin/mkdir -p $VERBOSE_ARG \
-          ${
-          if evictCfg.enable
-          then ''
-            "/persist${evictCfg.configDir}/.steam" \
-            "/persist${evictCfg.configDir}/.local/share/Daedalic Entertainment GmbH" \
-            "/persist${evictCfg.configDir}/local/share/Steam" \
-            "/persist${evictCfg.configDir}/steam"
-          ''
-          else ''
-            "/persist/home/tiebe/.steam" \
-            "/persist/home/tiebe/.local/share/Daedalic Entertainment GmbH" \
-            "/persist/home/tiebe/.local/share/Steam" \
-            "/persist/home/tiebe/.config/steam"
-          ''
-        }
+          "${steamStatePersistRoot}" \
+          "${steamDataPersistRoot}" \
+          "${steamConfigPersistRoot}" \
+          "${daedalicPersistRoot}" \
+          "${steamStateRoot}" \
+          "${homeRoot}/.local/share" \
+          "${homeRoot}/.config"
+      '';
+
+      home.activation.createSteamSymlinks = lib.hm.dag.entryAfter ["createSteamPersistDirs" "writeBoundary"] ''
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${steamStateRoot}/exportedsettings.json"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${steamStateRoot}/registry.vdf"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${steamStateRoot}/steam.pid"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${steamStateRoot}/steam.token"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${steamDataRoot}"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${steamConfigRoot}"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/rm -rf $VERBOSE_ARG "${daedalicRoot}"
+
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${steamStatePersistRoot}/exportedsettings.json" "${steamStateRoot}/exportedsettings.json"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${steamStatePersistRoot}/registry.vdf" "${steamStateRoot}/registry.vdf"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${steamStatePersistRoot}/steam.pid" "${steamStateRoot}/steam.pid"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${steamStatePersistRoot}/steam.token" "${steamStateRoot}/steam.token"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${steamDataPersistRoot}" "${steamDataRoot}"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${steamConfigPersistRoot}" "${steamConfigRoot}"
+        $DRY_RUN_CMD ${pkgs.coreutils}/bin/ln -sfn "${daedalicPersistRoot}" "${daedalicRoot}"
       '';
     };
   };
