@@ -33,10 +33,6 @@ in
     # XDG portal for screen sharing, file pickers, etc.
     xdg.portal = {
       enable = true;
-      config.common.default = [
-        "hyprland"
-        "gtk"
-      ];
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 

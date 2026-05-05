@@ -14,6 +14,7 @@ let
     types
     ;
   cfg = config.tiebe.desktop.apps.firefox;
+  evictCfg = config.tiebe.system.boot.evictDarlings;
 
   lock-false = {
     Value = false;
@@ -23,6 +24,18 @@ let
     Value = true;
     Status = "locked";
   };
+
+  # Wrap Firefox with HOME override for evict darlings
+  firefoxPackage =
+    if evictCfg.enable then
+      pkgs.firefox.overrideAttrs (oldAttrs: {
+        buildCommand = oldAttrs.buildCommand + ''
+          wrapProgram "$executablePath" \
+            --set 'HOME' '${evictCfg.configDir}'
+        '';
+      })
+    else
+      pkgs.firefox;
 in
 {
   imports = [ ./darlings.nix ];
@@ -39,7 +52,7 @@ in
     programs = {
       firefox = {
         enable = true;
-        package = pkgs.firefox;
+        package = firefoxPackage;
         #package = pkgs.librewolf;
         # ---- POLICIES ----
         # Check about:policies#documentation for options.
