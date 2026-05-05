@@ -17,10 +17,47 @@ let
   fs-diff = pkgs.writeShellScriptBin "fs-diff" ''
     set -euo pipefail
 
-    OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/root-blank 9999999)
-    OLD_TRANSID=''${OLD_TRANSID#transid marker was }
+    ROOT_SOURCE=$(findmnt -no SOURCE /)
+    ROOT_FSTYPE=$(findmnt -no FSTYPE /)
 
-    sudo btrfs subvolume find-new "/mnt/root" "$OLD_TRANSID" |
+    if [ "$ROOT_FSTYPE" != "btrfs" ]; then
+      echo "fs-diff: / is not mounted on btrfs" >&2
+      exit 1
+    fi
+
+    cleanup_mounts=()
+
+    cleanup() {
+      for mountpoint in "${cleanup_mounts[@]}"; do
+        sudo umount "$mountpoint"
+        rmdir "$mountpoint"
+      done
+    }
+
+    trap cleanup EXIT
+
+    resolve_mount() {
+      subvol="$1"
+      candidate="$2"
+
+      if [ -d "$candidate" ] && [ "$(findmnt -rn -T "$candidate" -o TARGET -n 2>/dev/null || true)" = "$candidate" ]; then
+        printf '%s\n' "$candidate"
+        return 0
+      fi
+
+      mountpoint=$(mktemp -d /tmp/fs-diff.XXXXXX)
+      cleanup_mounts+=("$mountpoint")
+      sudo mount -o "subvol=$subvol,ro" "$ROOT_SOURCE" "$mountpoint"
+      printf '%s\n' "$mountpoint"
+    }
+
+    ROOT_MOUNT=$(resolve_mount root /mnt/root)
+    ROOT_BLANK_MOUNT=$(resolve_mount root-blank /mnt/root-blank)
+
+    OLD_TRANSID=$(sudo btrfs subvolume find-new "$ROOT_BLANK_MOUNT" 9999999)
+    OLD_TRANSID=${OLD_TRANSID#transid marker was }
+
+    sudo btrfs subvolume find-new "$ROOT_MOUNT" "$OLD_TRANSID" |
       sed '$d' |
       cut -f17- -d' ' |
       sort |
