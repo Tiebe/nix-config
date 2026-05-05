@@ -60,7 +60,7 @@
 
         programs = {
           # waybar.enable = true;
-          rofi.enable = true;
+          #rofi.enable = true;
           # swaync.enable = true;
           # wlogout.enable = true;
         };
@@ -87,6 +87,7 @@
         httptoolkit.enable = true;
         localsend.enable = true;
         intellij.enable = true;
+        rofi.enable = true;
       };
     };
 
