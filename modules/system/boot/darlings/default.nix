@@ -28,7 +28,7 @@ let
     cleanup_mounts=()
 
     cleanup() {
-      for mountpoint in "${cleanup_mounts[@]}"; do
+      for mountpoint in "''${cleanup_mounts[@]}"; do
         sudo umount "$mountpoint"
         rmdir "$mountpoint"
       done
@@ -55,7 +55,7 @@ let
     ROOT_BLANK_MOUNT=$(resolve_mount root-blank /mnt/root-blank)
 
     OLD_TRANSID=$(sudo btrfs subvolume find-new "$ROOT_BLANK_MOUNT" 9999999)
-    OLD_TRANSID=${OLD_TRANSID#transid marker was }
+    OLD_TRANSID=''${OLD_TRANSID#transid marker was }
 
     sudo btrfs subvolume find-new "$ROOT_MOUNT" "$OLD_TRANSID" |
       sed '$d' |
