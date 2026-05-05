@@ -44,6 +44,7 @@ in
           "dialout"
           "input"
         ];
+        uid = 1000;
       };
     };
 

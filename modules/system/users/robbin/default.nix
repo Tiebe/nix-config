@@ -26,6 +26,7 @@ in {
         hashedPasswordFile = config.age.secrets.passwordRobbin.path;
         isNormalUser = true;
         extraGroups = ["wheel" "dialout" "input"];
+        uid = 1001;
       };
     };
 
