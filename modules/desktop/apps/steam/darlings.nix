@@ -21,7 +21,10 @@ in {
         then "${evictCfg.configDir}/"
         else "";
 
-      persistRoot = "/persist/home/tiebe";
+      persistRoot =
+        if evictCfg.enable
+        then "/persist${evictCfg.configDir}"
+        else "/persist/home/tiebe";
 
       steamPath = path: "${homePrefix}${path}";
       persistPath = path: "${persistRoot}${path}";
