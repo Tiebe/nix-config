@@ -77,7 +77,7 @@
         vencord.enable = false;
         wezterm.enable = true;
         vscode.enable = true;
-        # firefox.enable = true;
+        firefox.enable = true;
         media.enable = true;
         parsec.enable = false;
         office.enable = true;
@@ -105,19 +105,20 @@
 
     services = {
       # winapps.enable = true;
-      docker.enable = true;
-      printing.enable = true;
+      #docker.enable = true;
+      podman.enable = true;
+#      printing.enable = true;
       ssh-server.enable = true;
       # sunshine.enable = true;
       # vr.enable = true;
       gpg.enable = true;
-      lorri.enable = true;
-      cachix.enable = true;
-      openvpn.enable = true;
+      #lorri.enable = true;
+      #cachix.enable = true;
+      #openvpn.enable = true;
       # nextcloud.enable = true;
       devenv.enable = true;
-      variety.enable = true;
-      bitfocus-companion.enable = true;
+      #variety.enable = true;
+      #bitfocus-companion.enable = true;
       ratbagd.enable = true;
       nova-chatmix.enable = true;
       boinc.enable = false;
