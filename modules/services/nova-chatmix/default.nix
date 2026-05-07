@@ -55,6 +55,7 @@ in {
             "PATH=${lib.makeBinPath [
               pkgs.pipewire
               pkgs.pulseaudio
+              pkgs.busybox
             ]}"
           ];
         };

@@ -35,14 +35,7 @@ in
     # XDG portal for screen sharing, file pickers, etc.
     xdg.portal = {
       enable = true;
-      config.common.default = [
-        "hyprland"
-        "gtk"
-      ];
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
-        xdg-desktop-portal-gtk
-      ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
     # Essential Wayland session packages

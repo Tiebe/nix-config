@@ -6,8 +6,9 @@
   inherit (lib) mkIf;
   cfg = config.tiebe.desktop.apps.wezterm;
   darlings = config.tiebe.system.boot.darlings;
+  evict = config.tiebe.system.boot.evictDarlings;
 in {
-  config = mkIf (darlings.enable && cfg.enable) {
+  config = mkIf (darlings.enable && cfg.enable && evict.enable) {
     # Wezterm config persistence
     home-manager.users.tiebe = {config, ...}: {
       home.file.".config/wezterm".source =
