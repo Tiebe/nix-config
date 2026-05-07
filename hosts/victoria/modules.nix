@@ -59,7 +59,6 @@
 
         programs = {
           waybar.enable = true;
-          rofi.enable = true;
           swaync.enable = true;
           wlogout.enable = true;
         };
@@ -84,6 +83,7 @@
         lmstudio.enable = true;
         opencode.enable = true;
         forgecode.enable = true;
+        rofi.enable = true;
       };
     };
 
