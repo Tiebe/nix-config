@@ -10,10 +10,12 @@ let
   inherit (lib)
     mkEnableOption
     mkIf
+    mkAfter
     mkOption
     types
     ;
   cfg = config.tiebe.desktop.hyprland;
+  wallpaper = ../theme/wallpaper.jpg;
 in
 {
   options = {
@@ -77,7 +79,14 @@ in
     programs.dconf.enable = true;
 
     home-manager.users.tiebe = {
-      services.hyprpaper.enable = true;
+      services.hyprpaper = {
+        enable = true;
+        settings = {
+          preload = [ "${wallpaper}" ];
+          wallpaper = [ ",${wallpaper}" ];
+          splash = false;
+        };
+      };
 
       wayland.windowManager.hyprland = {
         enable = true;
@@ -163,7 +172,7 @@ in
           };
 
           # Clipboard history
-          exec-once = [
+          exec-once = mkAfter [
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
             "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"

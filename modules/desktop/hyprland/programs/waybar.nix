@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkAfter mkEnableOption mkIf;
   cfg = config.tiebe.desktop.hyprland;
   waybarCfg = config.tiebe.desktop.hyprland.programs.waybar;
 
@@ -558,7 +558,7 @@ in {
       home.packages = [brightness-control];
 
       # Launch waybar-wrapper and monitor listener via Hyprland exec-once
-      wayland.windowManager.hyprland.settings.exec-once = [
+      wayland.windowManager.hyprland.settings.exec-once = mkAfter [
         "${waybar-wrapper}/bin/waybar-wrapper"
         "${monitor-listener}/bin/hyprland-monitor-listener"
       ];
