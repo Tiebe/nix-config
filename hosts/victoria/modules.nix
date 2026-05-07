@@ -5,8 +5,9 @@
   config,
   pkgs,
   ...
-}: {
-  imports = [../../modules];
+}:
+{
+  imports = [ ../../modules ];
 
   config.tiebe = {
     base = {
@@ -81,8 +82,8 @@
         intellij.enable = true;
         localsend.enable = true;
         lmstudio.enable = true;
-        opencode.enable = true;
-        forgecode.enable = true;
+        # opencode.enable = true;
+        # forgecode.enable = true;
         rofi.enable = true;
       };
     };
