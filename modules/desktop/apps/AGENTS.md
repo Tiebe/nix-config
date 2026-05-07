@@ -59,4 +59,3 @@
 ## KNOWN ISSUES
 
 - `opendeck.nix` is a loose file, not in a subfolder — legacy pattern
-- `rofi/` exists here AND in `desktop/hyprland/programs/` — duplicate coverage
