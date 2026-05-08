@@ -39,7 +39,7 @@
       "model": "anthropic/claude-sonnet-4-6"
     },
     "sisyphus-junior": {
-      "model": "litellm/gpt-5.5",
+      "model": "anthropic/claude-opus-4-7",
       "variant": "medium"
     },
     "librarian": {
@@ -51,7 +51,7 @@
       "model": "anthropic/claude-opus-4-7"
     },
     "ultrabrain": {
-      "model": "litellm/gpt-5.5",
+      "model": "anthropic/claude-opus-4-7",
       "variant": "xhigh"
     },
     "deep": {
@@ -69,10 +69,10 @@
       "variant": "medium"
     },
     "unspecified-high": {
-      "model": "litellm/claude-sonnet-4-6"
+      "model": "anthropic/claude-opus-4-7"
     },
     "writing": {
-      "model": "litellm/claude-sonnet-4-6"
+      "model": "anthropic/claude-sonnet-4-6"
     }
   }
 }

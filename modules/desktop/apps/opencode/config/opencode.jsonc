@@ -9,25 +9,13 @@
     "anthropic": {
       "options": {
         "baseURL": "https://litellm.tiebe.me/v1"
-      },
-      "models": {
-        "claude-opus-4.6": {
-          "options": {
-            "maxContextWindow": 200000
-          }
-        },
-        "claude-sonnet-4.6": {
-          "options": {
-            "maxContextWindow": 200000
-          }
-        }
       }
     },
     "litellm": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LiteLLM",
       "options": {
-        "baseURL": "http://127.0.0.1:4001/v1"
+        "baseURL": "https://api.apipro.me/v1"
       },
       "models": {
         "gpt-5.5": {
