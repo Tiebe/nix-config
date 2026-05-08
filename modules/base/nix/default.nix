@@ -50,6 +50,7 @@ in {
             "antigravity"
             "parsec-bin"
             "obsidian"
+            "claude-desktop"
           ];
       };
     };

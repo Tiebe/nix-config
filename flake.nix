@@ -78,6 +78,7 @@
     forgecode.inputs.nixpkgs.follows = "nixpkgs";
 
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
+    claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
