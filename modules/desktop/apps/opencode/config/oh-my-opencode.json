@@ -11,7 +11,7 @@
       "model": "litellm/claude-opus-4-7"
     },
     "hephaestus": {
-      "model": "litellm/gpt-5.3-codex",
+      "model": "litellm/gpt-5.5",
       "variant": "medium"
     },
     "oracle": {
@@ -39,7 +39,7 @@
       "model": "litellm/claude-sonnet-4-6"
     },
     "sisyphus-junior": {
-      "model": "litellm/gpt-5.3-codex",
+      "model": "litellm/gpt-5.5",
       "variant": "medium"
     },
     "librarian": {
