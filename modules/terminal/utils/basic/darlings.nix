@@ -18,7 +18,7 @@
     then "/persist${evictCfg.configDir}/ssh"
     else "/persist/home/tiebe/.ssh";
 in {
-  config = mkIf (darlings.enable && cfg.enable) {
+  config = mkIf (darlings.enable && cfg.enable && evictCfg.enable) {
     programs.ssh = mkIf (evictCfg.enable && cfg.enable) {
       extraConfig = ''
         Host *
