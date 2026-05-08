@@ -8,7 +8,7 @@
   },
   "agents": {
     "sisyphus": {
-      "model": "litellm/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7"
     },
     "hephaestus": {
       "model": "litellm/gpt-5.5",
@@ -25,7 +25,7 @@
       "model": "litellm/gemini-3-flash"
     },
     "prometheus": {
-      "model": "litellm/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7"
     },
     "metis": {
       "model": "litellm/gpt-5.5",
@@ -36,7 +36,7 @@
       "variant": "xhigh"
     },
     "atlas": {
-      "model": "litellm/claude-sonnet-4-6"
+      "model": "anthropic/claude-sonnet-4-6"
     },
     "sisyphus-junior": {
       "model": "litellm/gpt-5.5",
@@ -48,17 +48,17 @@
   },
   "categories": {
     "visual-engineering": {
-      "model": "litellm/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7"
     },
     "ultrabrain": {
       "model": "litellm/gpt-5.5",
       "variant": "xhigh"
     },
     "deep": {
-      "model": "litellm/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7"
     },
     "artistry": {
-      "model": "litellm/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7"
     },
     "quick": {
       "model": "litellm/gpt-5.4-mini",
