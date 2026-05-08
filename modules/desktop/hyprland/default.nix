@@ -145,7 +145,6 @@ in
           # Dwindle layout
           dwindle = {
             # pseudotile = true;
-            smart_split = true;
             preserve_split = true;
             force_split = 2;
           };

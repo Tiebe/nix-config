@@ -67,7 +67,8 @@
       };
 
       apps = {
-        # opencode.enable = true;
+        opencode.enable = true;
+        claude-code.enable = true;
         forgecode.enable = false;
         steam.enable = true;
         discord = {

@@ -32,19 +32,8 @@
       })
     else null;
 
-  desktopPackage = let
-    desktop = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.desktop or null;
-    outputHashes = import ./opencode-hashes.nix;
-  in
-    if desktop != null
-    then
-      (desktop.override {opencode = opencodePackage;}).overrideAttrs (_: {
-        cargoDeps = pkgs.rustPlatform.importCargoLock {
-          lockFile = inputs.opencode + "/packages/desktop/src-tauri/Cargo.lock";
-          inherit outputHashes;
-        };
-      })
-    else null;
+  desktopPackage = pkgs.opencode;
+  # desktopPackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
 
   # Determine config directory based on evict-darlings
   opencodeConfigDir =
@@ -68,9 +57,29 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      opencodePackage
-      desktopPackage
+      pkgs.opencode
+      pkgs.opencode-desktop
     ];
+
+  systemd.services.opencode-litellm-proxy = {
+    description = "OpenCode LiteLLM compatibility proxy";
+
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+
+      ExecStart = "${pkgs.nodejs}/bin/node ${./proxy.mjs}";
+
+      Restart = "always";
+      RestartSec = 3;
+    };
+  };
+
+
 
     home-manager.users.tiebe = {
       hmConfig,
@@ -86,18 +95,18 @@ in {
       # Merge API key into existing auth.json (preserving OAuth tokens)
       home.activation.mergeOpencodeAuthJson = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${opencodeLocalDir}"
-        API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.apiproKey.path})"
+        API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.litellmKey.path})"
         AUTH_FILE="${opencodeLocalDir}/auth.json"
 
         if [ -f "$AUTH_FILE" ]; then
           # Merge into existing file at top level
           $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" \
-            '.anthropic = {type: "api", key: $apiKey} | ."apipro-openai" = {type: "api", key: $apiKey}' \
+            '.anthropic = {type: "api", key: $apiKey} | ."litellm" = {type: "api", key: $apiKey}' \
             "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
         else
           # Create new file with top-level key
           $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY" \
-            '{anthropic: {type: "api", key: $apiKey}, "apipro-openai": {type: "api", key: $apiKey}}' \
+            '{anthropic: {type: "api", key: $apiKey}, "litellm": {type: "api", key: $apiKey}}' \
             > "$AUTH_FILE"
         fi
       '';

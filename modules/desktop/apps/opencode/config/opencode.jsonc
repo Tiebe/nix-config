@@ -3,22 +3,12 @@
   "plugin": [
     "oh-my-opencode@latest",
     "cc-safety-net",
-    "@tarquinen/opencode-dcp@latest",
-    "opencode-gemini-auth@latest"
+    "@tarquinen/opencode-dcp@latest"
   ],
   "provider": {
-    "zai-coding-plan": {
-      "models": {
-        "glm-5": {
-          "options": {
-            "maxContextWindow": 100000
-          }
-        }
-      }
-    },
     "anthropic": {
       "options": {
-        "baseURL": "https://api.apipro.me/v1"
+        "baseURL": "https://litellm.tiebe.me/v1"
       },
       "models": {
         "claude-opus-4.6": {
@@ -33,60 +23,36 @@
         }
       }
     },
-    "apipro-openai": {
+    "litellm": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "APIPro OpenAI",
+      "name": "LiteLLM",
       "options": {
-        "baseURL": "https://api.apipro.me/v1"
+        "baseURL": "http://127.0.0.1:4001/v1"
       },
       "models": {
-        "gpt-5": {
-          "name": "GPT-5"
-        },
-        "gpt-5-codex": {
-          "name": "GPT-5 Codex"
-        },
-        "gpt-5-codex-mini": {
-          "name": "GPT-5 Codex Mini"
-        },
-        "gpt-5.1": {
-          "name": "GPT-5.1"
-        },
-        "gpt-5.1-codex": {
-          "name": "GPT-5.1 Codex"
-        },
-        "gpt-5.1-codex-max": {
-          "name": "GPT-5.1 Codex Max"
-        },
-        "gpt-5.1-codex-mini": {
-          "name": "GPT-5.1 Codex Mini"
-        },
-        "gpt-5.2": {
-          "name": "GPT-5.2"
-        },
-        "gpt-5.2-codex": {
-          "name": "GPT-5.2 Codex"
-        },
-        "gpt-5.3-codex": {
-          "name": "GPT-5.3 Codex"
-        },
-        "gpt-5.4": {
-          "name": "GPT-5.4"
+        "gpt-5.5": {
+          "name": "GPT-5.5",
+          "limit": {
+            "context": 256000,
+            "output": 128000
+          }
         },
         "gpt-5.4-mini": {
           "name": "GPT-5.4 Mini"
+        },
+        "minimax-m2.7": {
+          "name": "Minimax M2.7"
         }
       }
     }
   },
-  "mcp": {
-    "firefox-devtools": {
-      "type": "local",
-      "command": ["npx", "-y", "firefox-devtools-mcp@latest", "--viewport", "1280x720"],
-      "environment": {
-        "START_URL": "about:home"
-      },
-      "enabled": true
+  "agent": {
+    "direct": {
+      "description": "Direct OpenCode agent without plugin orchestration",
+      "mode": "primary",
+      "model": "litellm/gpt-5.4-mini"
     }
-  }
+  },
+  "model": "litellm/gpt-5.5",
+  "small_model": "litellm/gpt-5.4-mini"
 }

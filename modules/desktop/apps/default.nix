@@ -21,6 +21,7 @@
     ./opencode
     ./forgecode
     ./rofi
+    ./claude-code
     ./opendeck.nix
   ];
 }

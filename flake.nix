@@ -76,6 +76,8 @@
 
     forgecode.url = "github:antinomyhq/forge";
     forgecode.inputs.nixpkgs.follows = "nixpkgs";
+
+    claude-desktop.url = "github:aaddrick/claude-desktop-debian";
   };
 
   outputs = {
@@ -91,6 +93,7 @@
     nixvirt,
     nixos-hardware,
     disko,
+    claude-desktop,
     ...
   } @ inputs: let
     inherit (self) outputs;

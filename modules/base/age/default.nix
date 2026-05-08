@@ -75,6 +75,11 @@ in {
           file = agePath "opencode/apipro-key.age";
           owner = "tiebe";
         };
+
+        litellmKey = {
+          file = agePath "opencode/litellm-key.age";
+          owner = "tiebe";
+        };
       };
 
       identityPaths = [
