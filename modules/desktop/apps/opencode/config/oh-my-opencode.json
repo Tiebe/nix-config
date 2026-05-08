@@ -8,61 +8,57 @@
   },
   "agents": {
     "sisyphus": {
-      "model": "litellm/gpt-5.5",
-      "variant": "xhigh",
+      "model": "litellm/claude-opus-4-7"
     },
     "hephaestus": {
-      "model": "litellm/gpt-5.5",
-      "variant": "medium",
+      "model": "litellm/gpt-5.3-codex",
+      "variant": "medium"
     },
     "oracle": {
       "model": "litellm/gpt-5.5",
-      "variant": "high",
+      "variant": "high"
     },
     "explore": {
-      "model": "litellm/gpt-5.4-mini",
+      "model": "litellm/gpt-5.4-mini"
     },
     "multimodal-looker": {
-      "model": "litellm/gpt-5.5",
+      "model": "litellm/gemini-3-flash"
     },
     "prometheus": {
-      "model": "litellm/gpt-5.5",
-      "variant": "xhigh",
+      "model": "litellm/claude-opus-4-7"
     },
     "metis": {
       "model": "litellm/gpt-5.5",
-      "variant": "xhigh",
+      "variant": "xhigh"
     },
     "momus": {
       "model": "litellm/gpt-5.5",
-      "variant": "xhigh",
+      "variant": "xhigh"
     },
     "atlas": {
-      "model": "litellm/gpt-5.5",
+      "model": "litellm/claude-sonnet-4-6"
     },
     "sisyphus-junior": {
-      "model": "litellm/gpt-5.4-mini",
-      "variant": "medium",
+      "model": "litellm/gpt-5.3-codex",
+      "variant": "medium"
     },
     "librarian": {
-      "model": "litellm/minimax-m2.7",
+      "model": "litellm/kimi-k2.6"
     }
   },
   "categories": {
     "visual-engineering": {
-      "model": "litellm/gpt-5.5"
+      "model": "litellm/claude-opus-4-7"
     },
     "ultrabrain": {
       "model": "litellm/gpt-5.5",
       "variant": "xhigh"
     },
     "deep": {
-      "model": "litellm/gpt-5.5",
-      "variant": "medium"
+      "model": "litellm/claude-opus-4-7"
     },
     "artistry": {
-      "model": "litellm/gpt-5.5",
-      "variant": "xhigh"
+      "model": "litellm/claude-opus-4-7"
     },
     "quick": {
       "model": "litellm/gpt-5.4-mini",
@@ -73,12 +69,10 @@
       "variant": "medium"
     },
     "unspecified-high": {
-      "model": "litellm/gpt-5.5",
-      "variant": "medium"
+      "model": "litellm/claude-sonnet-4-6"
     },
     "writing": {
-      "model": "litellm/gpt-5.5",
-      "variant": "medium"
+      "model": "litellm/claude-sonnet-4-6"
     }
   }
 }
