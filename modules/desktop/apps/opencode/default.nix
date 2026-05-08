@@ -88,7 +88,7 @@ in {
     }: {
       home.file = {
         "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
-        "${opencodeConfigDir}/oh-my-opencode.json".source = ./config/oh-my-opencode.json;
+        "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
         "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
       };
 
