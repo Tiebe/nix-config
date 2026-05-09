@@ -1,14 +1,21 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
-  "background_task": {
-    "maxToolCalls": 9007199254740991,
-    "circuitBreaker": {
-      "enabled": false
-    }
-  },
   "agents": {
     "sisyphus": {
-      "model": "anthropic/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "litellm/k2p5"
+        },
+        {
+          "model": "litellm/gpt-5.5",
+          "variant": "medium"
+        },
+        {
+          "model": "litellm/glm-5"
+        }
+      ]
     },
     "hephaestus": {
       "model": "litellm/gpt-5.5",
@@ -16,60 +23,167 @@
     },
     "oracle": {
       "model": "litellm/gpt-5.5",
-      "variant": "high"
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-opus-4-7",
+          "variant": "max"
+        }
+      ]
+    },
+    "librarian": {
+      "model": "litellm/gpt-5.4-mini-fast",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-haiku-4-5"
+        },
+        {
+          "model": "litellm/gpt-5.4-nano"
+        }
+      ]
     },
     "explore": {
-      "model": "litellm/gpt-5.4-mini"
+      "model": "litellm/gpt-5.4-mini-fast",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-haiku-4-5"
+        },
+        {
+          "model": "litellm/gpt-5.4-nano"
+        }
+      ]
     },
     "multimodal-looker": {
-      "model": "litellm/gemini-3-flash"
+      "model": "litellm/gpt-5.5",
+      "variant": "medium",
+      "fallback_models": [
+        {
+          "model": "litellm/glm-4.6v"
+        },
+        {
+          "model": "litellm/gpt-5-nano"
+        }
+      ]
     },
     "prometheus": {
-      "model": "anthropic/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.5",
+          "variant": "high"
+        }
+      ]
     },
     "metis": {
-      "model": "litellm/gpt-5.5",
-      "variant": "xhigh"
+      "model": "anthropic/claude-opus-4-7",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.5",
+          "variant": "high"
+        },
+        {
+          "model": "litellm/k2p5"
+        }
+      ]
     },
     "momus": {
       "model": "litellm/gpt-5.5",
-      "variant": "xhigh"
+      "variant": "xhigh",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-opus-4-7",
+          "variant": "max"
+        }
+      ]
     },
     "atlas": {
-      "model": "anthropic/claude-sonnet-4-6"
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.5",
+          "variant": "medium"
+        }
+      ]
     },
     "sisyphus-junior": {
-      "model": "anthropic/claude-opus-4-7",
-      "variant": "medium"
-    },
-    "librarian": {
-      "model": "litellm/kimi-k2.6"
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.5",
+          "variant": "medium"
+        }
+      ]
     }
   },
   "categories": {
     "visual-engineering": {
-      "model": "anthropic/claude-opus-4-7"
+      "model": "litellm/glm-5",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-opus-4-7",
+          "variant": "max"
+        },
+        {
+          "model": "litellm/k2p5"
+        }
+      ]
     },
     "ultrabrain": {
-      "model": "anthropic/claude-opus-4-7",
-      "variant": "xhigh"
+      "model": "litellm/gpt-5.5",
+      "variant": "xhigh",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-opus-4-7",
+          "variant": "max"
+        }
+      ]
     },
     "deep": {
-      "model": "anthropic/claude-opus-4-7"
+      "model": "litellm/gpt-5.5",
+      "variant": "medium",
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-opus-4-7",
+          "variant": "max"
+        }
+      ]
     },
     "artistry": {
-      "model": "anthropic/claude-opus-4-7"
+      "model": "anthropic/claude-opus-4-7",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.5"
+        }
+      ]
     },
     "quick": {
       "model": "litellm/gpt-5.4-mini",
-      "variant": "low"
+      "fallback_models": [
+        {
+          "model": "anthropic/claude-haiku-4-5"
+        }
+      ]
     },
     "unspecified-low": {
-      "model": "litellm/gpt-5.4-mini",
-      "variant": "medium"
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.3-codex",
+          "variant": "medium"
+        }
+      ]
     },
     "unspecified-high": {
-      "model": "anthropic/claude-opus-4-7"
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": [
+        {
+          "model": "litellm/gpt-5.3-codex",
+          "variant": "medium"
+        }
+      ]
     },
     "writing": {
       "model": "anthropic/claude-sonnet-4-6"
