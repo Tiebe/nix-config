@@ -59,6 +59,7 @@ in {
     environment.systemPackages = [
       pkgs.opencode
       pkgs.opencode-desktop
+      pkgs.rtk
     ];
 
   systemd.services.opencode-litellm-proxy = {
@@ -90,6 +91,7 @@ in {
         "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
         "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
         "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
+        "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
       };
 
       # Merge API key into existing auth.json (preserving OAuth tokens)
