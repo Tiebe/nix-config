@@ -5,15 +5,22 @@
     "cc-safety-net",
     "@tarquinen/opencode-dcp@latest"
   ],
+  "mcp": {
+    "jadx-mcp-server": {
+      "enabled": true,
+      "type": "local",
+      "command": ["uv", "--directory", "/home/tiebe/Downloads/jadx-mcp-server", "run", "jadx_mcp_server.py"],
+    }
+  },
   "provider": {
     "anthropic": {
       "options": {
-        "baseURL": "https://litellm.tiebe.me/v1"
+        "baseURL": "https://api.apipro.me/v1"
       }
     },
     "litellm": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "LiteLLM",
+      "name": "APIPro",
       "options": {
         "baseURL": "https://api.apipro.me/v1"
       },
@@ -59,9 +66,6 @@
         },
         "glm-5.1": {
           "name": "GLM 5.1"
-        },
-        "kimi-k2.6": {
-          "name": "Kimi K2.6"
         },
         "minimax-m2.7": {
           "name": "Minimax M2.7"

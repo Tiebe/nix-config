@@ -51,6 +51,7 @@ in {
             "parsec-bin"
             "obsidian"
             "claude-desktop"
+            "claude-code"
           ];
       };
     };

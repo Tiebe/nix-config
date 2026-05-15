@@ -75,14 +75,19 @@ in
       services.hyprpaper = {
         enable = true;
         settings = {
-          preload = [ "${wallpaper}" ];
-          wallpaper = [ ",${wallpaper}" ];
+          wallpaper = [ 
+            {
+              monitor = "";
+              path = "${wallpaper}";
+            }
+         ];
           splash = false;
         };
       };
 
       wayland.windowManager.hyprland = {
         enable = true;
+        #configType = "lua";
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
         systemd = {
           enable = true;

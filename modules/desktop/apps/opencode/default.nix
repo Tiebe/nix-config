@@ -110,62 +110,64 @@ in
     ];
 
     environment.systemPackages = [
-      pkgs.opencode
+      opencodePackage
       pkgs.opencode-desktop
-      pkgs.rtk
+      pkgs.jadx
+      pkgs.uv
+#      pkgs.rtk
     ];
 
-    systemd.services.opencode-litellm-proxy = {
-      description = "OpenCode LiteLLM compatibility proxy";
+  # systemd.services.opencode-litellm-proxy = {
+  #   description = "OpenCode LiteLLM compatibility proxy";
 
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
+  #   after = [ "network-online.target" ];
+  #   wants = [ "network-online.target" ];
 
-      wantedBy = [ "multi-user.target" ];
+  #   wantedBy = [ "multi-user.target" ];
 
-      serviceConfig = {
-        Type = "simple";
+  #   serviceConfig = {
+  #     Type = "simple";
 
-        ExecStart = "${pkgs.nodejs}/bin/node ${./proxy.mjs}";
+  #     ExecStart = "${pkgs.nodejs}/bin/node ${./proxy.mjs}";
 
-        Restart = "always";
-        RestartSec = 3;
+  #     Restart = "always";
+  #     RestartSec = 3;
+  #   };
+  # };
+
+
+
+    home-manager.users.tiebe = {
+      hmConfig,
+      lib,
+      ...
+    }: {
+      home.file = {
+        "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
+        "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
+        "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
+#        "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
       };
-    };
 
-    home-manager.users.tiebe =
-      {
-        hmConfig,
-        lib,
-        ...
-      }:
-      {
-        home.file = {
-          "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
-          "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
-          "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
-          "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
-        };
+      # Merge API key into existing auth.json (preserving OAuth tokens)
+      home.activation.mergeOpencodeAuthJson = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${opencodeLocalDir}"
+        LITE_API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.litellmKey.path})"
+        API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.apiproKey.path})"
+        AUTH_FILE="${opencodeLocalDir}/auth.json"
 
-        # Merge API key into existing auth.json (preserving OAuth tokens)
-        home.activation.mergeOpencodeAuthJson = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${opencodeLocalDir}"
-          LITE_API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.litellmKey.path})"
-          API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.apiproKey.path})"
-          AUTH_FILE="${opencodeLocalDir}/auth.json"
-
-          if [ -f "$AUTH_FILE" ]; then
-            # Merge into existing file at top level
-            $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" --arg liteApiKey "$LITE_API_KEY" \
-              '.anthropic = {type: "api", key: $liteApiKey} | ."litellm" = {type: "api", key: $apiKey}' \
-              "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
-          else
-            # Create new file with top-level key
-            $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY"  --arg liteApiKey "$LITE_API_KEY" \
-              '{anthropic: {type: "api", key: $liteApiKey}, "litellm": {type: "api", key: $apiKey}}' \
-              > "$AUTH_FILE"
-          fi
-        '';
+        if [ -f "$AUTH_FILE" ]; then
+          # Merge into existing file at top level
+          $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" --arg liteApiKey "$LITE_API_KEY" \
+            '.anthropic = {type: "api", key: $apiKey} | ."litellm" = {type: "api", key: $apiKey}' \
+            "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
+        else
+          # Create new file with top-level key
+          $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY"  --arg liteApiKey "$LITE_API_KEY" \
+            '{anthropic: {type: "api", key: $apiKey}, "litellm": {type: "api", key: $apiKey}}' \
+            > "$AUTH_FILE"
+        fi
+      '';
       };
   };
 }

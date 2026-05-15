@@ -19,6 +19,6 @@ in
 
   config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.claude-desktop.overlays.default ];
-    environment.systemPackages = [ pkgs.claude-desktop ];
+    environment.systemPackages = [ pkgs.claude-desktop-fhs pkgs.kotlin-language-server pkgs.claude-code pkgs.nodejs];
   };
 }

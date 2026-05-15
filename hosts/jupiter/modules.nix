@@ -116,7 +116,7 @@
       #lorri.enable = true;
       #cachix.enable = true;
       #openvpn.enable = true;
-      # nextcloud.enable = true;
+      nextcloud.enable = true;
       devenv.enable = true;
       #variety.enable = true;
       #bitfocus-companion.enable = true;

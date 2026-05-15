@@ -2,18 +2,12 @@
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
   "agents": {
     "sisyphus": {
-      "model": "anthropic/claude-opus-4-7",
-      "variant": "max",
+      "model": "litellm/gpt-5.5",
+      "variant": "xhigh",
       "fallback_models": [
         {
-          "model": "litellm/kimi-k2.6"
-        },
-        {
-          "model": "litellm/gpt-5.5",
-          "variant": "medium"
-        },
-        {
-          "model": "litellm/glm-5.1"
+          "model": "anthropic/claude-opus-4-7",
+          "variant": "max"
         }
       ]
     },
@@ -79,9 +73,6 @@
         {
           "model": "litellm/gpt-5.5",
           "variant": "high"
-        },
-        {
-          "model": "litellm/kimi-k2.6"
         }
       ]
     },
@@ -105,10 +96,10 @@
       ]
     },
     "sisyphus-junior": {
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "litellm/gpt-5.5",
       "fallback_models": [
         {
-          "model": "litellm/gpt-5.5",
+          "model": "anthropic/claude-sonnet-4-6",
           "variant": "medium"
         }
       ]
@@ -121,9 +112,6 @@
         {
           "model": "anthropic/claude-opus-4-7",
           "variant": "max"
-        },
-        {
-          "model": "litellm/kimi-k2.6"
         }
       ]
     },
@@ -165,16 +153,16 @@
       ]
     },
     "unspecified-low": {
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "litellm/gpt-5.3-codex",
       "fallback_models": [
         {
-          "model": "litellm/gpt-5.3-codex",
+          "model": "litellm/gpt-5.5",
           "variant": "medium"
         }
       ]
     },
     "unspecified-high": {
-      "model": "anthropic/claude-sonnet-4-6",
+      "model": "litellm/gpt-5.5",
       "fallback_models": [
         {
           "model": "litellm/gpt-5.3-codex",
@@ -183,7 +171,7 @@
       ]
     },
     "writing": {
-      "model": "anthropic/claude-sonnet-4-6"
+      "model": "litellm/gpt-5.5"
     }
   }
 }
