@@ -77,18 +77,18 @@ in {
                   }
                 ];
               };
-              # passive=true: this stream won't be selected as default source
               "capture.props" = {
                 "node.name" = "effect_input.arctis-eq";
-                "node.target" = "alsa_input.usb-SteelSeries_Arctis_Nova_Pro_Wireless-00.mono-fallback";
-                "node.passive" = true;
+                "target.object" = "alsa_input.usb-SteelSeries_Arctis_Nova_Pro_Wireless-00.mono-fallback";
                 "audio.position" = ["MONO"];
+                "stream.dont-remix" = true;
               };
               "playback.props" = {
                 "node.name" = "arctis-eq-out";
                 "node.description" = "Arctis Mic (EQ)";
                 "media.class" = "Audio/Source/Virtual";
                 "audio.position" = ["MONO"];
+                "node.dont-fallback" = true;
               };
             };
           }
