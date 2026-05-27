@@ -5,190 +5,203 @@
   config,
   pkgs,
   ...
-}:
-{
-  imports = [ ../../modules ];
+}: {
+  imports = [../../modules];
 
-  config.tiebe = {
-    base = {
-      age.enable = true;
-      locale.enable = true;
-      nix.enable = true;
-    };
-
-    system = {
-      boot = {
-        darlings.enable = true;
-        # evictDarlings.enable = true;
-        systemd-boot.enable = true;
-      };
-
-      networking = {
-        network.enable = true;
-        wifi.enable = true;
-        bluetooth.enable = true;
-        tailscale.enable = true;
-      };
-
-      users.tiebe = {
-        enable = true;
-        email.enable = true;
-      };
-
-      users.robbin.enable = true;
-
-      sound.enable = true;
-      #sound.deepFilter.enable = true;
-      ddc.enable = true;
-    };
-
-    theme.catppuccin.enable = true;
-
-    desktop = {
-      # plasma.enable = true;
-
-      hyprland = {
-        enable = true;
-        idle.enable = true;
-        lock.enable = true;
-
-        animations.enable = true;
-        binds.enable = true;
-        windowrules.enable = true;
-
-        greetd.enable = true;
-
-        programs = {
-          waybar.enable = true;
-          # rofi.enable = true;
-          swaync.enable = true;
-          wlogout.enable = true;
-        };
-      };
-
-      apps = {
-        opencode.enable = true;
-        claude-code.enable = true;
-        forgecode.enable = false;
-        steam.enable = true;
-        discord = {
-          enable = true;
-          vencord = true;
-        };
-        vencord.enable = false;
-        wezterm.enable = true;
-        vscode.enable = true;
-        firefox.enable = true;
-        media.enable = true;
-        parsec.enable = false;
-        office.enable = true;
-        minecraft.enable = true;
-        thunderbird.enable = true;
-        obsidian.enable = true;
-        httptoolkit.enable = true;
-        localsend.enable = true;
-        intellij.enable = true;
-        rofi.enable = true;
-      };
-    };
-
-    terminal = {
-      zsh.enable = true;
-      utils = {
-        basic.enable = true;
-        advanced.enable = true;
-
-        # neovim.enable = true;
-        fastfetch.enable = true;
-        helix.enable = true;
-      };
-    };
-
-    services = {
-      # winapps.enable = true;
-      #docker.enable = true;
-      podman.enable = true;
-      #      printing.enable = true;
-      ssh-server.enable = true;
-      # sunshine.enable = true;
-      # vr.enable = true;
-      gpg.enable = true;
-      #lorri.enable = true;
-      #cachix.enable = true;
-      #openvpn.enable = true;
-      nextcloud.enable = true;
-      devenv.enable = true;
-      #variety.enable = true;
-      #bitfocus-companion.enable = true;
-      ratbagd.enable = true;
-      nova-chatmix.enable = true;
-      boinc.enable = false;
-      windows = {
-        enable = false;
-        uuid = "03560274-043c-0572-b206-1e0700080009";
-
-        cpu = {
-          cores = 9;
-          threads = 2;
-        };
-
-        memory = 29;
-        diskPath = "/persist/windows/windows.qcow2";
-        nvramPath = "/persist/windows/nvram.fd";
-
-        sysinfo = {
-          bios = {
-            vendor = "American Megatrends International, LLC.";
-            version = "FK";
-            date = "09/27/2024";
-          };
-
-          system = {
-            manufacturer = "Gigabyte Technology Co., Ltd.";
-            product = "Z790 AORUS ELITE AX";
-            version = "Default string";
-            serial = "Default string";
-            family = "Z790 MB";
-          };
-        };
-
-        gpuModule = "amdgpu";
-
-        pciDevices = [
+  config = {
+    security.sudo.extraRules = [
+      {
+        users = ["tiebe"];
+        commands = [
           {
-            type = "pci";
-            mode = "subsystem";
-            managed = true;
-            source = {
-              domain = "0x0000";
-              bus = "0x03";
-              slot = "0x00";
-              function = "0x0";
-            };
-          }
-          {
-            type = "pci";
-            mode = "subsystem";
-            managed = true;
-            source = {
-              domain = "0x0000";
-              bus = "0x03";
-              slot = "0x00";
-              function = "0x1";
-            };
-          }
-          {
-            type = "pci";
-            mode = "subsystem";
-            managed = true;
-            source = {
-              domain = "0x0000";
-              bus = "0x00";
-              slot = "0x14";
-              function = "0x0";
-            };
+            command = "/run/current-system/sw/bin/nixos-rebuild";
+            options = ["NOPASSWD"];
           }
         ];
+      }
+    ];
+
+    tiebe = {
+      base = {
+        age.enable = true;
+        locale.enable = true;
+        nix.enable = true;
+      };
+
+      system = {
+        boot = {
+          darlings.enable = true;
+          # evictDarlings.enable = true;
+          systemd-boot.enable = true;
+        };
+
+        networking = {
+          network.enable = true;
+          wifi.enable = true;
+          bluetooth.enable = true;
+          tailscale.enable = true;
+        };
+
+        users.tiebe = {
+          enable = true;
+          email.enable = true;
+        };
+
+        users.robbin.enable = true;
+
+        sound.enable = true;
+        #sound.deepFilter.enable = true;
+        ddc.enable = true;
+      };
+
+      theme.catppuccin.enable = true;
+
+      desktop = {
+        # plasma.enable = true;
+
+        hyprland = {
+          enable = true;
+          idle.enable = true;
+          lock.enable = true;
+
+          animations.enable = true;
+          binds.enable = true;
+          windowrules.enable = true;
+
+          greetd.enable = true;
+
+          programs = {
+            waybar.enable = true;
+            # rofi.enable = true;
+            swaync.enable = true;
+            wlogout.enable = true;
+          };
+        };
+
+        apps = {
+          opencode.enable = true;
+          claude-code.enable = true;
+          forgecode.enable = false;
+          steam.enable = true;
+          discord = {
+            enable = true;
+            vencord = true;
+          };
+          vencord.enable = false;
+          wezterm.enable = true;
+          vscode.enable = true;
+          firefox.enable = true;
+          media.enable = true;
+          parsec.enable = false;
+          office.enable = true;
+          minecraft.enable = true;
+          thunderbird.enable = true;
+          obsidian.enable = true;
+          httptoolkit.enable = true;
+          localsend.enable = true;
+          intellij.enable = true;
+          rofi.enable = true;
+        };
+      };
+
+      terminal = {
+        zsh.enable = true;
+        utils = {
+          basic.enable = true;
+          advanced.enable = true;
+
+          # neovim.enable = true;
+          fastfetch.enable = true;
+          helix.enable = true;
+        };
+      };
+
+      services = {
+        # winapps.enable = true;
+        #docker.enable = true;
+        podman.enable = true;
+        #      printing.enable = true;
+        ssh-server.enable = true;
+        # sunshine.enable = true;
+        # vr.enable = true;
+        gpg.enable = true;
+        #lorri.enable = true;
+        #cachix.enable = true;
+        #openvpn.enable = true;
+        nextcloud.enable = true;
+        devenv.enable = true;
+        #variety.enable = true;
+        #bitfocus-companion.enable = true;
+        ratbagd.enable = true;
+        nova-chatmix.enable = true;
+        boinc.enable = false;
+        windows = {
+          enable = false;
+          uuid = "03560274-043c-0572-b206-1e0700080009";
+
+          cpu = {
+            cores = 9;
+            threads = 2;
+          };
+
+          memory = 29;
+          diskPath = "/persist/windows/windows.qcow2";
+          nvramPath = "/persist/windows/nvram.fd";
+
+          sysinfo = {
+            bios = {
+              vendor = "American Megatrends International, LLC.";
+              version = "FK";
+              date = "09/27/2024";
+            };
+
+            system = {
+              manufacturer = "Gigabyte Technology Co., Ltd.";
+              product = "Z790 AORUS ELITE AX";
+              version = "Default string";
+              serial = "Default string";
+              family = "Z790 MB";
+            };
+          };
+
+          gpuModule = "amdgpu";
+
+          pciDevices = [
+            {
+              type = "pci";
+              mode = "subsystem";
+              managed = true;
+              source = {
+                domain = "0x0000";
+                bus = "0x03";
+                slot = "0x00";
+                function = "0x0";
+              };
+            }
+            {
+              type = "pci";
+              mode = "subsystem";
+              managed = true;
+              source = {
+                domain = "0x0000";
+                bus = "0x03";
+                slot = "0x00";
+                function = "0x1";
+              };
+            }
+            {
+              type = "pci";
+              mode = "subsystem";
+              managed = true;
+              source = {
+                domain = "0x0000";
+                bus = "0x00";
+                slot = "0x14";
+                function = "0x0";
+              };
+            }
+          ];
+        };
       };
     };
   };
