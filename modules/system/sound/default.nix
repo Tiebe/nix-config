@@ -33,6 +33,25 @@ in {
       pulse.enable = true;
       wireplumber.enable = true;
 
+      # Combined mic: mixes Arctis (EQ'd) and SoloCast into one virtual source.
+      # Uses arctis-eq-out from the filter-chain.service instance.
+      extraConfig.pipewire-pulse."10-combined-mic" = {
+        "pulse.cmd" = [
+          {
+            cmd = "load-module";
+            args = "module-null-sink sink_name=combined-mic sink_properties=device.description=Combined-Microphone rate=48000 channels=1 channel_map=mono";
+          }
+          {
+            cmd = "load-module";
+            args = "module-loopback source=arctis-eq-out sink=combined-mic latency_msec=1";
+          }
+          {
+            cmd = "load-module";
+            args = "module-loopback source=alsa_input.usb-HP__Inc_HyperX_SoloCast-00.HiFi__Mic__source sink=combined-mic latency_msec=1";
+          }
+        ];
+      };
+
       # Arctis EQ runs as a separate pipewire filter-chain instance via the
       # built-in filter-chain.service, avoiding WirePlumber default-nodes-api crashes.
       configPackages = [
