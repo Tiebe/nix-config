@@ -23,5 +23,6 @@
     ./rofi
     ./claude-code
     ./opendeck.nix
+    ./easyeffects
   ];
 }

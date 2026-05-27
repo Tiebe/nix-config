@@ -101,6 +101,7 @@
           localsend.enable = true;
           intellij.enable = true;
           rofi.enable = true;
+          easyeffects.enable = true;
         };
       };
 
