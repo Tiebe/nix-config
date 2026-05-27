@@ -33,17 +33,15 @@ in {
       pulse.enable = true;
       wireplumber.enable = true;
 
-      # Arctis headset mic EQ loaded via WirePlumber to avoid timing issues
-      # that break default-nodes-api when using context.modules in pipewire.conf.d
-      wireplumber.extraConfig."20-arctis-eq" = {
-        "wireplumber.profiles" = {
-          main."filter.source.arctis-eq" = "required";
-        };
-        "wireplumber.components" = [
+      # Arctis headset mic EQ: boosts presence (3.5kHz) and high shelf (6kHz+)
+      # to match the SoloCast's fuller frequency response.
+      # capture side is passive (stream) so WirePlumber doesn't treat it as a
+      # default source candidate; playback side is the virtual source apps use.
+      extraConfig.pipewire."20-arctis-eq" = {
+        "context.modules" = [
           {
             name = "libpipewire-module-filter-chain";
-            type = "pw-module";
-            arguments = {
+            args = {
               "node.name" = "arctis-eq";
               "node.description" = "Arctis Mic (EQ)";
               "media.name" = "Arctis Mic (EQ)";
@@ -79,10 +77,11 @@ in {
                   }
                 ];
               };
+              # passive=true: this stream won't be selected as default source
               "capture.props" = {
                 "node.name" = "effect_input.arctis-eq";
                 "node.target" = "alsa_input.usb-SteelSeries_Arctis_Nova_Pro_Wireless-00.mono-fallback";
-                "media.class" = "Audio/Source";
+                "node.passive" = true;
                 "audio.position" = ["MONO"];
               };
               "playback.props" = {
@@ -90,10 +89,8 @@ in {
                 "node.description" = "Arctis Mic (EQ)";
                 "media.class" = "Audio/Source/Virtual";
                 "audio.position" = ["MONO"];
-                "node.passive" = true;
               };
             };
-            provides = "filter.source.arctis-eq";
           }
         ];
       };
