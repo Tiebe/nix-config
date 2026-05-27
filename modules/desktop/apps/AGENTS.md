@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-22 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+23 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -10,6 +10,7 @@
 |--------|-----------|-------|
 | bitwarden | simple | Password manager |
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
+| easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |
 | firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
 | httptoolkit | simple | HTTP debugging proxy |
 | lmstudio | simple | LLM interface |
