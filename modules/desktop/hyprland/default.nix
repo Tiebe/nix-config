@@ -139,7 +139,6 @@ in {
             follow_mouse = 1;
             sensitivity = 0;
             accel_profile = "flat";
-            scroll_factor = 0.3;
             touchpad = {
               natural_scroll = true;
               tap-to-click = true;
