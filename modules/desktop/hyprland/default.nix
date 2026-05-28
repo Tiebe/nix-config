@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkAfter
@@ -16,8 +16,7 @@ let
     ;
   cfg = config.tiebe.desktop.hyprland;
   wallpaper = ../theme/wallpaper.jpg;
-in
-{
+in {
   options = {
     tiebe.desktop.hyprland = {
       enable = mkEnableOption "the Hyprland compositor";
@@ -35,7 +34,7 @@ in
     # XDG portal for screen sharing, file pickers, etc.
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
     };
 
     # Essential Wayland session packages
@@ -56,9 +55,9 @@ in
     # Polkit agent for auth dialogs
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -75,12 +74,12 @@ in
       services.hyprpaper = {
         enable = true;
         settings = {
-          wallpaper = [ 
+          wallpaper = [
             {
               monitor = "";
               path = "${wallpaper}";
             }
-         ];
+          ];
           splash = false;
         };
       };
@@ -91,7 +90,7 @@ in
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
         systemd = {
           enable = true;
-          variables = [ "--all" ];
+          variables = ["--all"];
         };
         settings = {
           # Monitor configuration
@@ -140,6 +139,7 @@ in
             follow_mouse = 1;
             sensitivity = 0;
             accel_profile = "flat";
+            scroll_factor = 0.3;
             touchpad = {
               natural_scroll = true;
               tap-to-click = true;
