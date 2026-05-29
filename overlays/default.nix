@@ -12,7 +12,7 @@
 
       src = prev.fetchurl {
         url = "https://github.com/bambulab/BambuStudio/releases/download/v${version}/BambuStudio_ubuntu-22.04-v${version}-20260514170313.AppImage";
-        sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        sha256 = "1rsbwh9d5a35gmifilad4vsxkfdsnh81gbhm59d3y66sxa5ml95f";
       };
 
       profile = ''
