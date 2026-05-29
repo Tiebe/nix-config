@@ -18,6 +18,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [outputs.overlays.modifications];
     environment.systemPackages = [pkgs.bambu-studio];
   };
 }
