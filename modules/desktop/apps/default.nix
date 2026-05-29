@@ -1,28 +1,29 @@
 {inputs, ...}: {
   imports = [
-    ./steam
-    ./vencord
-    ./wezterm
-    ./firefox
-    ./vscode
-    ./media
-    ./minecraft
-    ./office
-    ./parsec
-    ./thunderbird
-    ./obsidian
-    ./httptoolkit
+    ./bambu-studio
     ./bitwarden
-    ./legcord
-    ./intellij
+    ./claude-code
     ./discord
+    ./easyeffects
+    ./firefox
+    ./forgecode
+    ./httptoolkit
+    ./intellij
+    ./legcord
     ./localsend
     ./lmstudio
+    ./media
+    ./minecraft
+    ./obsidian
+    ./office
     ./opencode
-    ./forgecode
-    ./rofi
-    ./claude-code
     ./opendeck.nix
-    ./easyeffects
+    ./parsec
+    ./rofi
+    ./steam
+    ./thunderbird
+    ./vencord
+    ./vscode
+    ./wezterm
   ];
 }

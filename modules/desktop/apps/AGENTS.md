@@ -2,12 +2,13 @@
 
 ## OVERVIEW
 
-23 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+24 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
 | Module | Complexity | Notes |
 |--------|-----------|-------|
+| bambu-studio | simple | 3D printer slicer (AppImage via overlay) |
 | bitwarden | simple | Password manager |
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
 | easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |

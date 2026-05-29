@@ -79,6 +79,7 @@
         };
 
         apps = {
+          bambu-studio.enable = true;
           opencode.enable = true;
           claude-code.enable = true;
           forgecode.enable = false;
