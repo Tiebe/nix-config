@@ -13,7 +13,6 @@
       };
       extracted = prev.appimageTools.extractType2 {
         inherit version src;
-        name = "bambu-studio";
         pname = "bambu-studio";
       };
       wrapped = prev.appimageTools.wrapType2 {
