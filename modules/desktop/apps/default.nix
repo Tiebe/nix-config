@@ -7,6 +7,7 @@
     ./easyeffects
     ./firefox
     ./forgecode
+    ./fusion360
     ./httptoolkit
     ./intellij
     ./legcord

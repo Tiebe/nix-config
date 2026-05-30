@@ -79,6 +79,13 @@
 
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixpkgs-discord-krisp.url = "github:FlameFlag/nixpkgs/flameflag/push-vmswpuqmvzpt";
+
+    fusion360-installer-src = {
+      url = "git+https://codeberg.org/cryinkfly/Autodesk-Fusion-360-on-Linux?ref=main";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -95,6 +102,7 @@
     nixos-hardware,
     disko,
     claude-desktop,
+    nixpkgs-discord-krisp,
     ...
   } @ inputs: let
     inherit (self) outputs;
