@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkAfter mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.desktop.hyprland;
   waybarCfg = config.tiebe.desktop.hyprland.programs.waybar;
 
@@ -101,8 +101,7 @@
     esac
   '';
 
-  # Base waybar config (JSON) — brightness modules injected at runtime by wrapper
-  baseConfig = pkgs.writeText "waybar-base-config.json" (builtins.toJSON {
+  waybarSettings = {
     mainBar = {
       layer = "top";
       position = "top";
@@ -115,12 +114,9 @@
       "modules-left" = ["hyprland/workspaces"];
       "modules-center" = ["clock"];
       "modules-right" = [
-        "mpris"
-        # brightness modules inserted here at runtime
         "cpu"
         "memory"
         "temperature"
-        "pulseaudio"
         "battery"
         "tray"
         "custom/notification"
@@ -165,25 +161,6 @@
         };
       };
 
-      mpris = {
-        format = "{player_icon} {dynamic}";
-        "format-paused" = "{status_icon} <i>{dynamic}</i>";
-        "player-icons" = {
-          default = "";
-          firefox = "";
-          spotify = "";
-        };
-        "status-icons" = {
-          paused = "";
-        };
-        "dynamic-order" = [
-          "title"
-          "artist"
-        ];
-        "dynamic-len" = 30;
-        "tooltip-format" = "{player}: {title} - {artist} ({album})";
-      };
-
       cpu = {
         format = " {usage}%";
         tooltip = true;
@@ -201,27 +178,6 @@
         "critical-threshold" = 80;
         "format-critical" = " {temperatureC}°C";
         interval = 5;
-      };
-
-      pulseaudio = {
-        format = "{icon} {volume}%";
-        "format-bluetooth" = "{icon} {volume}%";
-        "format-muted" = " muted";
-        "format-icons" = {
-          headphone = "";
-          "hands-free" = "";
-          headset = "";
-          phone = "";
-          portable = "";
-          car = "";
-          default = [
-            ""
-            ""
-            ""
-          ];
-        };
-        "on-click" = "pavucontrol";
-        "scroll-step" = 5;
       };
 
       battery = {
@@ -268,10 +224,9 @@
         escape = true;
       };
     };
-  });
+  };
 
-  # Base CSS — brightness selectors appended at runtime by wrapper
-  baseCss = pkgs.writeText "waybar-base-style.css" ''
+  waybarStyle = ''
     /* Catppuccin Mocha */
     @define-color base #1e1e2e;
     @define-color mantle #181825;
@@ -346,10 +301,6 @@
       font-weight: bold;
     }
 
-    #mpris {
-      color: @mauve;
-    }
-
     #cpu {
       color: @blue;
     }
@@ -364,14 +315,6 @@
 
     #temperature.critical {
       color: @red;
-    }
-
-    #pulseaudio {
-      color: @lavender;
-    }
-
-    #pulseaudio.muted {
-      color: @overlay0;
     }
 
     #battery {
@@ -415,121 +358,15 @@
     }
 
     /* Module spacing */
-    #mpris,
     #cpu,
     #memory,
     #temperature,
-    #pulseaudio,
     #battery,
     #tray,
     #custom-notification {
       padding: 0 10px;
       margin: 4px 0;
     }
-  '';
-
-  # Waybar wrapper: detects monitors at runtime, injects brightness widgets, execs waybar
-  waybar-wrapper = pkgs.writeShellScriptBin "waybar-wrapper" ''
-        set -euo pipefail
-
-        RUNTIME_DIR="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/waybar"
-        mkdir -p "$RUNTIME_DIR"
-
-        # Wait for Hyprland and detect monitors
-        monitors=()
-        for _attempt in $(seq 1 30); do
-          while IFS= read -r m; do
-            [[ -n "$m" ]] && monitors+=("$m")
-          done < <(hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '.[].name' 2>/dev/null || true)
-          [[ ''${#monitors[@]} -gt 0 ]] && break
-          sleep 1
-          monitors=()
-        done
-
-        if [[ ''${#monitors[@]} -eq 0 ]]; then
-          # No monitors detected yet — run with base config
-          exec ${pkgs.waybar}/bin/waybar -c ${baseConfig} -s ${baseCss}
-        fi
-
-        # Build JSON array of monitor names for jq
-        monitors_json=$(printf '%s\n' "''${monitors[@]}" | ${pkgs.jq}/bin/jq -R . | ${pkgs.jq}/bin/jq -s .)
-
-        # Inject per-monitor brightness modules into waybar config
-        ${pkgs.jq}/bin/jq \
-          --argjson monitors "$monitors_json" \
-          --arg bin "${brightness-control}/bin/brightness-control" \
-          '
-          ($monitors | map("custom/brightness-" + .)) as $mod_names |
-          ($monitors | map({
-            key: ("custom/brightness-" + .),
-            value: {
-              format: ("\u2600 " + . + " {}%"),
-              exec: ($bin + " " + . + " get"),
-              "on-scroll-up": ($bin + " " + . + " up"),
-              "on-scroll-down": ($bin + " " + . + " down"),
-              "on-click": ($bin + " " + . + " set 100"),
-              "on-click-right": ($bin + " " + . + " set 50"),
-              interval: 5,
-              "tooltip-format": (. + " brightness: {}% (scroll to adjust)")
-            }
-          }) | from_entries) as $configs |
-          .mainBar["modules-right"] as $right |
-          ([$right | to_entries[] | select(.value == "mpris") | .key] |
-            if length > 0 then .[0] + 1 else 0 end) as $idx |
-          .mainBar["modules-right"] = ($right[:$idx] + $mod_names + $right[$idx:]) |
-          .mainBar += $configs
-          ' ${baseConfig} > "$RUNTIME_DIR/config.json"
-
-        # Augment CSS: base + per-monitor brightness selectors
-        cp ${baseCss} "$RUNTIME_DIR/style.css"
-        for mon in "''${monitors[@]}"; do
-          css_id="custom-brightness-''${mon}"
-          cat >> "$RUNTIME_DIR/style.css" <<CSS
-
-        #$css_id {
-          color: @yellow;
-          padding: 0 10px;
-          margin: 4px 0;
-        }
-    CSS
-        done
-
-        exec ${pkgs.waybar}/bin/waybar -c "$RUNTIME_DIR/config.json" -s "$RUNTIME_DIR/style.css"
-  '';
-
-  # Monitor listener: restarts waybar-wrapper when displays are added/removed
-  monitor-listener = pkgs.writeShellScriptBin "hyprland-monitor-listener" ''
-    set -euo pipefail
-
-    # Wait for Hyprland IPC socket
-    SOCKET=""
-    for _i in $(seq 1 30); do
-      SOCKET="''${XDG_RUNTIME_DIR}/hypr/''${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
-      [[ -S "$SOCKET" ]] && break
-      sleep 1
-    done
-
-    if [[ ! -S "$SOCKET" ]]; then
-      echo "Hyprland IPC socket not found" >&2
-      exit 1
-    fi
-
-    ${pkgs.socat}/bin/socat -U - "UNIX-CONNECT:$SOCKET" | while IFS= read -r line; do
-      case "$line" in
-        monitoradded*|monitorremoved*)
-          # Debounce and let Hyprland settle
-          sleep 2
-          # Invalidate DDC cache — monitor set changed
-          rm -f /tmp/brightness-ddc-cache
-          # Kill existing waybar-wrapper and waybar instances, then relaunch
-          ${pkgs.procps}/bin/pkill -f waybar-wrapper || true
-          ${pkgs.procps}/bin/pkill waybar || true
-          sleep 1
-          ${waybar-wrapper}/bin/waybar-wrapper &
-          disown
-          ;;
-      esac
-    done
   '';
 in {
   options = {
@@ -557,17 +394,11 @@ in {
 
       home.packages = [brightness-control];
 
-      # Launch waybar-wrapper and monitor listener via Hyprland exec-once
-      wayland.windowManager.hyprland.settings.exec-once = mkAfter [
-        "${waybar-wrapper}/bin/waybar-wrapper"
-        "${monitor-listener}/bin/hyprland-monitor-listener"
-      ];
-
-      # Keep programs.waybar.enable for catppuccin module compatibility
-      # Config and CSS are managed by waybar-wrapper at runtime
       programs.waybar = {
         enable = true;
-        systemd.enable = false;
+        systemd.enable = true;
+        settings = waybarSettings;
+        style = waybarStyle;
       };
     };
   };
