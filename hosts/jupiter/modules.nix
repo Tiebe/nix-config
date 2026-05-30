@@ -80,6 +80,7 @@
 
         apps = {
           bambu-studio.enable = true;
+          fusion360.enable = true;
           opencode.enable = true;
           claude-code.enable = true;
           forgecode.enable = false;
