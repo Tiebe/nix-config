@@ -205,8 +205,8 @@ sed -i 's|cp -f "\$SELECTED_DIRECTORY/downloads/Qt6WebEngineCore\.dll" "\$QT6_WE
 # sed -i '/timeout -k 5m 1m wine.*FusionClientInstaller\.exe.*--quiet/s/^/    # /' "$PATCHED_INSTALLER"
 
 # Disable the run_wine_autodesk_fusion call that launches Fusion after installation
-# Only comment out the function call, not the function definition
-sed -i '/run_wine_autodesk_fusion/{/function/!s/^/    # /}' "$PATCHED_INSTALLER"
+# Match only bare calls (no parentheses), not the function definition line
+sed -i '/run_wine_autodesk_fusion[^(]/s/^/    # /' "$PATCHED_INSTALLER"
 
 # Disable the xdg-open sponsors link
 sed -i '/xdg-open.*cryinkfly\.com\/sponsors/s/^/    # /' "$PATCHED_INSTALLER"
