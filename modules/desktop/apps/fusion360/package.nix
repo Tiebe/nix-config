@@ -19,6 +19,7 @@
   xorg,
   mokutil,
   wineWowPackages,
+  wineWow64Packages,
   winetricks,
   gettext,
 }:
