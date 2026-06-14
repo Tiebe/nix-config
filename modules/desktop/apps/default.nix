@@ -20,6 +20,7 @@
     ./opencode
     ./opendeck.nix
     ./parsec
+    ./quantframe
     ./rofi
     ./steam
     ./thunderbird
