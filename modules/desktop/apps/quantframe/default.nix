@@ -18,6 +18,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [pkgs.quantframe];
+    environment.systemPackages = [(pkgs.callPackage ./package.nix {})];
   };
 }
