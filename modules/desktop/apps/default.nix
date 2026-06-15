@@ -27,5 +27,6 @@
     ./vencord
     ./vscode
     ./wezterm
+    ./wfinfo-ng
   ];
 }

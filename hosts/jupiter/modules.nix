@@ -84,12 +84,9 @@
           opencode.enable = true;
           claude-code.enable = true;
           forgecode.enable = false;
+          discord.enable = false;
           steam.enable = true;
-          discord = {
-            enable = true;
-            vencord = true;
-          };
-          vencord.enable = false;
+          vencord.enable = true;
           wezterm.enable = true;
           vscode.enable = true;
           firefox.enable = true;
@@ -105,6 +102,7 @@
           rofi.enable = true;
           easyeffects.enable = true;
           quantframe.enable = true;
+          wfinfo-ng.enable = true;
         };
       };
 
