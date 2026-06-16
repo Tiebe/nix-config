@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
@@ -19,7 +19,8 @@ let
   baseOpencodePackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default or null;
 
   opencodePackage =
-    if baseOpencodePackage != null then
+    if baseOpencodePackage != null
+    then
       baseOpencodePackage.overrideAttrs (oldAttrs: {
         # Workaround for https://github.com/anomalyco/opencode/issues/18447
         postFixup =
@@ -29,25 +30,24 @@ let
               --prefix LD_LIBRARY_PATH : ${pkgs.stdenv.cc.cc.lib}/lib
           '';
       })
-    else
-      null;
+    else null;
 
   desktopPackage = pkgs.opencode;
   # desktopPackage = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
 
   # Determine config directory based on evict-darlings
   opencodeConfigDir =
-    if evictCfg.enable then "${evictCfg.configDir}/opencode" else "/home/tiebe/.config/opencode";
+    if evictCfg.enable
+    then "${evictCfg.configDir}/opencode"
+    else "/home/tiebe/.config/opencode";
 
   # Determine local/share directory based on evict-darlings
   opencodeLocalDir =
-    if evictCfg.enable then
-      "${evictCfg.configDir}/local/share/opencode"
-    else
-      "/home/tiebe/.local/share/opencode";
-in
-{
-  imports = [ ./darlings.nix ];
+    if evictCfg.enable
+    then "${evictCfg.configDir}/local/share/opencode"
+    else "/home/tiebe/.local/share/opencode";
+in {
+  imports = [./darlings.nix];
 
   options = {
     tiebe.desktop.apps.opencode = {
@@ -56,86 +56,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [
-      (final: prev: {
-        rtk = prev.rustPlatform.buildRustPackage (finalAttrs: {
-          pname = "rtk";
-          version = "0.39.0";
-
-          src = prev.fetchFromGitHub {
-            owner = "rtk-ai";
-            repo = "rtk";
-            tag = "v${finalAttrs.version}";
-            hash = "sha256-TX4MtR/rq61wxHWYJAO2x3CYvZtkCoXynf45dRC+MVo=";
-          };
-
-          strictDeps = true;
-          __structuredAttrs = true;
-
-          cargoHash = "sha256-s3AtUftUZtzhlep8R/ZuxwmGELIZpqbQXqLTD+aS4Ro=";
-
-          nativeBuildInputs = [
-            prev.makeWrapper
-            prev.pkg-config
-          ];
-
-          buildInputs = [
-            prev.sqlite
-          ];
-
-          postInstall = ''
-            wrapProgram $out/bin/rtk \
-              --prefix PATH : ${prev.lib.makeBinPath [ prev.gitMinimal ]}
-          '';
-
-          nativeCheckInputs = [
-            prev.gitMinimal
-            prev.writableTmpDirAsHomeHook
-          ];
-
-          nativeInstallCheckInputs = [
-            prev.versionCheckHook
-          ];
-          doInstallCheck = true;
-
-          meta = prev.lib.attrsets.recursiveUpdate (prev.rtk.meta or { }) {
-            description = "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands";
-            homepage = "https://github.com/rtk-ai/rtk";
-            changelog = "https://github.com/rtk-ai/rtk/blob/${finalAttrs.src.tag}/CHANGELOG.md";
-            license = prev.lib.licenses.mit;
-            mainProgram = "rtk";
-          };
-        });
-      })
-    ];
-
     environment.systemPackages = [
-      opencodePackage
+      pkgs.opencode
       pkgs.opencode-desktop
       pkgs.jadx
       pkgs.uv
-#      pkgs.rtk
+      pkgs.ripgrep
     ];
-
-  # systemd.services.opencode-litellm-proxy = {
-  #   description = "OpenCode LiteLLM compatibility proxy";
-
-  #   after = [ "network-online.target" ];
-  #   wants = [ "network-online.target" ];
-
-  #   wantedBy = [ "multi-user.target" ];
-
-  #   serviceConfig = {
-  #     Type = "simple";
-
-  #     ExecStart = "${pkgs.nodejs}/bin/node ${./proxy.mjs}";
-
-  #     Restart = "always";
-  #     RestartSec = 3;
-  #   };
-  # };
-
-
 
     home-manager.users.tiebe = {
       hmConfig,
@@ -146,7 +73,11 @@ in
         "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
         "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
         "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
-#        "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
+        #        "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
+      };
+
+      home.sessionVariables = {
+        OPENCODE_ENABLE_EXA = 1;
       };
 
       # Merge API key into existing auth.json (preserving OAuth tokens)
@@ -159,15 +90,15 @@ in
         if [ -f "$AUTH_FILE" ]; then
           # Merge into existing file at top level
           $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" --arg liteApiKey "$LITE_API_KEY" \
-            '.anthropic = {type: "api", key: $apiKey} | ."litellm" = {type: "api", key: $apiKey}' \
+            '.anthropic = {type: "api", key: $apiKey} | ."litellm" = {type: "api", key: $liteApiKey}' \
             "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
         else
           # Create new file with top-level key
           $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY"  --arg liteApiKey "$LITE_API_KEY" \
-            '{anthropic: {type: "api", key: $apiKey}, "litellm": {type: "api", key: $apiKey}}' \
+            '{anthropic: {type: "api", key: $apiKey}, "litellm": {type: "api", key: $liteApiKey}}' \
             > "$AUTH_FILE"
         fi
       '';
-      };
+    };
   };
 }

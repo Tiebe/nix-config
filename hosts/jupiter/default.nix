@@ -5,8 +5,7 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   lowpower = pkgs.writeShellScriptBin "lowpower" ''
     #!/usr/bin/env bash
     kscreen-doctor \
@@ -20,8 +19,7 @@ let
       output.DisplayPort-0.mode.90 \
       output.DisplayPort-2.mode.139
   '';
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
     ./modules.nix
@@ -31,7 +29,7 @@ in
     inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-latest-lto-x86_64-v3;
 
   boot.initrd = {
-    kernelModules = [ "amdgpu" ];
+    kernelModules = ["amdgpu"];
     verbose = false;
   };
 
@@ -50,7 +48,9 @@ in
   networking.interfaces.enp7s0.wakeOnLan.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 
-  systemd.tmpfiles.rules = [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
+  programs.noisetorch.enable = true;
+
+  systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
   hardware.graphics = {
     extraPackages = with pkgs; [
       libva
@@ -58,16 +58,18 @@ in
     ];
   };
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
-boot.kernelModules = [ "v4l2loopback" ];
-boot.extraModprobeConfig = ''
-  options v4l2loopback devices=1 video_nr=10 card_label="qrcam" exclusive_caps=1
-'';
+  boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
+  boot.kernelModules = ["v4l2loopback"];
+  boot.extraModprobeConfig = ''
+    options v4l2loopback devices=1 video_nr=10 card_label="qrcam" exclusive_caps=1
+  '';
 
   environment.systemPackages = with pkgs; [
     lowpower
     highpower
   ];
+
+  services.flatpak.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

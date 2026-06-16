@@ -7,8 +7,7 @@
   pkgs,
   modulesPath,
   ...
-}:
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -21,10 +20,10 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
+  boot.supportedFilesystems = ["ntfs"];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/71f5521b-9fb6-4ebe-9a61-a4b46c57ea43";
@@ -88,7 +87,7 @@
   # TODO!! when switching to erase your darlings, make sure to first recreate root snapshot with /run/media folders for mounts. otherwise no boot
 
   swapDevices = [
-    { device = "/dev/disk/by-uuid/a4b4def0-6197-4054-ba85-66ddec0a554b"; }
+    {device = "/dev/disk/by-uuid/a4b4def0-6197-4054-ba85-66ddec0a554b";}
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

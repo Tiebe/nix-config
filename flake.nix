@@ -4,6 +4,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     # Home manager
     home-manager = {
@@ -53,7 +54,7 @@
     };
 
     nixcord = {
-      url = "github:kaylorben/nixcord";
+      url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -80,8 +81,6 @@
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs-discord-krisp.url = "github:FlameFlag/nixpkgs/flameflag/push-vmswpuqmvzpt";
-
     fusion360-installer-src = {
       url = "git+https://codeberg.org/cryinkfly/Autodesk-Fusion-360-on-Linux?ref=main";
       flake = false;
@@ -91,6 +90,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-small,
     home-manager,
     sops-nix,
     agenix,
@@ -102,7 +102,6 @@
     nixos-hardware,
     disko,
     claude-desktop,
-    nixpkgs-discord-krisp,
     ...
   } @ inputs: let
     inherit (self) outputs;

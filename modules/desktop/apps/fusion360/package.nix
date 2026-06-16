@@ -23,7 +23,6 @@
   winetricks,
   gettext,
 }:
-
 stdenv.mkDerivation rec {
   pname = "fusion360-installer";
   version = "2.0.4-alpha";

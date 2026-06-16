@@ -44,4 +44,3 @@ in {
   "opencode/apipro-key.age".publicKeys = all;
   "opencode/litellm-key.age".publicKeys = all;
 }
-

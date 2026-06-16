@@ -2,13 +2,12 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   cfg = config.tiebe.desktop.apps.vscode;
   darlings = config.tiebe.system.boot.darlings;
-in
-{
-  config = mkIf (darlings.enable && cfg.enable) {
-  };
+in {
+  config =
+    mkIf (darlings.enable && cfg.enable) {
+    };
 }

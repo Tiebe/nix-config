@@ -1,9 +1,16 @@
 # This file defines overlays
 {inputs, ...}: {
-  modifications = final: prev: {
+  modifications = final: prev: let
+    small = import inputs.nixpkgs-small {
+      inherit (final.stdenv.hostPlatform) system;
+      inherit (final) config;
+    };
+  in {
     ragenix = prev.ragenix.override {
       plugins = [final.age-plugin-yubikey];
     };
+
+    claude-code = small.claude-code;
 
     bambu-studio = let
       version = "02.07.00.55";
@@ -48,7 +55,7 @@
           Name=BambuStudio
           GenericName=3D Printing Software
           Comment=A cutting-edge, feature-rich slicing software.
-          Exec=BambuStudio %U
+          Exec=bambu-studio %U
           Icon=BambuStudio
           Terminal=false
           Type=Application

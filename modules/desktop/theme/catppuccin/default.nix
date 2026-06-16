@@ -68,6 +68,7 @@ in {
         wlogout.enable = true;
         mako.enable = false;
         kvantum.enable = true;
+        hyprland.enable = false;
         enable = true;
       };
 

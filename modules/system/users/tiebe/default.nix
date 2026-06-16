@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
@@ -15,8 +15,7 @@ let
     ;
   cfg = config.tiebe.system.users.tiebe;
   evictCfg = config.tiebe.system.boot.evictDarlings;
-in
-{
+in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./darlings.nix
@@ -49,7 +48,7 @@ in
     };
 
     users.defaultUserShell = pkgs.zsh;
-    environment.shells = with pkgs; [ zsh ];
+    environment.shells = with pkgs; [zsh];
     programs.zsh.enable = true;
 
     home-manager = {
@@ -64,55 +63,57 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       users = {
-        tiebe =
-          {
-            config,
-            pkgs,
-            lib,
-            ...
-          }:
-          {
-            programs.home-manager.enable = true;
+        tiebe = {
+          config,
+          pkgs,
+          lib,
+          ...
+        }: {
+          programs.home-manager.enable = true;
 
-            home = {
-              username = "tiebe";
-              # Use evict darlings home directory if enabled, otherwise fall back to /home/tiebe
-              # Use mkForce to override the home-manager default which detects from users.users.tiebe.home
-              # homeDirectory = lib.mkForce (if evictCfg.enable then evictCfg.baseDir else "/home/tiebe");
-            };
+          home = {
+            username = "tiebe";
+            # Use evict darlings home directory if enabled, otherwise fall back to /home/tiebe
+            # Use mkForce to override the home-manager default which detects from users.users.tiebe.home
+            # homeDirectory = lib.mkForce (if evictCfg.enable then evictCfg.baseDir else "/home/tiebe");
+          };
 
-            # XDG configuration for evict darlings
-            xdg = mkIf evictCfg.enable {
+          # XDG configuration for evict darlings
+          xdg = mkIf evictCfg.enable {
+            enable = true;
+            configHome = "${evictCfg.configDir}";
+            cacheHome = "${evictCfg.configDir}/cache";
+            dataHome = "${evictCfg.configDir}/local/share";
+            stateHome = "${evictCfg.configDir}/local/state";
+
+            userDirs = {
+              setSessionVariables = true;
               enable = true;
-              configHome = "${evictCfg.configDir}";
-              cacheHome = "${evictCfg.configDir}/cache";
-              dataHome = "${evictCfg.configDir}/local/share";
-              stateHome = "${evictCfg.configDir}/local/state";
-
-              userDirs = {
-                setSessionVariables = true;
-                enable = true;
-                createDirectories = false;
-                videos = null;
-                templates = null;
-                publicShare = null;
-                pictures = null;
-                music = null;
-                download = null;
-                documents = null;
-                desktop = null;
-                extraConfig = {
-                  XDG_REHOME = "${evictCfg.homeDir}";
-                };
+              createDirectories = false;
+              videos = null;
+              templates = null;
+              publicShare = null;
+              pictures = null;
+              music = null;
+              download = null;
+              documents = null;
+              desktop = null;
+              extraConfig = {
+                XDG_REHOME = "${evictCfg.homeDir}";
               };
             };
-
-            # Move face files to config directory when using evict darlings
-            home.file."${if evictCfg.enable then "config/face.jpg" else ".config/face.jpg"}".source =
-              ./profile.jpg;
-
-            home.stateVersion = "23.11";
           };
+
+          # Move face files to config directory when using evict darlings
+          home.file."${
+            if evictCfg.enable
+            then "config/face.jpg"
+            else ".config/face.jpg"
+          }".source =
+            ./profile.jpg;
+
+          home.stateVersion = "23.11";
+        };
       };
     };
   };

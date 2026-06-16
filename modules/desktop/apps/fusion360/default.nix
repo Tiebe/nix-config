@@ -29,7 +29,6 @@ in {
       "x-scheme-handler/adskidmgr" = "adskidmgr-opener.desktop";
     };
 
-    environment.etc."xdg/applications/adskidmgr-opener.desktop".source =
-      "${fusion360Package}/share/applications/adskidmgr-opener.desktop";
+    environment.etc."xdg/applications/adskidmgr-opener.desktop".source = "${fusion360Package}/share/applications/adskidmgr-opener.desktop";
   };
 }

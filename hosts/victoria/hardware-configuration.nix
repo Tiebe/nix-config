@@ -29,12 +29,12 @@
     options = ["fmask=0077" "dmask=0077"];
   };
 
-   fileSystems."/home" =
-     { device = "/dev/disk/by-uuid/f97a73d1-d95a-4e16-9aa4-2c19dfbbdb74";
-       fsType = "btrfs";
-       options = [ "subvol=home" ];
-       neededForBoot = true;
-     };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/f97a73d1-d95a-4e16-9aa4-2c19dfbbdb74";
+    fsType = "btrfs";
+    options = ["subvol=home"];
+    neededForBoot = true;
+  };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/f97a73d1-d95a-4e16-9aa4-2c19dfbbdb74";

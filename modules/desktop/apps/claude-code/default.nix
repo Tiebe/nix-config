@@ -5,12 +5,10 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.desktop.apps.claude-code;
-in
-{
+in {
   options = {
     tiebe.desktop.apps.claude-code = {
       enable = mkEnableOption "Claude Code";
@@ -18,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.claude-desktop.overlays.default ];
-    environment.systemPackages = [ pkgs.claude-desktop-fhs pkgs.kotlin-language-server pkgs.claude-code pkgs.nodejs];
+    nixpkgs.overlays = [inputs.claude-desktop.overlays.default];
+    environment.systemPackages = [pkgs.claude-desktop-fhs pkgs.kotlin-language-server pkgs.claude-code pkgs.nodejs];
   };
 }

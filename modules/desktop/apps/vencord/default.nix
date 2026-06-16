@@ -25,9 +25,12 @@ in {
 
       programs.nixcord = {
         enable = true;
-        discord.enable = false;
+        discord = {
+          enable = true;
+          krisp.enable = true;
+        };
 
-        vesktop.enable = true;
+        vesktop.enable = false;
 
         config.plugins = {
           betterGifAltText.enable = true;
@@ -35,10 +38,10 @@ in {
           betterSettings.enable = true;
           biggerStreamPreview.enable = true;
           callTimer.enable = true;
-          clearURLs.enable = true;
+          ClearURLs.enable = true;
           copyEmojiMarkdown.enable = true;
           copyFileContents.enable = true;
-          copyUserURLs.enable = true;
+          CopyUserURLs.enable = true;
           emoteCloner.enable = true;
           fakeNitro.enable = true;
           fixImagesQuality.enable = true;
@@ -53,14 +56,14 @@ in {
           mentionAvatars.enable = true;
           messageClickActions.enable = true;
           messageLogger.enable = true;
-          mutualGroupDMs.enable = true;
+          MutualGroupDMs.enable = true;
           openInApp.enable = true;
           permissionsViewer.enable = true;
           platformIndicators.enable = true;
           userMessagesPronouns.enable = true;
           readAllNotificationsButton.enable = true;
           relationshipNotifier.enable = true;
-          reviewDB.enable = true;
+          ReviewDB.enable = true;
           serverInfo.enable = true;
           shikiCodeblocks.enable = true;
           showConnections.enable = true;

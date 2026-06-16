@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
@@ -74,8 +74,7 @@ let
         fi
       done
   '';
-in
-{
+in {
   options = {
     tiebe.system.boot.darlings = {
       enable = mkEnableOption "Erase your darlings";

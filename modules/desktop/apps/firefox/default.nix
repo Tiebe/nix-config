@@ -5,9 +5,9 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
@@ -27,18 +27,19 @@ let
 
   # Wrap Firefox with HOME override for evict darlings
   firefoxPackage =
-    if evictCfg.enable then
+    if evictCfg.enable
+    then
       pkgs.firefox.overrideAttrs (oldAttrs: {
-        buildCommand = oldAttrs.buildCommand + ''
-          wrapProgram "$executablePath" \
-            --set 'HOME' '${evictCfg.configDir}'
-        '';
+        buildCommand =
+          oldAttrs.buildCommand
+          + ''
+            wrapProgram "$executablePath" \
+              --set 'HOME' '${evictCfg.configDir}'
+          '';
       })
-    else
-      pkgs.firefox;
-in
-{
-  imports = [ ./darlings.nix ];
+    else pkgs.firefox;
+in {
+  imports = [./darlings.nix];
 
   options = {
     tiebe.desktop.apps.firefox = {
@@ -120,8 +121,7 @@ in
             };
 
             "search@kagi.com" = {
-              "install_url" =
-                "https://addons.mozilla.org/en-US/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
+              "install_url" = "https://addons.mozilla.org/en-US/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
               installation_mode = "force_installed";
             };
 
