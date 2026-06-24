@@ -84,6 +84,8 @@
         opencode.enable = true;
         # forgecode.enable = true;
         rofi.enable = true;
+        claude-code.enable = true;
+        remanager.enable = true;
       };
     };
 

@@ -12,6 +12,68 @@
 
     claude-code = small.claude-code;
 
+    remanager = let
+      version = "1.6.0";
+      src = prev.fetchurl {
+        url = "https://github.com/rmitchellscott/reManager/releases/download/v${version}/reManager-linux-amd64.tar.gz";
+        sha256 = "sha256-HMbdPSurVqP6r6XN14IQRVXcvuI8spWbsP8CjmqMdqA=";
+      };
+      desktopFile = prev.fetchurl {
+        url = "https://raw.githubusercontent.com/rmitchellscott/reManager/v${version}/flatpak/io.scottlabs.reManager.desktop";
+        sha256 = "sha256-0vYDmBeJU37EpdIjUQWWoo3oejeP01N+Oa6VNAgzrP0=";
+      };
+      metainfo = prev.fetchurl {
+        url = "https://raw.githubusercontent.com/rmitchellscott/reManager/v${version}/flatpak/io.scottlabs.reManager.metainfo.xml";
+        sha256 = "sha256-oeryw01Nzai/0x5SC3S4KRQET80eMXzW6fJaW0sutDs=";
+      };
+      icon = prev.fetchurl {
+        url = "https://raw.githubusercontent.com/rmitchellscott/reManager/v${version}/assets/icon.svg";
+        sha256 = "sha256-rgDsiOStQoR1Wu72+9xsmvWr4yYlvxUS5RulagvtQOw=";
+      };
+    in
+      prev.stdenvNoCC.mkDerivation {
+        inherit version;
+        pname = "remanager";
+        src = src;
+
+        nativeBuildInputs = [prev.gnutar prev.makeWrapper prev.installShellFiles];
+
+        dontConfigure = true;
+        dontBuild = true;
+
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          tar -xzf $src -C $out/bin
+          chmod +x $out/bin/reManager
+          install -Dm644 ${desktopFile} $out/share/applications/io.scottlabs.reManager.desktop
+          install -Dm644 ${metainfo} $out/share/metainfo/io.scottlabs.reManager.metainfo.xml
+          install -Dm644 ${icon} $out/share/icons/hicolor/scalable/apps/io.scottlabs.reManager.svg
+          runHook postInstall
+        '';
+
+        postFixup = ''
+          wrapProgram $out/bin/reManager \
+            --prefix LD_LIBRARY_PATH : ${prev.lib.makeLibraryPath [
+              prev.glib
+              prev.gtk3
+              prev.gdk-pixbuf
+              prev.libsoup_3
+              prev.webkitgtk_4_1
+              prev.gst_all_1.gst-plugins-base
+              prev.gst_all_1.gst-plugins-good
+            ]}
+        '';
+
+        meta = {
+          description = "Multi-platform desktop app for managing mods on reMarkable tablets";
+          homepage = "https://github.com/rmitchellscott/reManager";
+          license = prev.lib.licenses.gpl3Plus;
+          platforms = ["x86_64-linux"];
+          mainProgram = "reManager";
+        };
+      };
+
     bambu-studio = let
       version = "02.07.00.55";
       src = prev.fetchurl {

@@ -20,6 +20,7 @@
     ./opendeck.nix
     ./parsec
     ./quantframe
+    ./remanager
     ./rofi
     ./steam
     ./thunderbird
