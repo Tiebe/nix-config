@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-24 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+25 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -27,6 +27,7 @@
 | parsec | simple | Remote desktop |
 | piper | simple | Mouse config (libratbag) |
 | protonmail | simple | Email client |
+| remanager | simple | reMarkable tablet mod manager (Wails/GTK app via prebuilt tarball in overlay) |
 | rofi | complex | **Most complex app** (349L) — cheatsheet PDF generation + desktop entries |
 | spotify | simple | Music |
 | steam | complex | `extraEnv.HOME` override, dual-path darlings with activation scripts |
