@@ -51,6 +51,7 @@
 
         sound.enable = true;
         #sound.deepFilter.enable = true;
+        sound.arctisEq.enable = true;
         ddc.enable = true;
       };
 
@@ -100,7 +101,6 @@
           localsend.enable = true;
           intellij.enable = true;
           rofi.enable = true;
-          easyeffects.enable = true;
           quantframe.enable = true;
           wfinfo-ng.enable = true;
         };

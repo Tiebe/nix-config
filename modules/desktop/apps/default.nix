@@ -4,7 +4,6 @@
     ./bitwarden
     ./claude-code
     ./discord
-    ./easyeffects
     ./firefox
     ./forgecode
     ./fusion360

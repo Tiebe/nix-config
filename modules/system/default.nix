@@ -8,6 +8,7 @@
     ./networking/wifi
     ./sound
     ./sound/deep-filter
+    ./sound/arctis-eq
     ./users/tiebe
     ./users/tiebe/email
     ./users/robbin
