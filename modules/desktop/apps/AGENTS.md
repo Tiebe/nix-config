@@ -10,6 +10,7 @@
 |--------|-----------|-------|
 | bambu-studio | simple | 3D printer slicer (AppImage via overlay) |
 | bitwarden | simple | Password manager |
+| codex | simple | Codex Desktop (`inputs.codex-desktop-linux` nixosModule), CLI follows the pinned Nixpkgs via `pkgs.codex` |
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
 | easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |
 | firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |

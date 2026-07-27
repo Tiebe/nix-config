@@ -81,6 +81,9 @@
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
 
+    codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
+    codex-desktop-linux.inputs.nixpkgs.follows = "nixpkgs";
+
     fusion360-installer-src = {
       url = "git+https://codeberg.org/cryinkfly/Autodesk-Fusion-360-on-Linux?ref=main";
       flake = false;

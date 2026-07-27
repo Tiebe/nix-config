@@ -3,6 +3,7 @@
     ./bambu-studio
     ./bitwarden
     ./claude-code
+    ./codex
     ./discord
     ./firefox
     ./forgecode

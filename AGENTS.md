@@ -430,5 +430,6 @@ persistence aligned with the overridden `HOME` path in the module-specific
 ## External Resources
 
 - Flake inputs use `nixpkgs/nixos-unstable`
+- Codex Desktop is supplied by `inputs.codex-desktop-linux`; its CLI uses `pkgs.codex` from the pinned Nixpkgs input
 - Home Manager follows nixpkgs
 - Secret management: https://github.com/yaxitech/ragenix
