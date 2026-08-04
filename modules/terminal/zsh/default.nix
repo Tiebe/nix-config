@@ -163,6 +163,7 @@ in {
         initContent = lib.mkMerge [
           (lib.mkBefore ''
             export WEZTERM_SHELL_SKIP_ALL=1
+            export PATH="/home/tiebe/.local/bin:$PATH"
 
             # Source custom plugins
             source ${zsh-256color}/share/zsh/site-functions/zsh-256color/zsh-256color.plugin.zsh
