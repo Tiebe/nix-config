@@ -24,6 +24,7 @@
     ./remanager
     ./rofi
     ./steam
+    ./stremio
     ./thunderbird
     ./vencord
     ./vscode

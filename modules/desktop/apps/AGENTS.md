@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-25 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+26 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -32,6 +32,7 @@
 | rofi | complex | **Most complex app** (349L) — cheatsheet PDF generation + desktop entries |
 | spotify | simple | Music |
 | steam | complex | `extraEnv.HOME` override, dual-path darlings with activation scripts |
+| stremio | simple | Media center streaming client (`stremio-linux-shell`, QML-based) |
 | thunar | simple | File manager |
 | vscode | simple | VSCodium |
 | zed | simple | Editor |

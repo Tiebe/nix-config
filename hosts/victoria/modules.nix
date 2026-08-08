@@ -8,6 +8,20 @@
 }: {
   imports = [../../modules];
 
+  config.security.sudo.extraRules = [
+    {
+      users = ["tiebe"];
+      commands = [
+        {
+          command = "ALL";
+          # SETENV too: the %wheel rule above grants it, and sudo applies the
+          # last matching rule, so omitting it here would break `sudo -E`.
+          options = ["NOPASSWD" "SETENV"];
+        }
+      ];
+    }
+  ];
+
   config.tiebe = {
     base = {
       age.enable = true;
@@ -87,6 +101,7 @@
         claude-code.enable = true;
         codex.enable = true;
         remanager.enable = true;
+        stremio.enable = true;
       };
     };
 
