@@ -10,6 +10,16 @@
       plugins = [final.age-plugin-yubikey];
     };
 
+    # waypipe 0.11.0 fails to build against ffmpeg 9.0: ffmpeg 9.0 removed
+    # the legacy per-purpose Vulkan queue fields (nb_encode_queues,
+    # nb_decode_queues, etc.) from AVVulkanDeviceContext, which waypipe's
+    # src/video.rs still references directly. Pin waypipe to ffmpeg_7 until
+    # upstream adapts to the new hwcontext_vulkan API.
+    # Track: https://gitlab.freedesktop.org/mstoeckl/waypipe (unfixed as of 2026-08-13)
+    waypipe = prev.waypipe.override {
+      ffmpeg = prev.ffmpeg_7;
+    };
+
     claude-code = small.claude-code;
 
     remanager = let
