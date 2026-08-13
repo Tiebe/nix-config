@@ -5,11 +5,18 @@
   config,
   pkgs,
   ...
-}: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+}:
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.tiebe.desktop.apps.vencord;
-in {
-  imports = [./darlings.nix];
+in
+{
+  imports = [ ./darlings.nix ];
 
   options = {
     tiebe.desktop.apps.vencord = {
@@ -18,7 +25,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.tiebe = {inputs, ...}: {
+    home-manager.users.tiebe = { inputs, ... }: {
       imports = [
         inputs.nixcord.homeModules.nixcord
       ];
@@ -47,7 +54,6 @@ in {
           fixImagesQuality.enable = true;
           fixSpotifyEmbeds.enable = true;
           forceOwnerCrown.enable = true;
-          friendsSince.enable = true;
           fullSearchContext.enable = true;
           gameActivityToggle.enable = true;
           greetStickerPicker.enable = true;
