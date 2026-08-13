@@ -103,6 +103,7 @@
         omp.enable = true;
         remanager.enable = true;
         stremio.enable = true;
+        frameforge.enable = true;
       };
     };
 

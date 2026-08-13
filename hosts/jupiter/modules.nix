@@ -103,6 +103,7 @@
           rofi.enable = true;
           quantframe.enable = true;
           wfinfo-ng.enable = true;
+          frameforge.enable = true;
         };
       };
 

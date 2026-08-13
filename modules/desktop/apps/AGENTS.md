@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-27 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+28 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -14,6 +14,7 @@
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
 | easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |
 | firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
+| frameforge | medium | Warframe companion (Tauri, `rustPlatform.buildRustPackage`); memory scanner needs `boot.kernel.sysctl."kernel.yama.ptrace_scope" = 0`, gated on `cfg.enable` in `default.nix` |
 | httptoolkit | simple | HTTP debugging proxy |
 | lmstudio | simple | LLM interface |
 | legcord | simple | Discord client |

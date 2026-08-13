@@ -7,6 +7,7 @@
     ./discord
     ./firefox
     ./forgecode
+    ./frameforge
     ./fusion360
     ./httptoolkit
     ./intellij
