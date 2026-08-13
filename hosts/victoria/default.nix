@@ -18,7 +18,8 @@
     inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-latest-lto-zen4;
 
   networking.hostName = "victoria";
-
+  programs.coolercontrol.enable = true;
+  environment.systemPackages = with pkgs; [lm_sensors];
   # kernel patch until https://gitlab.gnome.org/GNOME/gdm/-/issues/974 is resolved
   # boot.kernelPatches = [
   #   {

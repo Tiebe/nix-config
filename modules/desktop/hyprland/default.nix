@@ -10,7 +10,6 @@
     (lib)
     mkEnableOption
     mkIf
-    mkAfter
     mkOption
     types
     ;
@@ -47,7 +46,6 @@ in {
       playerctl
       libnotify
       polkit_gnome
-      networkmanagerapplet
       pavucontrol
       blueman
     ];
@@ -86,7 +84,7 @@ in {
 
       wayland.windowManager.hyprland = {
         enable = true;
-        #configType = "lua";
+        configType = "lua";
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
         systemd = {
           enable = true;
@@ -95,88 +93,118 @@ in {
         settings = {
           # Monitor configuration
           monitor = [
-            "desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS32Q 23342B600296, 2560x1440@165, 0x0, 1"
-            "desc:AOC Q27G2SG4 XFXP6HA016617, 2560x1440@155, -2560x0, 1"
-            "desc:Hewlett Packard HP 22cwa 6CM64808DT, 1920x1080x60, 2560x0, 1"
-            ", preferred, auto, 1"
+            {
+              output = "desc:GIGA-BYTE TECHNOLOGY CO. LTD. GS32Q 23342B600296";
+              mode = "2560x1440@165";
+              position = "0x0";
+              scale = 1;
+            }
+            {
+              output = "desc:AOC Q27G2SG4 XFXP6HA016617";
+              mode = "2560x1440@155";
+              position = "-2560x0";
+              scale = 1;
+            }
+            {
+              output = "desc:Hewlett Packard HP 22cwa 6CM64808DT";
+              mode = "1920x1080@60";
+              position = "2560x0";
+              scale = 1;
+            }
+            {
+              output = "";
+              mode = "preferred";
+              position = "auto";
+              scale = 1;
+            }
           ];
 
-          # General appearance
-          general = {
-            gaps_in = 5;
-            gaps_out = 10;
-            border_size = 3;
-            "col.active_border" = "rgb(cba6f7)"; # mauve
-            "col.inactive_border" = "rgb(313244)"; # surface0
-            layout = "dwindle";
-            allow_tearing = false;
-          };
-
-          # Decoration
-          decoration = {
-            rounding = 14;
-            active_opacity = 1.0;
-            inactive_opacity = 0.92;
-            blur = {
-              enabled = true;
-              size = 6;
-              passes = 3;
-              new_optimizations = true;
-              xray = false;
-              ignore_opacity = true;
+          config = {
+            # General appearance
+            general = {
+              gaps_in = 5;
+              gaps_out = 10;
+              border_size = 3;
+              col = {
+                active_border = "rgb(cba6f7)"; # mauve
+                inactive_border = "rgb(313244)"; # surface0
+              };
+              layout = "dwindle";
+              allow_tearing = false;
             };
-            shadow = {
-              enabled = true;
-              range = 20;
-              render_power = 3;
-              color = "rgba(1a1a2eee)";
+
+            # Decoration
+            decoration = {
+              rounding = 14;
+              active_opacity = 1.0;
+              inactive_opacity = 0.92;
+              blur = {
+                enabled = true;
+                size = 6;
+                passes = 3;
+                new_optimizations = true;
+                xray = false;
+                ignore_opacity = true;
+              };
+              shadow = {
+                enabled = true;
+                range = 20;
+                render_power = 3;
+                color = "rgba(1a1a2eee)";
+              };
+            };
+
+            # Input
+            input = {
+              kb_layout = "us";
+              follow_mouse = 1;
+              sensitivity = 0;
+              accel_profile = "flat";
+              touchpad = {
+                natural_scroll = true;
+                tap_to_click = true;
+                drag_lock = 1; # 0 disabled, 1 enabled with timeout, 2 enabled sticky
+              };
+            };
+
+            # Dwindle layout
+            dwindle = {
+              # pseudotile = true;
+              preserve_split = true;
+              force_split = 2;
+            };
+
+            # Master layout
+            master = {
+              new_status = "master";
+            };
+
+            # Misc
+            misc = {
+              force_default_wallpaper = 0;
+              disable_hyprland_logo = true;
+              disable_splash_rendering = true;
+              mouse_move_enables_dpms = true;
+              key_press_enables_dpms = true;
+            };
+
+            # Cursor
+            cursor = {
+              no_hardware_cursors = true;
             };
           };
 
-          # Input
-          input = {
-            kb_layout = "us";
-            follow_mouse = 1;
-            sensitivity = 0;
-            accel_profile = "flat";
-            touchpad = {
-              natural_scroll = true;
-              tap-to-click = true;
-              drag_lock = true;
-            };
-          };
-
-          # Dwindle layout
-          dwindle = {
-            # pseudotile = true;
-            preserve_split = true;
-            force_split = 2;
-          };
-
-          # Master layout
-          master = {
-            new_status = "master";
-          };
-
-          # Misc
-          misc = {
-            force_default_wallpaper = 0;
-            disable_hyprland_logo = true;
-            disable_splash_rendering = true;
-            mouse_move_enables_dpms = true;
-            key_press_enables_dpms = true;
-          };
-
-          # Clipboard history
-          exec-once = mkAfter [
-            "wl-paste --type text --watch cliphist store"
-            "wl-paste --type image --watch cliphist store"
-            "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
-          ];
-
-          # Cursor
-          cursor = {
-            no_hardware_cursors = true;
+          # Clipboard history + tray applet on startup
+          on = {
+            _args = [
+              "hyprland.start"
+              (lib.generators.mkLuaInline ''
+                function()
+                  hl.exec_cmd("wl-paste --type text --watch cliphist store")
+                  hl.exec_cmd("wl-paste --type image --watch cliphist store")
+                end
+              '')
+            ];
           };
         };
       };

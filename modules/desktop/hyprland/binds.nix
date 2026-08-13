@@ -24,6 +24,24 @@
   clipboardHistory = pkgs.writeShellScriptBin "clipboard-history" ''
     ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -p "Clipboard" | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy
   '';
+
+  # Lua bind helpers.
+  # `keys` is a plain key-combo string, `dispatcher` is a raw Lua expression
+  # string (e.g. "hl.dsp.window.close()"), `flags` is an optional bind-flags attrset.
+  bind = keys: dispatcher: {
+    _args = [
+      keys
+      (lib.generators.mkLuaInline dispatcher)
+    ];
+  };
+  bindFlags = keys: dispatcher: flags: {
+    _args = [
+      keys
+      (lib.generators.mkLuaInline dispatcher)
+      flags
+    ];
+  };
+  mkExec = cmd: "hl.dsp.exec_cmd(${builtins.toJSON cmd})";
 in {
   options = {
     tiebe.desktop.hyprland.binds = {
@@ -40,124 +58,124 @@ in {
       ];
 
       wayland.windowManager.hyprland.settings = {
-        "$mod" = "SUPER";
-
         bind = [
           # Application launchers
-          "$mod SHIFT, Return, exec, rofi-launcher"
-          "$mod, Return, exec, wezterm"
-          "$mod, Q, killactive,"
-          "$mod, F, fullscreen, 0"
-          "$mod SHIFT, F, fullscreen, 1" # maximize
-          "$mod, V, togglefloating,"
-          "$mod, P, pseudo," # dwindle
-          "$mod, S, layoutmsg, togglesplit" # dwindle
+          (bind "SUPER + SHIFT + RETURN" (mkExec "rofi-launcher"))
+          (bind "SUPER + RETURN" (mkExec "wezterm"))
+          (bind "SUPER + Q" "hl.dsp.window.close()")
+          (bind "SUPER + F" ''hl.dsp.window.fullscreen({ mode = "fullscreen" })'')
+          (bind "SUPER + SHIFT + F" ''hl.dsp.window.fullscreen({ mode = "maximized" })'') # maximize
+          (bind "SUPER + V" "hl.dsp.window.float()")
+          (bind "SUPER + P" "hl.dsp.window.pseudo()") # dwindle
+          (bind "SUPER + S" ''hl.dsp.layout("togglesplit")'') # dwindle
 
           # Lock / logout
-          "$mod, L, exec, hyprlock"
-          "$mod, M, exec, wlogout"
+          (bind "SUPER + L" (mkExec "hyprlock"))
+          (bind "SUPER + M" (mkExec "wlogout"))
 
           # Screenshots
-          ", Print, exec, screenshot-full"
-          "$mod SHIFT, S, exec, screenshot-area"
+          (bind "Print" (mkExec "screenshot-full"))
+          (bind "SUPER + SHIFT + S" (mkExec "screenshot-area"))
 
           # Clipboard history
-          "$mod SHIFT, V, exec, clipboard-history"
+          (bind "SUPER + SHIFT + V" (mkExec "clipboard-history"))
 
           # Notification center
-          "$mod, N, exec, swaync-client -t -sw"
+          (bind "SUPER + N" (mkExec "swaync-client -t -sw"))
 
           # Focus movement
-          "$mod, left, movefocus, l"
-          "$mod, right, movefocus, r"
-          "$mod, up, movefocus, u"
-          "$mod, down, movefocus, d"
-          "$mod, H, movefocus, l"
-          "$mod, J, movefocus, d"
-          "$mod, K, movefocus, u"
+          (bind "SUPER + left" ''hl.dsp.focus({ direction = "left" })'')
+          (bind "SUPER + right" ''hl.dsp.focus({ direction = "right" })'')
+          (bind "SUPER + up" ''hl.dsp.focus({ direction = "up" })'')
+          (bind "SUPER + down" ''hl.dsp.focus({ direction = "down" })'')
+          (bind "SUPER + H" ''hl.dsp.focus({ direction = "left" })'')
+          (bind "SUPER + J" ''hl.dsp.focus({ direction = "down" })'')
+          (bind "SUPER + K" ''hl.dsp.focus({ direction = "up" })'')
 
           # Window movement
-          "$mod SHIFT, left, movewindow, l"
-          "$mod SHIFT, right, movewindow, r"
-          "$mod SHIFT, up, movewindow, u"
-          "$mod SHIFT, down, movewindow, d"
-          "$mod SHIFT, H, movewindow, l"
-          "$mod SHIFT, J, movewindow, d"
-          "$mod SHIFT, K, movewindow, u"
-          "$mod SHIFT, L, movewindow, r"
+          (bind "SUPER + SHIFT + left" ''hl.dsp.window.move({ direction = "left" })'')
+          (bind "SUPER + SHIFT + right" ''hl.dsp.window.move({ direction = "right" })'')
+          (bind "SUPER + SHIFT + up" ''hl.dsp.window.move({ direction = "up" })'')
+          (bind "SUPER + SHIFT + down" ''hl.dsp.window.move({ direction = "down" })'')
+          (bind "SUPER + SHIFT + H" ''hl.dsp.window.move({ direction = "left" })'')
+          (bind "SUPER + SHIFT + J" ''hl.dsp.window.move({ direction = "down" })'')
+          (bind "SUPER + SHIFT + K" ''hl.dsp.window.move({ direction = "up" })'')
+          (bind "SUPER + SHIFT + L" ''hl.dsp.window.move({ direction = "right" })'')
 
           # Workspace switching
-          "$mod, 1, workspace, 1"
-          "$mod, 2, workspace, 2"
-          "$mod, 3, workspace, 3"
-          "$mod, 4, workspace, 4"
-          "$mod, 5, workspace, 5"
-          "$mod, 6, workspace, 6"
-          "$mod, 7, workspace, 7"
-          "$mod, 8, workspace, 8"
-          "$mod, 9, workspace, 9"
-          "$mod, 0, workspace, 10"
+          (bind "SUPER + 1" ''hl.dsp.focus({ workspace = 1 })'')
+          (bind "SUPER + 2" ''hl.dsp.focus({ workspace = 2 })'')
+          (bind "SUPER + 3" ''hl.dsp.focus({ workspace = 3 })'')
+          (bind "SUPER + 4" ''hl.dsp.focus({ workspace = 4 })'')
+          (bind "SUPER + 5" ''hl.dsp.focus({ workspace = 5 })'')
+          (bind "SUPER + 6" ''hl.dsp.focus({ workspace = 6 })'')
+          (bind "SUPER + 7" ''hl.dsp.focus({ workspace = 7 })'')
+          (bind "SUPER + 8" ''hl.dsp.focus({ workspace = 8 })'')
+          (bind "SUPER + 9" ''hl.dsp.focus({ workspace = 9 })'')
+          (bind "SUPER + 0" ''hl.dsp.focus({ workspace = 10 })'')
 
           # Move to workspace
-          "$mod SHIFT, 1, movetoworkspace, 1"
-          "$mod SHIFT, 2, movetoworkspace, 2"
-          "$mod SHIFT, 3, movetoworkspace, 3"
-          "$mod SHIFT, 4, movetoworkspace, 4"
-          "$mod SHIFT, 5, movetoworkspace, 5"
-          "$mod SHIFT, 6, movetoworkspace, 6"
-          "$mod SHIFT, 7, movetoworkspace, 7"
-          "$mod SHIFT, 8, movetoworkspace, 8"
-          "$mod SHIFT, 9, movetoworkspace, 9"
-          "$mod SHIFT, 0, movetoworkspace, 10"
+          (bind "SUPER + SHIFT + 1" ''hl.dsp.window.move({ workspace = 1 })'')
+          (bind "SUPER + SHIFT + 2" ''hl.dsp.window.move({ workspace = 2 })'')
+          (bind "SUPER + SHIFT + 3" ''hl.dsp.window.move({ workspace = 3 })'')
+          (bind "SUPER + SHIFT + 4" ''hl.dsp.window.move({ workspace = 4 })'')
+          (bind "SUPER + SHIFT + 5" ''hl.dsp.window.move({ workspace = 5 })'')
+          (bind "SUPER + SHIFT + 6" ''hl.dsp.window.move({ workspace = 6 })'')
+          (bind "SUPER + SHIFT + 7" ''hl.dsp.window.move({ workspace = 7 })'')
+          (bind "SUPER + SHIFT + 8" ''hl.dsp.window.move({ workspace = 8 })'')
+          (bind "SUPER + SHIFT + 9" ''hl.dsp.window.move({ workspace = 9 })'')
+          (bind "SUPER + SHIFT + 0" ''hl.dsp.window.move({ workspace = 10 })'')
 
           # Special workspace (scratchpad)
-          "$mod, grave, togglespecialworkspace, magic"
-          "$mod SHIFT, grave, movetoworkspace, special:magic"
+          (bind "SUPER + grave" ''hl.dsp.workspace.toggle_special("magic")'')
+          (bind "SUPER + SHIFT + grave" ''hl.dsp.window.move({ workspace = "special:magic" })'')
 
           # Scroll through workspaces
-          "$mod, mouse_down, workspace, e+1"
-          "$mod, mouse_up, workspace, e-1"
+          (bind "SUPER + mouse_down" ''hl.dsp.focus({ workspace = "e+1" })'')
+          (bind "SUPER + mouse_up" ''hl.dsp.focus({ workspace = "e-1" })'')
 
           # Tab through recent workspaces
-          "$mod, Tab, workspace, previous"
-        ];
+          (bind "SUPER + Tab" ''hl.dsp.focus({ workspace = "previous" })'')
 
-        # Repeat binds (hold to repeat)
-        binde = [
-          # Resize
-          "$mod CTRL, left, resizeactive, -20 0"
-          "$mod CTRL, right, resizeactive, 20 0"
-          "$mod CTRL, up, resizeactive, 0 -20"
-          "$mod CTRL, down, resizeactive, 0 20"
-          "$mod CTRL, H, resizeactive, -20 0"
-          "$mod CTRL, L, resizeactive, 20 0"
-          "$mod CTRL, K, resizeactive, 0 -20"
-          "$mod CTRL, J, resizeactive, 0 20"
-        ];
+          # Resize (hold to repeat)
+          (bindFlags "SUPER + CTRL + left" ''hl.dsp.window.resize({ x = -20, y = 0, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + right" ''hl.dsp.window.resize({ x = 20, y = 0, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + up" ''hl.dsp.window.resize({ x = 0, y = -20, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + down" ''hl.dsp.window.resize({ x = 0, y = 20, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + H" ''hl.dsp.window.resize({ x = -20, y = 0, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + L" ''hl.dsp.window.resize({ x = 20, y = 0, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + K" ''hl.dsp.window.resize({ x = 0, y = -20, relative = true })'' {repeating = true;})
+          (bindFlags "SUPER + CTRL + J" ''hl.dsp.window.resize({ x = 0, y = 20, relative = true })'' {repeating = true;})
 
-        # Mouse binds
-        bindm = [
-          "$mod, mouse:272, movewindow"
-          "$mod, mouse:273, resizewindow"
-        ];
+          # Mouse binds
+          (bindFlags "SUPER + mouse:272" "hl.dsp.window.drag()" {mouse = true;})
+          (bindFlags "SUPER + mouse:273" "hl.dsp.window.resize()" {mouse = true;})
 
-        # Locked binds (work even when locked)
-        bindl = [
-          # Media controls
-          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-          ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next"
-          ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
-          ", XF86AudioStop, exec, ${pkgs.playerctl}/bin/playerctl stop"
-        ];
+          # Media controls (locked binds, work even when locked)
+          (bindFlags "XF86AudioMute" ''hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")'' {locked = true;})
+          (bindFlags "XF86AudioMicMute" ''hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle")'' {locked = true;})
+          (bindFlags "XF86AudioPlay" (mkExec "${pkgs.playerctl}/bin/playerctl play-pause") {locked = true;})
+          (bindFlags "XF86AudioNext" (mkExec "${pkgs.playerctl}/bin/playerctl next") {locked = true;})
+          (bindFlags "XF86AudioPrev" (mkExec "${pkgs.playerctl}/bin/playerctl previous") {locked = true;})
+          (bindFlags "XF86AudioStop" (mkExec "${pkgs.playerctl}/bin/playerctl stop") {locked = true;})
 
-        # Locked + repeat binds
-        bindle = [
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%+"
-          ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+          # Locked + repeat binds
+          (bindFlags "XF86AudioRaiseVolume" ''hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+")'' {
+            locked = true;
+            repeating = true;
+          })
+          (bindFlags "XF86AudioLowerVolume" ''hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")'' {
+            locked = true;
+            repeating = true;
+          })
+          (bindFlags "XF86MonBrightnessUp" (mkExec "${pkgs.brightnessctl}/bin/brightnessctl set 5%+") {
+            locked = true;
+            repeating = true;
+          })
+          (bindFlags "XF86MonBrightnessDown" (mkExec "${pkgs.brightnessctl}/bin/brightnessctl set 5%-") {
+            locked = true;
+            repeating = true;
+          })
         ];
       };
     };

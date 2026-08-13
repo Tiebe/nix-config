@@ -117,6 +117,8 @@
         "cpu"
         "memory"
         "temperature"
+        "bluetooth"
+        "network"
         "battery"
         "tray"
         "custom/notification"
@@ -198,6 +200,29 @@
         "tooltip-format" = "{timeTo}";
       };
 
+      network = {
+        interval = 5;
+        "format-wifi" = "  {essid}";
+        "format-ethernet" = "  {ifname}";
+        "format-disconnected" = "  Disconnected";
+        "tooltip-format-wifi" = "{essid}  {signalStrength}%  {ipaddr}/{cidr}";
+        "tooltip-format-ethernet" = "{ifname}  {ipaddr}/{cidr}";
+        "tooltip-format-disconnected" = "Disconnected";
+        # gnome-control-center refuses to start unless XDG_CURRENT_DESKTOP
+        # claims GNOME/Unity, so override it for just this invocation.
+        "on-click" = "env XDG_CURRENT_DESKTOP=GNOME ${pkgs.gnome-control-center}/bin/gnome-control-center wifi";
+      };
+
+      bluetooth = {
+        format = "  {status}";
+        "format-disabled" = "";
+        "format-connected" = "  {num_connections} connected";
+        "tooltip-format" = "{controller_alias}  {controller_address}";
+        "tooltip-format-connected" = "{controller_alias}  {controller_address}\n\n{device_enumerate}";
+        "tooltip-format-enumerate-connected" = "{device_alias}  {device_address}";
+        "on-click" = "${pkgs.overskride}/bin/overskride";
+      };
+
       tray = {
         spacing = 10;
         "icon-size" = 18;
@@ -245,6 +270,7 @@
     @define-color yellow #f9e2af;
     @define-color green #a6e3a1;
     @define-color teal #94e2d5;
+    @define-color sapphire #74c7ec;
     @define-color blue #89b4fa;
     @define-color lavender #b4befe;
     @define-color flamingo #f2cdcd;
@@ -317,6 +343,22 @@
       color: @red;
     }
 
+    #network {
+      color: @lavender;
+    }
+
+    #network.disconnected {
+      color: @red;
+    }
+
+    #bluetooth {
+      color: @sapphire;
+    }
+
+    #bluetooth.disabled {
+      color: @overlay0;
+    }
+
     #battery {
       color: @green;
     }
@@ -361,6 +403,8 @@
     #cpu,
     #memory,
     #temperature,
+    #network,
+    #bluetooth,
     #battery,
     #tray,
     #custom-notification {
@@ -392,7 +436,11 @@ in {
         Install.WantedBy = ["graphical-session.target"];
       };
 
-      home.packages = [brightness-control];
+      home.packages = [
+        brightness-control
+        pkgs.gnome-control-center
+        pkgs.overskride
+      ];
 
       programs.waybar = {
         enable = true;

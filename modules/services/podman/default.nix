@@ -29,6 +29,8 @@ in {
 
     virtualisation.oci-containers.backend = "podman";
 
+    virtualisation.containers.registries.search = ["docker.io"];
+
     users.users.tiebe.extraGroups = ["podman"];
   };
 }

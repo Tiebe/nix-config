@@ -56,14 +56,14 @@
         postFixup = ''
           wrapProgram $out/bin/reManager \
             --prefix LD_LIBRARY_PATH : ${prev.lib.makeLibraryPath [
-              prev.glib
-              prev.gtk3
-              prev.gdk-pixbuf
-              prev.libsoup_3
-              prev.webkitgtk_4_1
-              prev.gst_all_1.gst-plugins-base
-              prev.gst_all_1.gst-plugins-good
-            ]}
+            prev.glib
+            prev.gtk3
+            prev.gdk-pixbuf
+            prev.libsoup_3
+            prev.webkitgtk_4_1
+            prev.gst_all_1.gst-plugins-base
+            prev.gst_all_1.gst-plugins-good
+          ]}
         '';
 
         meta = {

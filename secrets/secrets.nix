@@ -35,8 +35,6 @@ in {
   "ssh/private.age".publicKeys = all;
   "ssh/public.age".publicKeys = all;
 
-  "attic.age".publicKeys = all;
-
   "davfs.age".publicKeys = all;
 
   "wg-home.age".publicKeys = all;

@@ -30,6 +30,7 @@ in {
       ayechat
       android-tools
       tmux
+      shell-gpt
     ];
 
     users.users.tiebe.extraGroups = ["adbusers"];

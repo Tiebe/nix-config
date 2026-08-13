@@ -20,11 +20,11 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "LiteLLM",
       "options": {
-        "baseURL": "https://litellm.tiebe.me/v1"
+        "baseURL": "https://ramclouds.me/v1"
       },
       "models": {
-       "claude-opus-4.8": {
-          "name": "Claude Opus 4.8",
+       "claude-opus-5": {
+          "name": "Claude Opus 5",
           "limit": {
             "context": 1000000,
             "output": 64000

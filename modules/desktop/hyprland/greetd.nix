@@ -37,5 +37,12 @@ in {
       TTYVHangup = true;
       TTYVTDisallocate = true;
     };
+
+    # tuigreet has no flag to set a static default username, so force its
+    # --remember state file to "tiebe" on every boot instead of persisting it.
+    systemd.tmpfiles.rules = [
+      "d /var/cache/tuigreet 0755 greeter greeter -"
+      "F /var/cache/tuigreet/lastuser 0644 greeter greeter - tiebe"
+    ];
   };
 }

@@ -14,7 +14,6 @@
     types
     ;
   cfg = config.tiebe.system.sound.deepFilter;
-  dfPlugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
 in {
   imports = [./darlings.nix];
 
@@ -30,6 +29,12 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Make the plugin's runtime closure discoverable to the pipewire
+    # filter-chain module. Without this, dlopen of libdeep_filter_ladspa.so
+    # fails with "No such file or directory" because the plugin's bundled
+    # Rust deps are not on the loader's search path.
+    services.pipewire.extraLadspaPackages = [pkgs.deepfilternet];
+
     services.pipewire.extraConfig.pipewire."99-deepfilter-source" = {
       "context.modules" = [
         {
@@ -42,7 +47,7 @@ in {
                 {
                   type = "ladspa";
                   name = "DeepFilter Mono";
-                  plugin = dfPlugin;
+                  plugin = "libdeep_filter_ladspa";
                   label = "deep_filter_mono";
                   control = {
                     "Attenuation Limit (dB)" = cfg.attenuationLimit;

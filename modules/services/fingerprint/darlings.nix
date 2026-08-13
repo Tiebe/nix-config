@@ -13,6 +13,12 @@ in {
       "L /var/lib/fprint - - - - /persist/var/lib/fprint"
     ];
 
-    systemd.services.fprintd.serviceConfig.StateDirectory = "";
+    # ProtectSystem=strict makes everything read-only by default, so
+    # explicitly reopen /var/lib/fprint for writes or enrollment data
+    # won't actually persist (same fix as bluetooth).
+    systemd.services.fprintd.serviceConfig = {
+      StateDirectory = "";
+      ReadWritePaths = ["/var/lib/fprint"];
+    };
   };
 }

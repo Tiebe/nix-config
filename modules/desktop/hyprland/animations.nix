@@ -19,27 +19,121 @@ in {
   config = mkIf (cfg.enable && animCfg.enable) {
     home-manager.users.tiebe = {
       wayland.windowManager.hyprland.settings = {
-        animations = {
-          enabled = true;
-          # Snappy bezier curves
-          bezier = [
-            "snappy, 0.05, 0.9, 0.1, 1.0"
-            "snappyFade, 0.2, 0.8, 0.2, 1.0"
-            "snappyMove, 0.05, 0.7, 0.1, 1.0"
-            "overshot, 0.05, 0.9, 0.1, 1.05"
-          ];
-          animation = [
-            "windows, 1, 3, snappy, popin 80%"
-            "windowsOut, 1, 3, snappyFade, popin 80%"
-            "windowsMove, 1, 2, snappyMove"
-            "fade, 1, 3, snappyFade"
-            "workspaces, 1, 3, snappy, slide"
-            "specialWorkspace, 1, 3, snappy, slidevert"
-            "border, 1, 5, default"
-            "borderangle, 1, 5, default"
-            "layers, 1, 2, snappyFade, fade"
-          ];
-        };
+        config.animations.enabled = true;
+
+        # Snappy bezier curves
+        curve = [
+          {
+            _args = [
+              "snappy"
+              {
+                type = "bezier";
+                points = [
+                  [0.05 0.9]
+                  [0.1 1.0]
+                ];
+              }
+            ];
+          }
+          {
+            _args = [
+              "snappyFade"
+              {
+                type = "bezier";
+                points = [
+                  [0.2 0.8]
+                  [0.2 1.0]
+                ];
+              }
+            ];
+          }
+          {
+            _args = [
+              "snappyMove"
+              {
+                type = "bezier";
+                points = [
+                  [0.05 0.7]
+                  [0.1 1.0]
+                ];
+              }
+            ];
+          }
+          {
+            _args = [
+              "overshot"
+              {
+                type = "bezier";
+                points = [
+                  [0.05 0.9]
+                  [0.1 1.05]
+                ];
+              }
+            ];
+          }
+        ];
+
+        animation = [
+          {
+            leaf = "windows";
+            enabled = true;
+            speed = 3;
+            bezier = "snappy";
+            style = "popin 80%";
+          }
+          {
+            leaf = "windowsOut";
+            enabled = true;
+            speed = 3;
+            bezier = "snappyFade";
+            style = "popin 80%";
+          }
+          {
+            leaf = "windowsMove";
+            enabled = true;
+            speed = 2;
+            bezier = "snappyMove";
+          }
+          {
+            leaf = "fade";
+            enabled = true;
+            speed = 3;
+            bezier = "snappyFade";
+          }
+          {
+            leaf = "workspaces";
+            enabled = true;
+            speed = 3;
+            bezier = "snappy";
+            style = "slide";
+          }
+          {
+            leaf = "specialWorkspace";
+            enabled = true;
+            speed = 3;
+            bezier = "snappy";
+            style = "slidevert";
+          }
+          {
+            leaf = "border";
+            enabled = true;
+            speed = 5;
+            bezier = "default";
+          }
+          {
+            leaf = "borderangle";
+            enabled = true;
+            speed = 5;
+            bezier = "default";
+          }
+          {
+            leaf = "layers";
+            enabled = true;
+            speed = 2;
+            bezier = "snappyFade";
+            style = "fade";
+          }
+        ];
       };
     };
   };

@@ -69,36 +69,36 @@ in {
       lib,
       ...
     }: {
-      home.file = {
-        "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
-        "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
-        "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
-        #        "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
-      };
+      # home.file = {
+      # "${opencodeConfigDir}/opencode.jsonc".source = ./config/opencode.jsonc;
+      # "${opencodeConfigDir}/oh-my-openagent.json".source = ./config/oh-my-openagent.json;
+      # "${opencodeConfigDir}/dcp.jsonc".source = ./config/dcp.jsonc;
+      #        "${opencodeConfigDir}/plugins/rtk.ts".source = ./config/plugins/rtk.ts;
+      # };
 
       home.sessionVariables = {
         OPENCODE_ENABLE_EXA = 1;
       };
 
       # Merge API key into existing auth.json (preserving OAuth tokens)
-      home.activation.mergeOpencodeAuthJson = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${opencodeLocalDir}"
-        LITE_API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.litellmKey.path})"
-        API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.apiproKey.path})"
-        AUTH_FILE="${opencodeLocalDir}/auth.json"
+      # home.activation.mergeOpencodeAuthJson = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      # $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${opencodeLocalDir}"
+      # LITE_API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.litellmKey.path})"
+      # API_KEY="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.apiproKey.path})"
+      # AUTH_FILE="${opencodeLocalDir}/auth.json"
 
-        if [ -f "$AUTH_FILE" ]; then
-          # Merge into existing file at top level
-          $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" --arg liteApiKey "$LITE_API_KEY" \
-            '.anthropic = {type: "api", key: $apiKey} | ."litellm" = {type: "api", key: $liteApiKey}' \
-            "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
-        else
-          # Create new file with top-level key
-          $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY"  --arg liteApiKey "$LITE_API_KEY" \
-            '{anthropic: {type: "api", key: $apiKey}, "litellm": {type: "api", key: $liteApiKey}}' \
-            > "$AUTH_FILE"
-        fi
-      '';
+      # if [ -f "$AUTH_FILE" ]; then
+      # Merge into existing file at top level
+      # $DRY_RUN_CMD ${pkgs.jq}/bin/jq --arg apiKey "$API_KEY" --arg liteApiKey "$LITE_API_KEY" \
+      # '.anthropic = {type: "api", key: $apiKey} | ."litellm" = {type: "api", key: $liteApiKey}' \
+      # "$AUTH_FILE" > "$AUTH_FILE.tmp" && mv "$AUTH_FILE.tmp" "$AUTH_FILE"
+      # else
+      # Create new file with top-level key
+      # $DRY_RUN_CMD ${pkgs.jq}/bin/jq -n --arg apiKey "$API_KEY"  --arg liteApiKey "$LITE_API_KEY" \
+      # '{anthropic: {type: "api", key: $apiKey}, "litellm": {type: "api", key: $liteApiKey}}' \
+      # > "$AUTH_FILE"
+      # fi
+      # '';
     };
   };
 }
