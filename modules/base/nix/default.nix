@@ -5,18 +5,17 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
     types
     ;
   cfg = config.tiebe.base.nix;
-in
-{
-  imports = [ ./darlings.nix ];
+in {
+  imports = [./darlings.nix];
 
   options = {
     tiebe.base.nix = {
@@ -25,12 +24,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.etc =
-      with pkgs;
-      (lib.mapAttrs' (name: value: {
+    environment.etc = with pkgs; (lib.mapAttrs' (name: value: {
         name = "nix/path/${name}";
         value.source = value.flake;
-      }) config.nix.registry);
+      })
+      config.nix.registry);
 
     programs.nix-ld = {
       enable = true;
@@ -48,8 +46,7 @@ in
         # Disable if you don't want unfree packages
         # allowUnfree = true;
 
-        allowUnfreePredicate =
-          pkg:
+        allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) [
             "discord"
             "discord-unwrapped"
@@ -74,7 +71,7 @@ in
       registry.nixpkgs.flake = inputs.nixpkgs;
       # This will additionally add your inputs to the system's legacy channels
       # Making legacy nix commands consistent as well, awesome!
-      nixPath = [ "/etc/nix/path" ];
+      nixPath = ["/etc/nix/path"];
 
       settings = {
         # Enable flakes and new 'nix' command

@@ -5,18 +5,17 @@
   config,
   pkgs,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     mkEnableOption
     mkIf
     mkOption
     types
     ;
   cfg = config.tiebe.desktop.apps.vencord;
-in
-{
-  imports = [ ./darlings.nix ];
+in {
+  imports = [./darlings.nix];
 
   options = {
     tiebe.desktop.apps.vencord = {
@@ -25,7 +24,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.tiebe = { inputs, ... }: {
+    home-manager.users.tiebe = {inputs, ...}: {
       imports = [
         inputs.nixcord.homeModules.nixcord
       ];
