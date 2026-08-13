@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-26 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+27 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -22,6 +22,7 @@
 | minecraft | simple | Game |
 | obsidian | simple | Notes |
 | office | simple | LibreOffice |
+| omp | simple | Oh My Pi AI coding agent (`inputs.omp` home-manager module), declarative `~/.omp/agent/config.yml` via `programs.omp.settings` |
 | opencode | complex | Tauri build from source (`inputs.opencode`), custom derivation |
 | forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
 | opendeck | simple | Stream deck — **loose file** (`opendeck.nix`, not in subfolder) |

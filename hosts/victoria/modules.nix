@@ -100,6 +100,7 @@
         rofi.enable = true;
         claude-code.enable = true;
         codex.enable = true;
+        omp.enable = true;
         remanager.enable = true;
         stremio.enable = true;
       };

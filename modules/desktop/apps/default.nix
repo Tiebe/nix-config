@@ -17,6 +17,7 @@
     ./minecraft
     ./obsidian
     ./office
+    ./omp
     ./opencode
     ./opendeck.nix
     ./parsec

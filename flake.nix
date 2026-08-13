@@ -78,6 +78,12 @@
     forgecode.url = "github:antinomyhq/forge";
     forgecode.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Do NOT follow this repo's nixpkgs here: omp's rust-overlay dependency
+    # (used to build its pinned Rust toolchain) breaks against very recent
+    # nixpkgs-unstable revisions (`stdenv.isLinux` removed from rust-overlay's
+    # `mk-aggregated.nix`). Let omp use its own tested, pinned nixpkgs.
+    omp.url = "github:can1357/oh-my-pi";
+
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
 
