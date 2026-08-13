@@ -85,7 +85,7 @@ in {
         };
       };
 
-      services.arrpc.enable = true;
+      services.arrpc.enable = false;
     };
   };
 }

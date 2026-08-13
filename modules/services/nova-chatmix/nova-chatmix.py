@@ -2,6 +2,7 @@
 
 from signal import SIGINT, SIGTERM, signal
 from subprocess import Popen, check_output
+from time import sleep
 
 from hid import device
 from hid import enumerate as hidenumerate
@@ -140,6 +141,9 @@ if __name__ == "__main__":
       main_sink=nova.PW_GAME_SINK,
       chat_sink=nova.PW_CHAT_SINK,
     )
+
+    sleep(1)
+    check_output([CMD_PACTL, "set-default-sink", f"input.{nova.PW_GAME_SINK}"])
 
     nova.chatmix_volume_control(chatmix=chatmix)
   except DeviceNotFoundException:

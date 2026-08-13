@@ -27,6 +27,15 @@ in {
       SUBSYSTEM=="usb", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="12e0", TAG+="uaccess", ENV{SYSTEMD_USER_WANTS}+="nova-chatmix.service"
     '';
 
+    # Prevent WirePlumber from moving existing streams to a new default sink.
+    # Without this, changing the default to input.NovaGame causes EasyEffects'
+    # output to follow, creating a feedback loop with the Nova loopback.
+    services.pipewire.wireplumber.extraConfig."99-nova-chatmix" = {
+      "wireplumber.settings" = {
+        "linking.follow-default-target" = false;
+      };
+    };
+
     home-manager.users.tiebe = {
       systemd.user.services.nova-chatmix = {
         Unit = {

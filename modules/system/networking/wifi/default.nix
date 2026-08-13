@@ -55,13 +55,14 @@ in {
               psk = "$WIFI_PSK_" + builtins.toString i;
             };
 
-            # EAP networks dont work yet (like eduroam)
-            # "802-1x" = {
-            #   eap = "peap";
-            #   identity = "$WIFI_USERNAME_" + builtins.toString i;
-            #   password = "$WIFI_PASSWORD_" + builtins.toString i;
-            #   "phase2-auth" = "mschapv2";
-            # };
+            # For WPA-EAP networks (e.g. eduroam). NetworkManager ignores this
+            # section when key-mgmt=wpa-psk, so PSK profiles are unaffected.
+            "802-1x" = {
+              eap = "$WIFI_EAP_" + builtins.toString i;
+              identity = "$WIFI_USERNAME_" + builtins.toString i;
+              password = "$WIFI_PASSWORD_" + builtins.toString i;
+              "phase2-auth" = "$WIFI_PHASE2_" + builtins.toString i;
+            };
           };
         })
         networkCount
