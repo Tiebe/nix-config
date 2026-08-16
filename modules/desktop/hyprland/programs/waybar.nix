@@ -10,97 +10,6 @@
   cfg = config.tiebe.desktop.hyprland;
   waybarCfg = config.tiebe.desktop.hyprland.programs.waybar;
 
-  # Per-monitor brightness control script
-  # Usage: brightness-control <monitor-name> <action> [value]
-  # - Auto-detects DDC vs software per monitor
-  # - DDC monitors → ddcutil hardware brightness
-  # - Non-DDC monitors → wl-gammarelay-rs per-output software dimming
-  brightness-control = pkgs.writeShellScriptBin "brightness-control" ''
-    set -uo pipefail
-
-    MONITOR="''${1:?Usage: brightness-control <monitor-name> <action> [value]}"
-    ACTION="''${2:-get}"
-    VALUE="''${3:-}"
-    STATE_FILE="/tmp/brightness-state-$MONITOR"
-    CACHE_FILE="/tmp/brightness-ddc-cache"
-    CACHE_MAX_AGE=600 # 10 minutes
-    STEP=10
-
-    # Initialize state if missing
-    [[ -f "$STATE_FILE" ]] || echo 100 > "$STATE_FILE"
-
-    # Detect all DDC-capable monitors via ddcutil
-    # Cache format: bus_number:connector_name per line
-    refresh_cache() {
-      local bus="" connector=""
-      : > "$CACHE_FILE"
-      while IFS= read -r line; do
-        if [[ "$line" =~ I2C\ bus:.*i2c-([0-9]+) ]]; then
-          bus="''${BASH_REMATCH[1]}"
-        fi
-        if [[ "$line" =~ DRM\ connector:.*card[0-9]+-([A-Za-z0-9-]+) ]]; then
-          connector="''${BASH_REMATCH[1]}"
-          [[ -n "$bus" ]] && echo "$bus:$connector" >> "$CACHE_FILE"
-          bus="" connector=""
-        fi
-      done < <(${pkgs.ddcutil}/bin/ddcutil detect 2>/dev/null)
-    }
-
-    ensure_cache() {
-      if [[ ! -f "$CACHE_FILE" ]]; then
-        refresh_cache
-        return
-      fi
-      local now age
-      now=$(date +%s)
-      age=$(( now - $(stat -c %Y "$CACHE_FILE") ))
-      (( age > CACHE_MAX_AGE )) && refresh_cache
-    }
-
-    get_brightness() { cat "$STATE_FILE"; }
-
-    set_brightness() {
-      local val=$1
-      (( val > 100 )) && val=100
-      (( val < 5 )) && val=5
-      echo "$val" > "$STATE_FILE"
-
-      ensure_cache
-
-      # Check if this monitor has DDC
-      local ddc_bus=""
-      while IFS=: read -r bus connector; do
-        if [[ "$connector" == "$MONITOR" ]]; then
-          ddc_bus="$bus"
-          break
-        fi
-      done < "$CACHE_FILE"
-
-      if [[ -n "$ddc_bus" ]]; then
-        # DDC monitor → hardware brightness
-        ${pkgs.ddcutil}/bin/ddcutil --bus "$ddc_bus" setvcp 10 "$val" --noverify &
-      else
-        # Non-DDC → software brightness via wl-gammarelay-rs per-output DBus
-        local gamma_val dbus_path
-        gamma_val=$(${pkgs.bc}/bin/bc -l <<< "scale=2; $val / 100")
-        dbus_path="/outputs/''${MONITOR//-/_}"
-        busctl --user set-property rs.wl-gammarelay "$dbus_path" \
-          rs.wl.gammarelay Brightness d "$gamma_val" 2>/dev/null || true
-      fi
-
-      wait
-    }
-
-    case "$ACTION" in
-      up)   cur=$(get_brightness); set_brightness $((cur + STEP)) ;;
-      down) cur=$(get_brightness); set_brightness $((cur - STEP)) ;;
-      get)  get_brightness ;;
-      set)  set_brightness "''${VALUE:?Usage: brightness-control <monitor> set <0-100>}" ;;
-      refresh) refresh_cache; echo "DDC cache refreshed" ;;
-      *)    echo "Usage: brightness-control <monitor-name> {up|down|get|set <value>|refresh}"; exit 1 ;;
-    esac
-  '';
-
   waybarSettings = {
     mainBar = {
       layer = "top";
@@ -421,23 +330,7 @@ in {
 
   config = mkIf (cfg.enable && waybarCfg.enable) {
     home-manager.users.tiebe = {
-      # wl-gammarelay-rs daemon for per-output software brightness (non-DDC monitors)
-      systemd.user.services.wl-gammarelay-rs = {
-        Unit = {
-          Description = "wl-gammarelay-rs — per-output software brightness via Wayland gamma";
-          PartOf = ["graphical-session.target"];
-          After = ["graphical-session.target"];
-        };
-        Service = {
-          ExecStart = "${pkgs.wl-gammarelay-rs}/bin/wl-gammarelay-rs";
-          Restart = "on-failure";
-          RestartSec = 2;
-        };
-        Install.WantedBy = ["graphical-session.target"];
-      };
-
       home.packages = [
-        brightness-control
         pkgs.gnome-control-center
         pkgs.overskride
       ];

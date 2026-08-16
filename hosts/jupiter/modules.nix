@@ -67,6 +67,7 @@
 
           animations.enable = true;
           binds.enable = true;
+          binds.monitorBrightness.enable = true;
           windowrules.enable = true;
 
           greetd.enable = true;
