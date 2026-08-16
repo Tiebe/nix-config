@@ -66,15 +66,20 @@
     # Detect all DDC-capable monitors via ddcutil
     # Cache format: bus_number:connector_name per line
     refresh_cache() {
-      local bus="" connector=""
+      local bus="" connector="" valid=0
       : > "$CACHE_FILE"
       while IFS= read -r line; do
+        if [[ "$line" =~ ^Display\ [0-9]+ ]]; then
+          valid=1
+        elif [[ "$line" =~ ^Invalid\ display ]]; then
+          valid=0
+        fi
         if [[ "$line" =~ I2C\ bus:.*i2c-([0-9]+) ]]; then
           bus="''${BASH_REMATCH[1]}"
         fi
-        if [[ "$line" =~ DRM\ connector:.*card[0-9]+-([A-Za-z0-9-]+) ]]; then
+        if [[ "$line" =~ DRM[_\ ]connector:.*card[0-9]+-([A-Za-z0-9-]+) ]]; then
           connector="''${BASH_REMATCH[1]}"
-          [[ -n "$bus" ]] && echo "$bus:$connector" >> "$CACHE_FILE"
+          [[ -n "$bus" && "$valid" == "1" ]] && echo "$bus:$connector" >> "$CACHE_FILE"
           bus="" connector=""
         fi
       done < <(${pkgs.ddcutil}/bin/ddcutil detect 2>/dev/null)
@@ -139,7 +144,7 @@
   # monitor (queried live from Hyprland, no hardcoded connector names).
   brightnessFn = pkgs.writeShellScriptBin "brightness-fn" ''
     set -uo pipefail
-    ACTION="''${1:?Usage: brightness-fn {up|down}}"
+    ACTION="''${1:?Usage: brightness-fn up|down}"
     for m in $(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[].name'); do
       ${brightnessControl}/bin/brightness-control "$m" "$ACTION" &
     done
