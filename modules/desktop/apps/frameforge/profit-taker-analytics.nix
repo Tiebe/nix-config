@@ -71,7 +71,8 @@ in
 
       makeWrapper \
         $out/libexec/${pname}/profit_taker_analyzer \
-        $out/bin/profit_taker_analyzer
+        $out/bin/profit_taker_analyzer \
+        --prefix LD_LIBRARY_PATH : $out/libexec/${pname}/lib
 
       install -Dm644 \
         $out/libexec/${pname}/data/flutter_assets/assets/AppIcon.png \
