@@ -14,7 +14,7 @@
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
 | easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |
 | firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
-| frameforge | medium | Warframe companion (Tauri, `rustPlatform.buildRustPackage`); memory scanner needs `boot.kernel.sysctl."kernel.yama.ptrace_scope" = 0`, gated on `cfg.enable` in `default.nix` |
+| frameforge | medium | Warframe tools: FrameForge (Tauri source build, ptrace memory scanner) and Profit Taker Analytics (prebuilt Flutter app with declarative `pta://` Discord OAuth handler) |
 | httptoolkit | simple | HTTP debugging proxy |
 | lmstudio | simple | LLM interface |
 | legcord | simple | Discord client |

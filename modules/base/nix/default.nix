@@ -61,6 +61,7 @@ in {
             "claude-desktop"
             "claude-code"
             "stremio-linux-shell"
+            "profit-taker-analytics"
           ];
       };
     };
