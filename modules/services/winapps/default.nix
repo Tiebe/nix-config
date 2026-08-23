@@ -72,11 +72,11 @@ in {
       environmentFiles = ["${stateDirectory}/environment"];
       environment = {
         CPU_CORES = "6";
-        DISK_SIZE = "64G";
+        DISK_SIZE = "32G";
         HOME = "/home/tiebe";
         RAM_SIZE = "4G";
         USERNAME = "Docker";
-        VERSION = "11";
+        VERSION = "tiny11";
       };
       volumes = [
         "${stateDirectory}/storage:/storage:rw"
@@ -114,6 +114,7 @@ in {
         description = "Generate local WinApps credentials";
         path = [
           pkgs.coreutils
+          pkgs.e2fsprogs
           pkgs.openssl
         ];
         serviceConfig = {
@@ -126,6 +127,8 @@ in {
           install -d -m 0700 -o root -g root \
             "${stateDirectory}" \
             "${stateDirectory}/storage"
+
+          chattr +C "${stateDirectory}/storage"
 
           if [ ! -s "${stateDirectory}/rdp-password" ]; then
             umask 077
