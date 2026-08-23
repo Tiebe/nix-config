@@ -8,7 +8,7 @@
   darlings = config.tiebe.system.boot.darlings;
   evictCfg = config.tiebe.system.boot.evictDarlings;
 in {
-  config = mkIf (darlings.enable && cfg.enable) {
+  config = mkIf (darlings.enable && cfg.enable && cfg.rootless) {
     # Rootless Docker stores data in ~/.local/share/docker, not /var/lib/docker
     home-manager.users.tiebe = {config, ...}: {
       xdg.dataFile."docker".source =

@@ -16,6 +16,11 @@ in {
   options = {
     tiebe.services.docker = {
       enable = mkEnableOption "Docker";
+      rootless = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to run the user-scoped rootless Docker daemon";
+      };
     };
   };
 
@@ -23,8 +28,8 @@ in {
     virtualisation.docker = {
       enable = true;
       rootless = {
-        enable = true;
-        setSocketVariable = true;
+        enable = cfg.rootless;
+        setSocketVariable = cfg.rootless;
       };
     };
 

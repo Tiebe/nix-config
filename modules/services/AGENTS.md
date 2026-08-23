@@ -12,7 +12,7 @@
 | boinc | simple | **Loose file** (`boinc.nix`, not in subfolder) |
 | cachix | simple | Binary cache |
 | devenv | simple | Dev environments |
-| docker | simple | Container runtime — canonical module template |
+| docker | simple | Container runtime — rootless by default; WinApps selects rootful mode |
 | fingerprint | simple | fprintd |
 | gpg | medium | YubiKey agent, SSH integration |
 | lorri | simple | Nix shell manager |
@@ -27,7 +27,7 @@
 | variety | simple | Wallpaper manager |
 | vr | simple | VR headset support |
 | waydroid | medium | Android container runtime with `/var/lib/waydroid` persistence for darlings |
-| winapps | complex | Docker + RDP Windows app integration |
+| winapps | complex | Rootful Docker + RDP Windows app integration with darlings storage |
 | windows | complex | **VFIO GPU passthrough** — `scopedHooks.nix` + `vm.nix` (3 files) |
 | zerogravity | complex | Custom Rust build — **orphaned** (not imported by `services/default.nix`) |
 
