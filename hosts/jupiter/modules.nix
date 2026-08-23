@@ -121,7 +121,7 @@
       };
 
       services = {
-        # winapps.enable = true;
+        winapps.enable = true;
         #docker.enable = true;
         podman.enable = true;
         #      printing.enable = true;
