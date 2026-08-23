@@ -36,7 +36,7 @@ in {
     environment.systemPackages = [
       winappsPackages.winapps
       winappsPackages.winapps-launcher
-      pkgs.freerdp3
+      pkgs.freerdp
     ];
 
     home-manager.users.tiebe.xdg.configFile."winapps/winapps.conf".text = ''
@@ -103,7 +103,6 @@ in {
       RestartMaxDelaySec = lib.mkOverride 90 "1m";
       RestartSec = lib.mkOverride 90 "100ms";
       RestartSteps = lib.mkOverride 90 9;
-      TimeoutStopSec = "130s";
     };
   };
 }
