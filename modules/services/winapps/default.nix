@@ -63,6 +63,8 @@ in {
       BOOT_TIMEOUT="120"
       HIDEF="on"
     '';
+    virtualisation.oci-containers.backend = lib.mkForce "docker";
+    virtualisation.podman.dockerCompat = lib.mkForce false;
 
     virtualisation.oci-containers.containers.WinApps = {
       image = "ghcr.io/dockur/windows:latest";
