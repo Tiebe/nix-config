@@ -8,13 +8,16 @@
   darlings = config.tiebe.system.boot.darlings;
 in {
   config = mkIf (darlings.enable && cfg.enable) {
-    systemd.tmpfiles.rules = [
-      "d /persist/var/lib/winapps 0700 root root -"
-    ];
+    systemd.services = {
+      "docker-WinApps" = {
+        after = ["persist.mount"];
+        requires = ["persist.mount"];
+      };
 
-    systemd.services."docker-WinApps" = {
-      after = ["persist.mount"];
-      requires = ["persist.mount"];
+      winapps-credentials = {
+        after = ["persist.mount"];
+        requires = ["persist.mount"];
+      };
     };
   };
 }

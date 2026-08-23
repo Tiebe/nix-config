@@ -9,10 +9,10 @@
   cfg = config.tiebe.services.winapps;
   darlings = config.tiebe.system.boot.darlings;
   winappsPackages = inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system};
-  storageVolume =
+  stateDirectory =
     if darlings.enable
-    then "/persist/var/lib/winapps:/storage:rw"
-    else "winapps_data:/storage:rw";
+    then "/persist/var/lib/winapps"
+    else "/var/lib/winapps";
 in {
   imports = [
     ./darlings.nix
@@ -41,8 +41,8 @@ in {
 
     home-manager.users.tiebe.xdg.configFile."winapps/winapps.conf".text = ''
       RDP_USER="Docker"
-      RDP_PASS="WinApps"
-      RDP_ASKPASS=""
+      RDP_PASS=""
+      RDP_ASKPASS="cat ${stateDirectory}/rdp-password"
       RDP_DOMAIN=""
       RDP_IP="127.0.0.1"
       RDP_PORT="3389"
@@ -69,17 +69,17 @@ in {
     virtualisation.oci-containers.containers.WinApps = {
       image = "ghcr.io/dockur/windows:latest";
       autoStart = true;
+      environmentFiles = ["${stateDirectory}/environment"];
       environment = {
         CPU_CORES = "6";
         DISK_SIZE = "64G";
         HOME = "/home/tiebe";
-        PASSWORD = "WinApps";
         RAM_SIZE = "4G";
         USERNAME = "Docker";
         VERSION = "11";
       };
       volumes = [
-        storageVolume
+        "${stateDirectory}/storage:/storage:rw"
         "/home/tiebe:/shared:rw"
         "${inputs.winapps}/oem:/oem:ro"
       ];
@@ -98,11 +98,50 @@ in {
       ];
     };
 
-    systemd.services."docker-WinApps".serviceConfig = {
-      Restart = lib.mkOverride 90 "on-failure";
-      RestartMaxDelaySec = lib.mkOverride 90 "1m";
-      RestartSec = lib.mkOverride 90 "100ms";
-      RestartSteps = lib.mkOverride 90 9;
+    systemd.services = {
+      "docker-WinApps" = {
+        after = ["winapps-credentials.service"];
+        requires = ["winapps-credentials.service"];
+        serviceConfig = {
+          Restart = lib.mkOverride 90 "on-failure";
+          RestartMaxDelaySec = lib.mkOverride 90 "1m";
+          RestartSec = lib.mkOverride 90 "100ms";
+          RestartSteps = lib.mkOverride 90 9;
+        };
+      };
+
+      winapps-credentials = {
+        description = "Generate local WinApps credentials";
+        path = [
+          pkgs.coreutils
+          pkgs.openssl
+        ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        script = ''
+          set -euo pipefail
+
+          install -d -m 0700 -o root -g root \
+            "${stateDirectory}" \
+            "${stateDirectory}/storage"
+
+          if [ ! -s "${stateDirectory}/rdp-password" ]; then
+            umask 077
+            openssl rand -base64 32 > "${stateDirectory}/rdp-password"
+          fi
+
+          chown tiebe:users "${stateDirectory}/rdp-password"
+          chmod 0400 "${stateDirectory}/rdp-password"
+
+          umask 077
+          printf 'PASSWORD=' > "${stateDirectory}/environment"
+          cat "${stateDirectory}/rdp-password" >> "${stateDirectory}/environment"
+          chown root:root "${stateDirectory}/environment"
+          chmod 0600 "${stateDirectory}/environment"
+        '';
+      };
     };
   };
 }
