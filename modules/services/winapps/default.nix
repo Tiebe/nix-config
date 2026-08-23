@@ -9,6 +9,17 @@
   cfg = config.tiebe.services.winapps;
   darlings = config.tiebe.system.boot.darlings;
   winappsPackages = inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system};
+  winapps = pkgs.symlinkJoin {
+    name = "winapps";
+    paths = [winappsPackages.winapps];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram "$out/bin/winapps" \
+        --prefix PATH : "${lib.makeBinPath [pkgs.coreutils]}"
+      wrapProgram "$out/bin/winapps-setup" \
+        --prefix PATH : "${lib.makeBinPath [pkgs.coreutils]}"
+    '';
+  };
   rdpAskPass = pkgs.writeShellScript "winapps-askpass" ''
     exec ${pkgs.coreutils}/bin/cat "${stateDirectory}/rdp-password"
   '';
@@ -37,7 +48,7 @@ in {
     };
 
     environment.systemPackages = [
-      winappsPackages.winapps
+      winapps
       winappsPackages.winapps-launcher
       pkgs.freerdp
     ];
