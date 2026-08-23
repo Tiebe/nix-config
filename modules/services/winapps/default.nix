@@ -9,6 +9,9 @@
   cfg = config.tiebe.services.winapps;
   darlings = config.tiebe.system.boot.darlings;
   winappsPackages = inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system};
+  rdpAskPass = pkgs.writeShellScript "winapps-askpass" ''
+    exec ${pkgs.coreutils}/bin/cat "${stateDirectory}/rdp-password"
+  '';
   stateDirectory =
     if darlings.enable
     then "/persist/var/lib/winapps"
@@ -42,7 +45,7 @@ in {
     home-manager.users.tiebe.xdg.configFile."winapps/winapps.conf".text = ''
       RDP_USER="Docker"
       RDP_PASS=""
-      RDP_ASKPASS="cat ${stateDirectory}/rdp-password"
+      RDP_ASKPASS="${rdpAskPass}"
       RDP_DOMAIN=""
       RDP_IP="127.0.0.1"
       RDP_PORT="3389"
@@ -124,9 +127,8 @@ in {
         script = ''
           set -euo pipefail
 
-          install -d -m 0700 -o root -g root \
-            "${stateDirectory}" \
-            "${stateDirectory}/storage"
+          install -d -m 0711 -o root -g root "${stateDirectory}"
+          install -d -m 0700 -o root -g root "${stateDirectory}/storage"
 
           chattr +C "${stateDirectory}/storage"
 
