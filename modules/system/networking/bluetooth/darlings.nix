@@ -10,6 +10,7 @@ in {
   config = mkIf (darlings.enable && cfg.enable) {
     # Bluetooth pairing/trust data (bluez keeps it under /var/lib/bluetooth)
     systemd.tmpfiles.rules = [
+      "d /persist/var/lib/bluetooth 0700 root root -"
       "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
     ];
 
