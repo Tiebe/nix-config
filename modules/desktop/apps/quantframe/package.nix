@@ -20,13 +20,13 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "quantframe";
-  version = "1.6.22";
+  version = "1.6.28";
 
   src = fetchFromGitHub {
     owner = "Kenya-DK";
     repo = "quantframe-react";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-OV4jgHiYH1t9sbbAe24B1a5vVmaHQFzIVKpL2pUPuJ4=";
+    hash = "sha256-TbkdfIPn/i+ocgJ0r7i6CJi+rr9eE8QK1798piuSJio=";
   };
 
   postPatch = ''
@@ -51,10 +51,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
       ;
     pnpm = pnpm_10;
     fetcherVersion = 3;
-    hash = "sha256-T/righzinythJx9mRd/AcFpjtZe3tyKgjfLDCZfAyzY=";
+    hash = "sha256-TAghp3rBySgNpzZ8ruG9jBO0BLcR3QhWK2XJ9C7VcuA=";
   };
 
-  cargoHash = "sha256-5FQmKwC+lzaS+nlA0sfou8HoKgkzWqu+m6Q3m4szM8s=";
+  cargoHash = "sha256-UH1JP2HBQ5RetdJRpWlIXU7Oui+Zm4uTxQqMDVAlFo4=";
 
   nativeBuildInputs = [
     cargo-tauri.hook
