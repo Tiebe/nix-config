@@ -17,15 +17,15 @@
 }:
 python3.pkgs.buildPythonApplication rec {
   pname = "piper";
-  version = "104ee170c1028f9d2fac1859dc6dea72efc0648f";
+  version = "0-unstable-2026-08-12";
 
   format = "other";
 
   src = fetchFromGitHub {
     owner = "libratbag";
     repo = "piper";
-    rev = "192df857d44ec5c314aa59701a1c74940339b513";
-    hash = "sha256-IxXa1vvvRbrxl0khChJxW+fhp1dJi+HtFlJXUU4VKYw=";
+    rev = "5d3c8845b55643595ccb8029dfa5c7a2fb079e77";
+    hash = "sha256-oGa0NXgoiVYadCAB5cnQYrjh3KIVWhTxsSYaB4TVZSA=";
   };
 
   nativeBuildInputs = [meson ninja gettext pkg-config wrapGAppsHook3 desktop-file-utils appstream-glib gobject-introspection];

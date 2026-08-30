@@ -24,12 +24,12 @@ in {
     services.ratbagd = {
       enable = true;
       package = pkgs.libratbag.overrideAttrs (old: {
-        version = "unstable-2025-11-07";
+        version = "0-unstable-2026-08-18";
         src = pkgs.fetchFromGitHub {
           owner = "libratbag";
           repo = "libratbag";
-          rev = "78d1124c3e7b992470017ab8a5b5af009745fe4f";
-          sha256 = "sha256-+aCORAue2hs8DPcWPszzMwGC9SMfJ/A0zpn7tCwuD9Y=";
+          rev = "b8d4d3ca1f4d6b23c664ffee2888b8eb669bee21";
+          sha256 = "sha256-8V/LIki/tI/9Wi6kuFJp6k1p+moMh8Gc8RNP1BUlZO8=";
         };
       });
     };
