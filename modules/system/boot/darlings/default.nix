@@ -93,6 +93,13 @@ in {
     environment.systemPackages = [fs-diff];
 
     users.mutableUsers = false;
+    # Scripted initrd, deliberately. NixOS warns that it is deprecated and
+    # scheduled for removal in 26.11, but the rollback below uses
+    # `boot.initrd.postDeviceCommands`, which systemd stage 1 does not provide.
+    # Migrating means reimplementing this as a `boot.initrd.systemd.services`
+    # oneshot ordered Before=sysroot.mount and After the root device unit —
+    # boot-critical on an ephemeral root, so it needs a deliberate reboot test
+    # on victoria first. Revisit before 26.11.
     boot.initrd.systemd.enable = false;
     boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
       mkdir -p /mnt
