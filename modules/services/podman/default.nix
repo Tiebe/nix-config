@@ -29,7 +29,9 @@ in {
 
     virtualisation.oci-containers.backend = "podman";
 
-    virtualisation.containers.registries.search = ["docker.io"];
+    # V1 registries.conf schema; this is exactly what the removed
+    # `virtualisation.containers.registries.search` shim expanded to.
+    virtualisation.containers.registries.settings.registries.search.registries = ["docker.io"];
 
     users.users.tiebe.extraGroups = ["podman"];
   };
