@@ -62,6 +62,8 @@ in {
             "claude-code"
             "stremio-linux-shell"
             "profit-taker-analytics"
+            # pluto's DisplayLink dock driver
+            "displaylink"
           ];
       };
     };

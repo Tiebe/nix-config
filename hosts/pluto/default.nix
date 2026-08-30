@@ -25,7 +25,7 @@
     extraPackages = with pkgs; [
       mesa
       vpl-gpu-rt # or intel-media-sdk for QSV
-      vaapiIntel
+      intel-vaapi-driver
       intel-media-driver
     ];
   };
