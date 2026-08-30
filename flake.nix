@@ -21,6 +21,13 @@
     agenix = {
       url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      # ragenix pins rust-overlay 59c45eb, whose lib/mk-aggregated.nix reads the
+      # `stdenv.isLinux` alias that nixpkgs dropped for the aggregated toolchain
+      # stdenv. Upstream rust-overlay fixed it (stdenv.hostPlatform.isLinux), and
+      # ragenix has not re-locked since 2025-10-30, so override the transitive pin.
+      # Drop this once ragenix bumps its own flake.lock.
+      # git+https, not github:, so re-locking does not need the GitHub API.
+      inputs.rust-overlay.url = "git+https://github.com/oxalica/rust-overlay";
     };
 
     nixos-generators = {
@@ -101,7 +108,6 @@
     nixpkgs,
     nixpkgs-small,
     home-manager,
-    sops-nix,
     agenix,
     winapps,
     stylix,
