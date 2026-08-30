@@ -87,15 +87,15 @@
   wd = zshPlugin {
     owner = "mfaerevaag";
     repo = "wd";
-    rev = "7f87d4caa7d4073da4ba3e26c2cbcd26fe53a83b";
-    sha256 = "sha256-Q3CE6+jxan0nczF5tIvmYKHBfR08eqd86Zogieh8YVU=";
+    rev = "944fcbc4e635d06f0209cfdbf1f158a6c2617d24";
+    sha256 = "sha256-t8SuiNskmJdRupl2BrvDz1zcyzN70KH38fyQU92guC4=";
   };
 
   zsh-eza-ls-plugin = zshPlugin {
     owner = "birdhackor";
     repo = "zsh-eza-ls-plugin";
-    rev = "e3b2394a5fa6b9d4689ac3c8d946fbbdaacb302d";
-    sha256 = "sha256-+QCEejmEtMujBelMOZUjiHL4njT3YHs9fkIgYrL2Yxc=";
+    rev = "550f40381d32d13527a627ec462e6166c893f698";
+    sha256 = "sha256-aAMeLhiRAATypFpboWLs5FhC+TNZtGjuVbbzAr5+2q0=";
   };
 
   zsh-plugin-fd = zshPlugin {
