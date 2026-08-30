@@ -26,14 +26,14 @@
 | omp | simple | Oh My Pi AI coding agent (`inputs.omp` home-manager module), declarative `~/.omp/agent/config.yml` via `programs.omp.settings` |
 | opencode | complex | Tauri build from source (`inputs.opencode`), custom derivation |
 | forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
-| opendeck | simple | Stream deck — **loose file** (`opendeck.nix`, not in subfolder) |
+| opendeck | medium | Elgato Stream Deck software — local `package.nix` unpacking the upstream `.deb` (autoPatchelf + wrapGAppsHook3), ships udev rules via `services.udev.packages` |
 | parsec | simple | Remote desktop |
 | piper | simple | Mouse config (libratbag) |
 | protonmail | simple | Email client |
 | remanager | simple | reMarkable tablet mod manager (Wails/GTK app via prebuilt tarball in overlay) |
 | rofi | complex | **Most complex app** (349L) — cheatsheet PDF generation + desktop entries |
 | spotify | simple | Music |
-| steam | complex | `extraEnv.HOME` override, dual-path darlings with activation scripts |
+| steam | complex | `extraEnv.HOME` override, dual-path darlings with activation scripts, vendored `gamescope-input-holding.patch` (gamescope PR #1897 rebased onto the packaged tag) |
 | stremio | simple | Media center streaming client (`stremio-linux-shell`, QML-based) |
 | thunar | simple | File manager |
 | vscode | simple | VSCodium |
@@ -62,7 +62,3 @@
 - Forgetting `darlings.nix` companion file (even if empty, it MUST exist)
 - Using `systemd.tmpfiles.rules` for paths under `/users/` — causes permission errors
 - Missing activation script for `mkOutOfStoreSymlink` targets — broken symlinks on first boot
-
-## KNOWN ISSUES
-
-- `opendeck.nix` is a loose file, not in a subfolder — legacy pattern

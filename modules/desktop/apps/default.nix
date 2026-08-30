@@ -20,7 +20,7 @@
     ./office
     ./omp
     ./opencode
-    ./opendeck.nix
+    ./opendeck
     ./parsec
     ./quantframe
     ./remanager
