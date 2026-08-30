@@ -16,9 +16,8 @@
   wget,
   xdg-utils,
   bc,
-  xorg,
+  xrandr,
   mokutil,
-  wineWowPackages,
   wineWow64Packages,
   winetricks,
   gettext,
@@ -45,7 +44,7 @@ stdenv.mkDerivation rec {
     wget
     xdg-utils
     bc
-    xorg.xrandr
+    xrandr
     mokutil
     wineWow64Packages.stable
     winetricks
@@ -90,7 +89,7 @@ stdenv.mkDerivation rec {
     [Desktop Entry]
     Type=Application
     Name=Autodesk Identity Manager Scheme Handler
-    Exec=sh -c 'env WINEPREFIX="\$HOME/.autodesk_fusion/wineprefixes/default" ${wineWowPackages.stable}/bin/wine "\$(find \$HOME/.autodesk_fusion/wineprefixes/default/ -name "AdskIdentityManager.exe" | head -1)" "%u"'
+    Exec=sh -c 'env WINEPREFIX="\$HOME/.autodesk_fusion/wineprefixes/default" ${wineWow64Packages.stable}/bin/wine "\$(find \$HOME/.autodesk_fusion/wineprefixes/default/ -name "AdskIdentityManager.exe" | head -1)" "%u"'
     StartupNotify=false
     MimeType=x-scheme-handler/adskidmgr;
     NoDisplay=true

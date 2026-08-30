@@ -16,18 +16,23 @@
   wayland,
   curl,
   jq,
-  xorg,
+  libx11,
+  libxcursor,
+  libxrandr,
+  libxi,
+  libxtst,
+  libxcb,
 }: let
   runtimeLibs = [
     libGL
     libxkbcommon
     wayland
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
-    xorg.libXi
-    xorg.libXtst
-    xorg.libxcb
+    libx11
+    libxcursor
+    libxrandr
+    libxi
+    libxtst
+    libxcb
   ];
 in
   rustPlatform.buildRustPackage (finalAttrs: {
