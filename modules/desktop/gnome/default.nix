@@ -46,22 +46,6 @@ in {
       totem # video player
     ];
 
-    nixpkgs.overlays = [
-      (final: prev: {
-        gnome = prev.gnome.overrideScope (gnomeFinal: gnomePrev: {
-          mutter = gnomePrev.mutter.overrideAttrs (old: {
-            src = pkgs.fetchFromGitLab {
-              domain = "gitlab.gnome.org";
-              owner = "vanvugt";
-              repo = "mutter";
-              rev = "triple-buffering-v4";
-              hash = lib.fakeSha256;
-            };
-          });
-        });
-      })
-    ];
-
     environment.systemPackages = with pkgs; [gnomeExtensions.appindicator];
     services.udev.packages = with pkgs; [gnome-settings-daemon];
 
