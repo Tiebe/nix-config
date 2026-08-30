@@ -37,13 +37,13 @@
 in
   rustPlatform.buildRustPackage (finalAttrs: {
     pname = "frameforge";
-    version = "3.8.0-linux.2";
+    version = "3.9.0-linux.1";
 
     src = fetchFromGitHub {
       owner = "Lyrex";
       repo = "FrameForge-Linux";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-vGl8x//A1HB5iKzyGL6joBwx4H/ZOC0mkSTUBnmqzac=";
+      hash = "sha256-Ck/ahYJ+pawfj5OOg8b+hzQDm3I2PncJIzDoGNsUj5c=";
     };
 
     postPatch = ''
@@ -55,10 +55,10 @@ in
       inherit (finalAttrs) pname version src;
       pnpm = pnpm_10;
       fetcherVersion = 3;
-      hash = "sha256-LH2Rto85b4nh//XPXPxmnljvEqfowDhIdbjsHZMIe0Y=";
+      hash = "sha256-4y6+6VPkscq29yfy+GmoNycBDUwXE4PlRpiWB7lPyJ4=";
     };
 
-    cargoHash = "sha256-++2SoODu1DL4jeYdXDtqtLDivAynPSsYNom3NEkSisQ=";
+    cargoHash = "sha256-4XtSMUXNVhikVEjqLlEWmtwArrd8jIskfNjj9HppWwU=";
 
     nativeBuildInputs = [
       cargo-tauri.hook
