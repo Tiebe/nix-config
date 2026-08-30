@@ -8,6 +8,10 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.services.bitfocus-companion;
+
+  # Local package.nix, not pkgs.bitfocus-companion: nixpkgs lags (4.3.4) behind
+  # the 5.x release this host runs.
+  companion = pkgs.callPackage ./package.nix {};
 in {
   imports = [
     ./darlings.nix
@@ -20,7 +24,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [pkgs.bitfocus-companion];
+    environment.systemPackages = [companion];
 
     home-manager.users.tiebe = {
       home.file.".local/share/gnome-shell/extensions/focus-watcher@tiebe.me".source = ./focus-watcher;
@@ -47,7 +51,7 @@ in {
           Type = "simple";
           Restart = "always";
           ExecStart = ''
-            ${pkgs.bitfocus-companion}/bin/bitfocus-companion
+            ${companion}/bin/bitfocus-companion
           '';
         };
       };
