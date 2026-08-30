@@ -10,23 +10,13 @@
       plugins = [final.age-plugin-yubikey];
     };
 
-    # waypipe 0.11.0 fails to build against ffmpeg 9.0: ffmpeg 9.0 removed
-    # the legacy per-purpose Vulkan queue fields (nb_encode_queues,
-    # nb_decode_queues, etc.) from AVVulkanDeviceContext, which waypipe's
-    # src/video.rs still references directly. Pin waypipe to ffmpeg_7 until
-    # upstream adapts to the new hwcontext_vulkan API.
-    # Track: https://gitlab.freedesktop.org/mstoeckl/waypipe (unfixed as of 2026-08-13)
-    waypipe = prev.waypipe.override {
-      ffmpeg = prev.ffmpeg_7;
-    };
-
     claude-code = small.claude-code;
 
     remanager = let
-      version = "1.6.0";
+      version = "1.7.2";
       src = prev.fetchurl {
         url = "https://github.com/rmitchellscott/reManager/releases/download/v${version}/reManager-linux-amd64.tar.gz";
-        sha256 = "sha256-HMbdPSurVqP6r6XN14IQRVXcvuI8spWbsP8CjmqMdqA=";
+        sha256 = "sha256-77/5yFOY81lAlDGZ3VlUtUzyQaFUiFcbxGCwwJuNN1w=";
       };
       desktopFile = prev.fetchurl {
         url = "https://raw.githubusercontent.com/rmitchellscott/reManager/v${version}/flatpak/io.scottlabs.reManager.desktop";
@@ -86,12 +76,12 @@
       };
 
     bambu-studio = let
-      version = "02.07.00.55";
+      version = "02.08.02.61";
       src = prev.fetchurl {
-        url = "https://github.com/bambulab/BambuStudio/releases/download/v${version}/BambuStudio_ubuntu-22.04-v${version}-20260514170313.AppImage";
-        sha256 = "1rsbwh9d5a35gmifilad4vsxkfdsnh81gbhm59d3y66sxa5ml95f";
+        url = "https://github.com/bambulab/BambuStudio/releases/download/v${version}/BambuStudio_ubuntu22.04-v${version}-20260820225108.AppImage";
+        sha256 = "sha256-aUJqWWgldFkVkPUckT04ibqhklLRyOn8riSX6w7Wv5I=";
       };
-      extracted = prev.appimageTools.extractType2 {
+      extracted = prev.appimageTools.extract {
         inherit version src;
         pname = "bambu-studio";
       };
