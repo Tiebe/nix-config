@@ -33,6 +33,7 @@ in {
         enable = true;
         discord = {
           enable = true;
+          vencord.enable = true;
           krisp.enable = true;
         };
 
@@ -44,11 +45,11 @@ in {
           betterSettings.enable = true;
           biggerStreamPreview.enable = true;
           callTimer.enable = true;
-          ClearURLs.enable = true;
+          clearUrls.enable = true;
           copyEmojiMarkdown.enable = true;
           copyFileContents.enable = true;
-          CopyUserURLs.enable = true;
-          emoteCloner.enable = true;
+          copyUserUrls.enable = true;
+          expressionCloner.enable = true;
           fakeNitro.enable = true;
           fixImagesQuality.enable = true;
           fixSpotifyEmbeds.enable = true;
@@ -61,14 +62,14 @@ in {
           mentionAvatars.enable = true;
           messageClickActions.enable = true;
           messageLogger.enable = true;
-          MutualGroupDMs.enable = true;
+          mutualGroupDms.enable = true;
           openInApp.enable = true;
           permissionsViewer.enable = true;
           platformIndicators.enable = true;
           userMessagesPronouns.enable = true;
           readAllNotificationsButton.enable = true;
           relationshipNotifier.enable = true;
-          ReviewDB.enable = true;
+          reviewDb.enable = true;
           serverInfo.enable = true;
           shikiCodeblocks.enable = true;
           showConnections.enable = true;
