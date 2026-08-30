@@ -37,6 +37,8 @@ in {
     NixOS-level catppuccin
     */
     catppuccin = {
+      enable = true;
+      autoEnable = true;
       flavor = "mocha";
       accent = "mauve";
       sddm.enable = true;
@@ -61,6 +63,8 @@ in {
       ];
 
       catppuccin = {
+        enable = true;
+        autoEnable = true;
         flavor = "mocha";
         accent = "mauve";
         rofi.enable = true;
@@ -69,7 +73,6 @@ in {
         mako.enable = false;
         kvantum.enable = true;
         hyprland.enable = false;
-        enable = true;
       };
 
       /*
@@ -81,6 +84,7 @@ in {
       };
 
       home.pointerCursor = {
+        enable = true;
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Ice";
         size = 24;
