@@ -14,10 +14,10 @@
     patches =
       (old.patches or [])
       ++ [
-        (pkgs.fetchpatch {
-          url = "https://patch-diff.githubusercontent.com/raw/ValveSoftware/gamescope/pull/1897.diff";
-          hash = "sha256-qe8BKKj97aaugjE5Ug1RO2uU7+iDdC5JpOFkGYLjV6Q=";
-        })
+        # ValveSoftware/gamescope PR #1897, rebased onto the 3.16.25 tag that
+        # nixpkgs packages. The upstream-generated pull/1897.diff is cut against
+        # a 2025-06 base and no longer applies; see the patch header.
+        ./gamescope-input-holding.patch
       ];
   });
 
@@ -102,6 +102,13 @@ in {
         else pkgs.steam;
     };
 
-    environment.systemPackages = with pkgs; [gamescope gamemode bubblewrap protonhax];
+    # Not `with pkgs; [gamescope ...]`: that resolves to the unpatched
+    # pkgs.gamescope and silently bypasses gamescope-kbm.
+    environment.systemPackages = [
+      gamescope-kbm
+      protonhax
+      pkgs.gamemode
+      pkgs.bubblewrap
+    ];
   };
 }
