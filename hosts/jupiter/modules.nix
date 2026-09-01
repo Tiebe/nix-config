@@ -86,9 +86,10 @@
           opencode.enable = true;
           claude-code.enable = true;
           forgecode.enable = false;
-          discord.enable = false;
+          discord.enable = true;
+          discord.vencord = false;
           steam.enable = true;
-          vencord.enable = true;
+          vencord.enable = false;
           wezterm.enable = true;
           vscode.enable = true;
           firefox.enable = true;

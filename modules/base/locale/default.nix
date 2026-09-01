@@ -25,6 +25,16 @@ in {
     # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
+    # glibc only generates the locales listed here, and the default is derived
+    # solely from defaultLocale + extraLocaleSettings. Apps with their own
+    # language selector (e.g. Bambu Studio -> en_GB) need theirs listed too.
+    i18n.supportedLocales = [
+      "C.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8"
+      "en_GB.UTF-8/UTF-8"
+      "nl_NL.UTF-8/UTF-8"
+    ];
+
     i18n.extraLocaleSettings = {
       LC_ADDRESS = "nl_NL.UTF-8";
       LC_IDENTIFICATION = "nl_NL.UTF-8";
