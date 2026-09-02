@@ -12,6 +12,23 @@
 
     claude-code = small.claude-code;
 
+    # k3b's nixpkgs wrapper prepends its bundled cdrtools/cdrdao to PATH, which
+    # shadows the setuid /run/wrappers/bin copies installed by programs.k3b.
+    # k3b picks the first match of equal version, so it would take the
+    # unprivileged binaries and every burn dies with "Operation not permitted
+    # ... Cannot open or use SCSI driver" — the kernel SG_IO filter rejects
+    # commands such as REZERO UNIT without CAP_SYS_RAWIO. makeWrapper applies
+    # --prefix in order, so the last one ends up in front: append ours instead
+    # of adding a second, nested wrapper (whose prefix the inner wrapper would
+    # override again).
+    kdePackages =
+      prev.kdePackages
+      // {
+        k3b = prev.kdePackages.k3b.overrideAttrs (old: {
+          qtWrapperArgs = old.qtWrapperArgs ++ ["--prefix PATH : /run/wrappers/bin"];
+        });
+      };
+
     remanager = let
       version = "1.7.2";
       src = prev.fetchurl {

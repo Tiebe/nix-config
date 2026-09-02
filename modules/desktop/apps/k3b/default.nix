@@ -18,10 +18,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # k3b override: prefers the setuid wrappers over its own bundled tools.
+    nixpkgs.overlays = [outputs.overlays.modifications];
+
     # Installs kdePackages.k3b, cdrdao, cdrtools and dvdplusrwtools, plus the
-    # setuid /run/wrappers/bin/{cdrdao,cdrecord} wrappers k3b needs for burning.
-    # /run/wrappers/bin precedes the system profile in PATH, so k3b's external
-    # program search picks up the wrappers without manual configuration.
+    # setuid /run/wrappers/bin/{cdrdao,cdrecord} wrappers needed for burning.
     programs.k3b.enable = true;
 
     # k3b enumerates drives through Solid, whose only OpticalDrive backend is
@@ -33,8 +34,9 @@ in {
     # exists once the sg module is loaded.
     boot.kernelModules = ["sg"];
 
-    # Required by the setuid wrappers above (owned root:cdrom, mode u+wrx,g+x).
-    # Device access itself already comes from the udev uaccess ACL on /dev/sr0.
+    # Required to execute the setuid wrappers (root:cdrom, mode u+wrx,g+x) and
+    # to reach /dev/sg1. Plain device access already comes from the udev
+    # uaccess ACL on /dev/sr0.
     users.users.tiebe.extraGroups = ["cdrom"];
   };
 }
