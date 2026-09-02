@@ -104,6 +104,7 @@
           intellij.enable = true;
           rofi.enable = true;
           quantframe.enable = true;
+          remanager.enable = true;
           wfinfo-ng.enable = true;
           frameforge.enable = true;
         };
