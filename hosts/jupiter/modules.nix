@@ -102,6 +102,7 @@
           httptoolkit.enable = true;
           localsend.enable = true;
           intellij.enable = true;
+          k3b.enable = true;
           rofi.enable = true;
           quantframe.enable = true;
           remanager.enable = true;

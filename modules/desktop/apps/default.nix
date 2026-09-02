@@ -11,6 +11,7 @@
     ./fusion360
     ./httptoolkit
     ./intellij
+    ./k3b
     ./legcord
     ./localsend
     ./lmstudio

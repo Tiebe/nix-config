@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-28 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+33 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -16,6 +16,7 @@
 | firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
 | frameforge | medium | Warframe tools: FrameForge (Tauri source build, ptrace memory scanner) and Profit Taker Analytics (prebuilt Flutter app with declarative `pta://` Discord OAuth handler) |
 | httptoolkit | simple | HTTP debugging proxy |
+| k3b | medium | Optical disc burning — upstream `programs.k3b` (setuid cdrdao/cdrecord wrappers) + `services.udisks2` (Solid's only OpticalDrive backend) + `sg` module + `cdrom` group |
 | lmstudio | simple | LLM interface |
 | legcord | simple | Discord client |
 | localsend | simple | Local file sharing |
