@@ -103,6 +103,7 @@
           localsend.enable = true;
           intellij.enable = true;
           k3b.enable = true;
+          picard.enable = true;
           rofi.enable = true;
           quantframe.enable = true;
           remanager.enable = true;

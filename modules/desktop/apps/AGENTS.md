@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-33 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+34 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -29,6 +29,7 @@
 | forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
 | opendeck | medium | Elgato Stream Deck software — local `package.nix` unpacking the upstream `.deb` (autoPatchelf + wrapGAppsHook3), ships udev rules via `services.udev.packages` |
 | parsec | simple | Remote desktop |
+| picard | simple | MusicBrainz Picard tagger + `chromaprint` for the `fpcalc` AcoustID scanner (not in Picard's own closure) |
 | piper | simple | Mouse config (libratbag) |
 | protonmail | simple | Email client |
 | remanager | simple | reMarkable tablet mod manager (Wails/GTK app via prebuilt tarball in overlay) |

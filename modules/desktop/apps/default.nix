@@ -23,6 +23,7 @@
     ./opencode
     ./opendeck
     ./parsec
+    ./picard
     ./quantframe
     ./remanager
     ./rofi
