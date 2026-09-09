@@ -55,19 +55,25 @@
     MONITOR="''${1:?Usage: brightness-control <monitor-name> <action> [value]}"
     ACTION="''${2:-get}"
     VALUE="''${3:-}"
-    STATE_FILE="/tmp/brightness-state-$MONITOR"
-    CACHE_FILE="/tmp/brightness-ddc-cache"
+    STATE_DIR="''${XDG_STATE_HOME:-$HOME/.local/state}/brightness"
+    STATE_FILE="$STATE_DIR/$MONITOR"
+    CACHE_FILE="''${XDG_RUNTIME_DIR:-/tmp}/brightness-ddc-cache"
     CACHE_MAX_AGE=600 # 10 minutes
     STEP=10
 
-    # Initialize state if missing
+    # State survives reboots so the tracked level cannot drift away from the
+    # hardware value that DDC monitors keep across power cycles.
+    ${pkgs.coreutils}/bin/mkdir -p "$STATE_DIR"
     [[ -f "$STATE_FILE" ]] || echo 100 > "$STATE_FILE"
 
-    # Detect all DDC-capable monitors via ddcutil
-    # Cache format: bus_number:connector_name per line
+    # Detect all DDC-capable monitors via ddcutil.
+    # Cache format: bus_number:connector_name per line.
+    # Written atomically and never installed empty: a transient detect failure
+    # (i2c busy, monitor in DPMS off) must not demote a DDC monitor to the
+    # software path, which dims gamma behind the hardware value.
     refresh_cache() {
-      local bus="" connector="" valid=0
-      : > "$CACHE_FILE"
+      local bus="" connector="" valid=0 tmp
+      tmp=$(${pkgs.coreutils}/bin/mktemp "$CACHE_FILE.XXXXXX")
       while IFS= read -r line; do
         if [[ "$line" =~ ^Display\ [0-9]+ ]]; then
           valid=1
@@ -79,24 +85,40 @@
         fi
         if [[ "$line" =~ DRM[_\ ]connector:.*card[0-9]+-([A-Za-z0-9-]+) ]]; then
           connector="''${BASH_REMATCH[1]}"
-          [[ -n "$bus" && "$valid" == "1" ]] && echo "$bus:$connector" >> "$CACHE_FILE"
+          [[ -n "$bus" && "$valid" == "1" ]] && echo "$bus:$connector" >> "$tmp"
           bus="" connector=""
         fi
       done < <(${pkgs.ddcutil}/bin/ddcutil detect 2>/dev/null)
+
+      if [[ -s "$tmp" ]]; then
+        ${pkgs.coreutils}/bin/mv -f "$tmp" "$CACHE_FILE"
+        return 0
+      fi
+      ${pkgs.coreutils}/bin/rm -f "$tmp"
+      return 1
     }
 
     ensure_cache() {
-      if [[ ! -f "$CACHE_FILE" ]]; then
-        refresh_cache
+      if [[ ! -s "$CACHE_FILE" ]]; then
+        refresh_cache || true
         return
       fi
       local now age
-      now=$(date +%s)
-      age=$(( now - $(stat -c %Y "$CACHE_FILE") ))
-      (( age > CACHE_MAX_AGE )) && refresh_cache
+      now=$(${pkgs.coreutils}/bin/date +%s)
+      age=$(( now - $(${pkgs.coreutils}/bin/stat -c %Y "$CACHE_FILE") ))
+      # Failed refresh keeps the previous cache; touch it so the next keypress
+      # is not stalled by another full ddcutil detect.
+      (( age > CACHE_MAX_AGE )) && { refresh_cache || ${pkgs.coreutils}/bin/touch "$CACHE_FILE"; }
+      return 0
     }
 
     get_brightness() { cat "$STATE_FILE"; }
+
+    # Software brightness via wl-gammarelay-rs per-output DBus (0.05 - 1.00)
+    set_gamma() {
+      ${pkgs.systemd}/bin/busctl --user set-property rs.wl-gammarelay \
+        "/outputs/''${MONITOR//-/_}" rs.wl.gammarelay Brightness d "$1" 2>/dev/null || true
+    }
 
     set_brightness() {
       local val=$1
@@ -108,23 +130,24 @@
 
       # Check if this monitor has DDC
       local ddc_bus=""
-      while IFS=: read -r bus connector; do
-        if [[ "$connector" == "$MONITOR" ]]; then
-          ddc_bus="$bus"
-          break
-        fi
-      done < "$CACHE_FILE"
+      if [[ -s "$CACHE_FILE" ]]; then
+        while IFS=: read -r bus connector; do
+          if [[ "$connector" == "$MONITOR" ]]; then
+            ddc_bus="$bus"
+            break
+          fi
+        done < "$CACHE_FILE"
+      fi
 
       if [[ -n "$ddc_bus" ]]; then
-        # DDC monitor → hardware brightness
+        # DDC monitor → hardware brightness. The software layer is forced back
+        # to full: an earlier run may have dimmed gamma while detection was
+        # failing, and hardware steps alone would never undo that.
         ${pkgs.ddcutil}/bin/ddcutil --bus "$ddc_bus" setvcp 10 "$val" --noverify &
+        set_gamma 1
       else
-        # Non-DDC → software brightness via wl-gammarelay-rs per-output DBus
-        local gamma_val dbus_path
-        gamma_val=$(${pkgs.bc}/bin/bc -l <<< "scale=2; $val / 100")
-        dbus_path="/outputs/''${MONITOR//-/_}"
-        busctl --user set-property rs.wl-gammarelay "$dbus_path" \
-          rs.wl.gammarelay Brightness d "$gamma_val" 2>/dev/null || true
+        # Non-DDC → software brightness
+        set_gamma "$(${pkgs.bc}/bin/bc -l <<< "scale=2; $val / 100")"
       fi
 
       wait
@@ -135,7 +158,7 @@
       down) cur=$(get_brightness); set_brightness $((cur - STEP)) ;;
       get)  get_brightness ;;
       set)  set_brightness "''${VALUE:?Usage: brightness-control <monitor> set <0-100>}" ;;
-      refresh) refresh_cache; echo "DDC cache refreshed" ;;
+      refresh) refresh_cache && echo "DDC cache refreshed" || { echo "ddcutil detect found no DDC monitors; kept previous cache" >&2; exit 1; } ;;
       *)    echo "Usage: brightness-control <monitor-name> {up|down|get|set <value>|refresh}"; exit 1 ;;
     esac
   '';

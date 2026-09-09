@@ -15,6 +15,19 @@
     ;
   cfg = config.tiebe.desktop.hyprland;
   wallpaper = ../theme/wallpaper.jpg;
+  hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
+
+  # Hyprland 0.56.0 regression: the screenshare onOutputCommit dispatch is gated
+  # on frame.copyFBPrepared, which is only set for monitor/region captures, so
+  # window captures (Discord "share a specific window") never get their frame
+  # copied and the toplevel-export client waits forever. Drop once upstream fixes.
+  hyprlandPatched = hyprPkgs.hyprland.overrideAttrs (old: {
+    patches =
+      (old.patches or [])
+      ++ [
+        ./screenshare-window-commit.patch
+      ];
+  });
 in {
   options = {
     tiebe.desktop.hyprland = {
@@ -25,9 +38,8 @@ in {
   config = mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      package = hyprlandPatched;
+      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
     };
 
     # XDG portal for screen sharing, file pickers, etc.
