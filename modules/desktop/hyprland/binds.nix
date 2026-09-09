@@ -11,6 +11,9 @@
   bindsCfg = config.tiebe.desktop.hyprland.binds;
   monitorBrightnessCfg = config.tiebe.desktop.hyprland.binds.monitorBrightness;
 
+  # Same Hyprland build the session runs, so hyprctl matches the compositor's IPC.
+  hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
+
   # Scripts
   screenshotArea = pkgs.writeShellScriptBin "screenshot-area" ''
     ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy
@@ -163,15 +166,18 @@
     esac
   '';
 
-  # Fn-key wrapper: applies brightness-control to every currently connected
-  # monitor (queried live from Hyprland, no hardcoded connector names).
+  # Fn-key wrapper: applies brightness-control to the monitor that currently
+  # has focus (queried live from Hyprland, no hardcoded connector names).
   brightnessFn = pkgs.writeShellScriptBin "brightness-fn" ''
     set -uo pipefail
     ACTION="''${1:?Usage: brightness-fn up|down}"
-    for m in $(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[].name'); do
-      ${brightnessControl}/bin/brightness-control "$m" "$ACTION" &
-    done
-    wait
+    MONITOR=$(${hyprctl} monitors -j 2>/dev/null \
+      | ${pkgs.jq}/bin/jq -r 'first(.[] | select(.focused) | .name) // empty')
+    if [[ -z "$MONITOR" ]]; then
+      echo "brightness-fn: no focused Hyprland monitor" >&2
+      exit 1
+    fi
+    exec ${brightnessControl}/bin/brightness-control "$MONITOR" "$ACTION"
   '';
 
   brightnessUpCmd =
@@ -186,7 +192,7 @@ in {
   options = {
     tiebe.desktop.hyprland.binds = {
       enable = mkEnableOption "Hyprland keybindings";
-      monitorBrightness.enable = mkEnableOption "multi-monitor brightness Fn keys (DDC hardware brightness on DDC-capable monitors, software gamma dimming on the rest)";
+      monitorBrightness.enable = mkEnableOption "brightness Fn keys for the focused monitor (DDC hardware brightness on DDC-capable monitors, software gamma dimming on the rest)";
     };
   };
 
