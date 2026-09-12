@@ -76,6 +76,14 @@ in {
       # Making legacy nix commands consistent as well, awesome!
       nixPath = ["/etc/nix/path"];
 
+      # Collect garbage weekly; keep a month of generations for rollback
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        randomizedDelaySec = "45min";
+        options = "--delete-older-than 30d";
+      };
+
       settings = {
         # Enable flakes and new 'nix' command
         experimental-features = "nix-command flakes";
