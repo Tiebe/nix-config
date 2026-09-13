@@ -28,7 +28,11 @@ Row {
                 if (event.button === Qt.MiddleButton) {
                     item.modelData.secondaryActivate();
                 } else if (event.button === Qt.RightButton || item.modelData.onlyMenu) {
-                    if (item.modelData.hasMenu)
+                    if (!item.modelData.hasMenu)
+                        return;
+                    if (menu.visible)
+                        menu.close();
+                    else
                         menu.open();
                 } else {
                     item.modelData.activate();
@@ -41,12 +45,12 @@ Row {
                 source: item.modelData.icon
             }
 
-            QsMenuAnchor {
+            TrayMenu {
                 id: menu
 
-                menu: item.modelData.menu
-                anchor.item: item
-                anchor.rect.y: item.height + 6
+                anchorItem: item
+                menuHandle: item.modelData.menu
+                offsetY: item.height + 6
             }
 
             Tooltip {
