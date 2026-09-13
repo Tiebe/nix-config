@@ -73,10 +73,13 @@
           greetd.enable = true;
 
           programs = {
-            waybar.enable = true;
+            quickshell.enable = true;
             # rofi.enable = true;
-            swaync.enable = true;
-            wlogout.enable = true;
+
+            # Replaced by quickshell.
+            waybar.enable = false;
+            swaync.enable = false;
+            wlogout.enable = false;
           };
         };
 

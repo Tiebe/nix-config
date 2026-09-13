@@ -72,9 +72,12 @@
         greetd.enable = true;
 
         programs = {
-          waybar.enable = true;
-          swaync.enable = true;
-          wlogout.enable = true;
+          quickshell.enable = true;
+
+          # Replaced by quickshell.
+          waybar.enable = false;
+          swaync.enable = false;
+          wlogout.enable = false;
         };
       };
 
