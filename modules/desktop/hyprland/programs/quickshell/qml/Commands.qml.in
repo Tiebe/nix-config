@@ -1,0 +1,39 @@
+pragma Singleton
+
+import QtQuick
+import Quickshell
+
+// Store paths are substituted by the Nix module so the shell never depends on
+// whatever PATH the graphical session happens to have.
+Singleton {
+    readonly property string hyprctl: "@hyprctl@"
+
+    readonly property var lock: ["@hyprlock@"]
+    readonly property var logout: [hyprctl, "dispatch", "hl.dsp.exit()"]
+    readonly property var suspend: ["@systemctl@", "suspend"]
+    readonly property var hibernate: ["@systemctl@", "hibernate"]
+    readonly property var shutdown: ["@systemctl@", "poweroff"]
+    readonly property var reboot: ["@systemctl@", "reboot"]
+    readonly property var bluetoothSettings: ["@bluetooth-settings@"]
+    readonly property var networkSettings: ["@network-settings@", "wifi"]
+
+    // gnome-control-center refuses to start unless XDG_CURRENT_DESKTOP claims GNOME.
+    readonly property var networkSettingsEnv: ({
+            "XDG_CURRENT_DESKTOP": "GNOME"
+        })
+
+    function openUrl(url: string): void {
+        Quickshell.execDetached(["@xdg-open@", url]);
+    }
+
+    function openNetworkSettings(): void {
+        Quickshell.execDetached({
+            command: networkSettings,
+            environment: networkSettingsEnv
+        });
+    }
+
+    function openBluetoothSettings(): void {
+        Quickshell.execDetached(bluetoothSettings);
+    }
+}

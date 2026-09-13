@@ -14,6 +14,18 @@
   # Same Hyprland build the session runs, so hyprctl matches the compositor's IPC.
   hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
 
+  # Quickshell replaces wlogout and swaync when it is enabled, so the session
+  # and notification keys talk to its IPC handlers instead.
+  quickshellCfg = config.tiebe.desktop.hyprland.programs.quickshell;
+  sessionMenuCmd =
+    if quickshellCfg.enable
+    then "${quickshellCfg.command} ipc call session toggle"
+    else "wlogout";
+  notificationCenterCmd =
+    if quickshellCfg.enable
+    then "${quickshellCfg.command} ipc call notifications toggle"
+    else "swaync-client -t -sw";
+
   # Scripts
   screenshotArea = pkgs.writeShellScriptBin "screenshot-area" ''
     ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy
@@ -238,7 +250,7 @@ in {
 
           # Lock / logout
           (bind "SUPER + L" (mkExec "hyprlock"))
-          (bind "SUPER + M" (mkExec "wlogout"))
+          (bind "SUPER + M" (mkExec sessionMenuCmd))
 
           # Screenshots
           (bind "Print" (mkExec "screenshot-full"))
@@ -248,7 +260,7 @@ in {
           (bind "SUPER + SHIFT + V" (mkExec "clipboard-history"))
 
           # Notification center
-          (bind "SUPER + N" (mkExec "swaync-client -t -sw"))
+          (bind "SUPER + N" (mkExec notificationCenterCmd))
 
           # Focus movement
           (bind "SUPER + left" ''hl.dsp.focus({ direction = "left" })'')

@@ -302,6 +302,14 @@ modules/
 └── terminal/      # Terminal environment (zsh, utils)
 ```
 
+`modules/desktop/hyprland/programs/` holds the session shell modules. They are
+mutually exclusive in two groups: `waybar` + `swaync` + `wlogout` (GTK stack), or
+`quickshell` (single QML shell providing bar, notification popups/center and
+session menu). Enabling `quickshell` alongside any of the other three is an
+assertion failure. Its QML lives in `programs/quickshell/qml/`, is built into the
+store by `programs/quickshell/default.nix` and run with `qs --path`; commands it
+invokes are substituted into `Commands.qml.in`.
+
 ## Host Configurations
 
 - **jupiter**: Main desktop — Intel CPU, AMD GPU, CachyOS kernel, btrfs, Plasma + Hyprland, darlings=false, stateVersion 24.05

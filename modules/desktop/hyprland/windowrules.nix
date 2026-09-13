@@ -299,6 +299,15 @@ in {
             match.namespace = "logout_dialog";
             blur = true;
           }
+          # Quickshell surfaces: bar, notifications, notification center, session menu
+          {
+            match.namespace = "^(quickshell-.*)$";
+            blur = true;
+          }
+          {
+            match.namespace = "^(quickshell-.*)$";
+            ignore_alpha = 0.0;
+          }
         ];
       };
     };
