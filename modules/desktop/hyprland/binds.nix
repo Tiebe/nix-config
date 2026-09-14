@@ -14,15 +14,32 @@
   # Same Hyprland build the session runs, so hyprctl matches the compositor's IPC.
   hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
 
-  # Quickshell replaces wlogout and swaync when it is enabled, so the session
-  # and notification keys talk to its IPC handlers instead.
+  # The session shell owns the launcher, clipboard, notification center, power
+  # menu and lock screen, so those keys follow whichever shell is enabled.
   quickshellCfg = config.tiebe.desktop.hyprland.programs.quickshell;
+  dmsCfg = config.tiebe.desktop.hyprland.programs.dankMaterialShell;
+  launcherCmd =
+    if dmsCfg.enable
+    then "${dmsCfg.command} ipc call spotlight toggle"
+    else "rofi-launcher";
+  clipboardCmd =
+    if dmsCfg.enable
+    then "${dmsCfg.command} ipc call clipboard toggle"
+    else "clipboard-history";
+  lockCmd =
+    if dmsCfg.enable
+    then "${dmsCfg.command} ipc call lock lock"
+    else "hyprlock";
   sessionMenuCmd =
-    if quickshellCfg.enable
+    if dmsCfg.enable
+    then "${dmsCfg.command} ipc call powermenu toggle"
+    else if quickshellCfg.enable
     then "${quickshellCfg.command} ipc call session toggle"
     else "wlogout";
   notificationCenterCmd =
-    if quickshellCfg.enable
+    if dmsCfg.enable
+    then "${dmsCfg.command} ipc call notifications toggle"
+    else if quickshellCfg.enable
     then "${quickshellCfg.command} ipc call notifications toggle"
     else "swaync-client -t -sw";
 
@@ -239,7 +256,7 @@ in {
       wayland.windowManager.hyprland.settings = {
         bind = [
           # Application launchers
-          (bind "SUPER + SHIFT + RETURN" (mkExec "rofi-launcher"))
+          (bind "SUPER + SHIFT + RETURN" (mkExec launcherCmd))
           (bind "SUPER + RETURN" (mkExec "wezterm"))
           (bind "SUPER + Q" "hl.dsp.window.close()")
           (bind "SUPER + F" ''hl.dsp.window.fullscreen({ mode = "fullscreen" })'')
@@ -249,7 +266,7 @@ in {
           (bind "SUPER + S" ''hl.dsp.layout("togglesplit")'') # dwindle
 
           # Lock / logout
-          (bind "SUPER + L" (mkExec "hyprlock"))
+          (bind "SUPER + L" (mkExec lockCmd))
           (bind "SUPER + M" (mkExec sessionMenuCmd))
 
           # Screenshots
@@ -257,7 +274,7 @@ in {
           (bind "SUPER + SHIFT + S" (mkExec "screenshot-area"))
 
           # Clipboard history
-          (bind "SUPER + SHIFT + V" (mkExec "clipboard-history"))
+          (bind "SUPER + SHIFT + V" (mkExec clipboardCmd))
 
           # Notification center
           (bind "SUPER + N" (mkExec notificationCenterCmd))

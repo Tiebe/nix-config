@@ -302,13 +302,27 @@ modules/
 └── terminal/      # Terminal environment (zsh, utils)
 ```
 
-`modules/desktop/hyprland/programs/` holds the session shell modules. They are
-mutually exclusive in two groups: `waybar` + `swaync` + `wlogout` (GTK stack), or
-`quickshell` (single QML shell providing bar, notification popups/center and
-session menu). Enabling `quickshell` alongside any of the other three is an
-assertion failure. Its QML lives in `programs/quickshell/qml/`, is built into the
-store by `programs/quickshell/default.nix` and run with `qs --path`; commands it
-invokes are substituted into `Commands.qml.in`.
+`modules/desktop/hyprland/programs/` holds the session shell modules, and they
+are mutually exclusive; exactly one of these three stacks is enabled per host:
+
+1. `waybar` + `swaync` + `wlogout` — GTK stack, paired with `hyprland.lock`
+   (hyprlock), `hyprland.idle` (hypridle) and `desktop.apps.rofi`.
+2. `quickshell` — in-repo QML shell (bar, notification popups/center, session
+   menu). Its QML lives in `programs/quickshell/qml/`, is built into the store by
+   `programs/quickshell/default.nix` and run with `qs --path`; commands it invokes
+   are substituted into `Commands.qml.in`.
+3. `dankMaterialShell` — upstream DankMaterialShell from the
+   `dank-material-shell` flake input (`programs/dank-material-shell/`). It also
+   replaces the launcher (spotlight), clipboard history, polkit agent, wallpaper
+   handling, lock screen and idle handling, so `hyprland.lock`, `hyprland.idle`
+   and `apps.rofi` must be off; `hyprpaper` and the polkit-gnome agent in
+   `hyprland/default.nix` switch themselves off when it is enabled. Settings and
+   session state are runtime-written, so `darlings.nix` persists
+   `DankMaterialShell` under `/persist`.
+
+Each shell module asserts that the ones it replaces are disabled, and
+`binds.nix` points the launcher, clipboard, lock, session-menu and
+notification keys at whichever shell is enabled.
 
 ## Host Configurations
 
@@ -439,5 +453,6 @@ persistence aligned with the overridden `HOME` path in the module-specific
 
 - Flake inputs use `nixpkgs/nixos-unstable`
 - Codex Desktop is supplied by `inputs.codex-desktop-linux`; its CLI uses `pkgs.codex` from the pinned Nixpkgs input
+- DankMaterialShell comes from `inputs.dank-material-shell` (its NixOS module is imported by `modules/desktop/hyprland/programs/dank-material-shell`) and builds `dms-shell` from source
 - Home Manager follows nixpkgs
 - Secret management: https://github.com/yaxitech/ragenix

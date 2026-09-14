@@ -15,6 +15,8 @@
     ;
   cfg = config.tiebe.desktop.hyprland;
   wallpaper = ../theme/wallpaper.jpg;
+  # DankMaterialShell brings its own polkit agent and wallpaper handling.
+  dmsCfg = config.tiebe.desktop.hyprland.programs.dankMaterialShell;
   hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 
   # Hyprland 0.56.0 regression: the screenshare onOutputCommit dispatch is gated
@@ -62,8 +64,8 @@ in {
       blueman
     ];
 
-    # Polkit agent for auth dialogs
-    systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    # Polkit agent for auth dialogs; DankMaterialShell provides its own.
+    systemd.user.services.polkit-gnome-authentication-agent-1 = mkIf (!dmsCfg.enable) {
       description = "polkit-gnome-authentication-agent-1";
       wantedBy = ["graphical-session.target"];
       wants = ["graphical-session.target"];
@@ -81,7 +83,8 @@ in {
     programs.dconf.enable = true;
 
     home-manager.users.tiebe = {
-      services.hyprpaper = {
+      # DankMaterialShell draws and manages the wallpaper itself.
+      services.hyprpaper = mkIf (!dmsCfg.enable) {
         enable = true;
         settings = {
           wallpaper = [
