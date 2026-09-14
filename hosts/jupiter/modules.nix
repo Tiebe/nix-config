@@ -134,7 +134,8 @@
         winapps.enable = true;
         #docker.enable = true;
         podman.enable = true;
-        #      printing.enable = true;
+        # CUPS; also supplies cups-pk-helper, which DMS's printer widget needs.
+        printing.enable = true;
         ssh-server.enable = true;
         # sunshine.enable = true;
         # vr.enable = true;
