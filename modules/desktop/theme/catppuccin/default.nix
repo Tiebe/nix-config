@@ -83,6 +83,14 @@ in {
         style.name = "kvantum";
       };
 
+      /*
+      catppuccin.gtk.icon sets gtk.iconTheme, but home-manager only installs the
+      icon theme and writes gtk-icon-theme-name when its gtk module is enabled.
+      Without it nothing on the system ships an app icon theme, so icon lookups
+      (DMS's launcher, GTK apps) fall back to hicolor and come up empty.
+      */
+      gtk.enable = true;
+
       home.pointerCursor = {
         enable = true;
         package = pkgs.bibata-cursors;
