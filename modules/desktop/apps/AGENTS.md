@@ -39,6 +39,7 @@
 | stremio | simple | Media center streaming client (`stremio-linux-shell`, QML-based) |
 | thunar | simple | File manager |
 | vscode | simple | VSCodium |
+| vencord | medium | nixcord (`inputs.nixcord`) home-manager module: Vencord-patched Discord + declarative plugin list. Ships the in-repo `plugins/auto-game-go-live` userplugin through `programs.nixcord.userPlugins`, switched on via `extraConfig.plugins` because userplugins are outside nixcord's typed schema. Pairs with `tiebe.desktop.hyprland.sharePicker` |
 | zed | simple | Editor |
 
 ## WHERE TO LOOK

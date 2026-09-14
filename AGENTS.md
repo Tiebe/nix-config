@@ -324,6 +324,17 @@ Each shell module asserts that the ones it replaces are disabled, and
 `binds.nix` points the launcher, clipboard, lock, session-menu and
 notification keys at whichever shell is enabled.
 
+`modules/desktop/hyprland/share-picker/` replaces xdg-desktop-portal-hyprland's
+Qt share picker (`screencopy:custom_picker_binary` in `~/.config/hypr/xdph.conf`)
+with a script that answers screencast requests with the running game — the
+capture source is chosen by the portal on Wayland, never by the requesting app.
+Game detection is `hyprctl clients` filtered by the `sharePicker.gameClasses` /
+`sharePicker.excludeClasses` regexes; with no match, or with
+`$XDG_RUNTIME_DIR/xdph-manual-picker` present, the normal dialog opens. The
+companion piece is the `AutoGameGoLive` Vencord userplugin in
+`modules/desktop/apps/vencord/plugins/`, which confirms Discord's Go Live modal.
+Window capture also depends on `hyprland/screenshare-window-commit.patch`.
+
 ## Host Configurations
 
 - **jupiter**: Main desktop — Intel CPU, AMD GPU, CachyOS kernel, btrfs, Plasma + Hyprland, darlings=false, stateVersion 24.05
