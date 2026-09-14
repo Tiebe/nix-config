@@ -234,6 +234,7 @@ in {
     ./idle.nix
     ./lock.nix
     ./greetd.nix
+    ./share-picker
     ./programs
   ];
 }
