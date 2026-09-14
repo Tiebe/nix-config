@@ -39,6 +39,18 @@ in {
 
         vesktop.enable = false;
 
+        # Ships with this repo; see plugins/auto-game-go-live/index.ts. Pairs with
+        # tiebe.desktop.hyprland.sharePicker, which answers the portal with the
+        # running game, so one click on Discord's screen share button streams it.
+        userPlugins = {
+          AutoGameGoLive = ./plugins/auto-game-go-live;
+        };
+
+        # Userplugins are not part of nixcord's typed plugin schema.
+        extraConfig = {
+          plugins.AutoGameGoLive.enabled = true;
+        };
+
         config.plugins = {
           betterGifAltText.enable = true;
           betterSessions.enable = true;

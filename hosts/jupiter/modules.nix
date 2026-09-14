@@ -72,6 +72,10 @@
           binds.monitorBrightness.enable = true;
           windowrules.enable = true;
 
+          # Auto-selects the running game when an app asks the portal to
+          # screencast; falls back to the normal picker when no game is up.
+          sharePicker.enable = true;
+
           greetd.enable = true;
 
           programs = {
@@ -94,7 +98,7 @@
           discord.enable = true;
           discord.vencord = false;
           steam.enable = true;
-          vencord.enable = false;
+          vencord.enable = true;
           wezterm.enable = true;
           vscode.enable = true;
           firefox.enable = true;
