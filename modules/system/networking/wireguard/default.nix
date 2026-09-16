@@ -33,9 +33,12 @@ in {
           set -e
           CONFIG_FILE="${config.age.secrets."wgHome.conf".path}"
 
-          # Check if connection already exists
-          if ${pkgs.networkmanager}/bin/nmcli connection show wg-home > /dev/null 2>&1; then
-            echo "WireGuard connection 'wg-home' already exists, skipping import"
+          # Check if connection already exists (nmcli names the imported
+          # profile after the WireGuard interface/[Interface] block, i.e.
+          # "wgHome" - NOT "wg-home"). A mismatched name here always fails
+          # the check and re-imports a duplicate profile on every boot.
+          if ${pkgs.networkmanager}/bin/nmcli connection show wgHome > /dev/null 2>&1; then
+            echo "WireGuard connection 'wgHome' already exists, skipping import"
             exit 0
           fi
 
