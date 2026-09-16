@@ -63,9 +63,9 @@
       hyprland = {
         enable = true;
 
-        # Hyprlock and Hypridle provide lock and idle handling.
-        idle.enable = true;
-        lock.enable = true;
+        # Lock screen and idle handling come from DankMaterialShell.
+        idle.enable = false;
+        lock.enable = false;
 
         animations.enable = true;
         binds.enable = true;
@@ -75,8 +75,10 @@
         keyring.enable = true;
 
         programs = {
-          dankMaterialShell.enable = false;
-          quickshell.enable = true;
+          dankMaterialShell.enable = true;
+
+          # Replaced by DankMaterialShell.
+          quickshell.enable = false;
           waybar.enable = false;
           swaync.enable = false;
           wlogout.enable = false;
@@ -103,9 +105,8 @@
         lmstudio.enable = true;
         opencode.enable = true;
         # forgecode.enable = true;
-        # Quickshell replaces the bar, notifications and session menu;
-        # Rofi remains the launcher and clipboard picker.
-        rofi.enable = true;
+        # DankMaterialShell's spotlight launcher replaces rofi.
+        rofi.enable = false;
         claude-code.enable = true;
         codex.enable = true;
         omp.enable = true;
