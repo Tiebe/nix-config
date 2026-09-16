@@ -5,17 +5,18 @@
   config,
   pkgs,
   ...
-}: {
-  imports = [../../modules];
+}:
+{
+  imports = [ ../../modules ];
 
   config = {
     security.sudo.extraRules = [
       {
-        users = ["tiebe"];
+        users = [ "tiebe" ];
         commands = [
           {
             command = "ALL";
-            options = ["NOPASSWD"];
+            options = [ "NOPASSWD" ];
           }
         ];
       }

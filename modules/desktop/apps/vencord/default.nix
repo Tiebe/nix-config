@@ -35,6 +35,9 @@ in {
           enable = true;
           vencord.enable = true;
           krisp.enable = true;
+
+          # OpenASAR hangs this host's client on the "Starting..." splash.
+          openASAR.enable = false;
         };
 
         vesktop.enable = false;
