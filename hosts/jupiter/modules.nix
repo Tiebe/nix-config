@@ -91,6 +91,7 @@
 
         apps = {
           bambu-studio.enable = true;
+          orcaslicer.enable = true;
           fusion360.enable = true;
           opencode.enable = true;
           claude-code.enable = true;

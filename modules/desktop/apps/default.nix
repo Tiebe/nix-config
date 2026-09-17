@@ -23,6 +23,7 @@
     ./omp
     ./opencode
     ./opendeck
+    ./orcaslicer
     ./parsec
     ./picard
     ./quantframe
