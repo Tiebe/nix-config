@@ -21,6 +21,7 @@
     ./obsidian
     ./office
     ./omp
+    ./open-bamboo-networking
     ./opencode
     ./opendeck
     ./orcaslicer

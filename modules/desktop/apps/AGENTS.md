@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-36 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+37 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -28,6 +28,7 @@
 | omp | simple | Oh My Pi AI coding agent (`inputs.omp` home-manager module), declarative `~/.omp/agent/config.yml` via `programs.omp.settings` |
 | opencode | complex | Tauri build from source (`inputs.opencode`), custom derivation |
 | forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
+| open-bamboo-networking | medium | Open-source `bambu_networking` plugin replacement for Bambu Studio / Orca Slicer — prebuilt release binaries (autoPatchelf'd), non-interactively drives the upstream `install.sh` via `home.activation` for each enabled slicer, skipped until that slicer's config dir exists |
 | opendeck | medium | Elgato Stream Deck software — local `package.nix` unpacking the upstream `.deb` (autoPatchelf + wrapGAppsHook3), ships udev rules via `services.udev.packages` |
 | orcaslicer | simple | 3D printer slicer (nixpkgs `orca-slicer`) |
 | parsec | simple | Remote desktop |
