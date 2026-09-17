@@ -5,18 +5,17 @@
   config,
   pkgs,
   ...
-}:
-{
-  imports = [ ../../modules ];
+}: {
+  imports = [../../modules];
 
   config = {
     security.sudo.extraRules = [
       {
-        users = [ "tiebe" ];
+        users = ["tiebe"];
         commands = [
           {
             command = "ALL";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
         ];
       }
@@ -104,6 +103,7 @@
           vscode.enable = true;
           firefox.enable = true;
           media.enable = true;
+          music-assistant.enable = true;
           parsec.enable = false;
           office.enable = true;
           minecraft.enable = true;

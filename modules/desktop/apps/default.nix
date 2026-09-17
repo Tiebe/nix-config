@@ -17,6 +17,7 @@
     ./lmstudio
     ./media
     ./minecraft
+    ./music-assistant
     ./obsidian
     ./office
     ./omp

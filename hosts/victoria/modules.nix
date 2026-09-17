@@ -93,6 +93,7 @@
         firefox.enable = true;
         wezterm.enable = true;
         media.enable = true;
+        music-assistant.enable = true;
         parsec.enable = true;
         office.enable = true;
         thunderbird.enable = true;

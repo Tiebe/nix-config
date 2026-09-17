@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-34 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
+35 application modules under `tiebe.desktop.apps.<name>`. Each folder contains `default.nix` + `darlings.nix`.
 
 ## MODULE CATALOG
 
@@ -22,6 +22,7 @@
 | localsend | simple | Local file sharing |
 | media | simple | Media players |
 | minecraft | simple | Game |
+| music-assistant | simple | Music Assistant Companion (`pkgs.music-assistant-desktop`) — official desktop client for a self-hosted Music Assistant server |
 | obsidian | simple | Notes |
 | office | simple | LibreOffice |
 | omp | simple | Oh My Pi AI coding agent (`inputs.omp` home-manager module), declarative `~/.omp/agent/config.yml` via `programs.omp.settings` |
