@@ -13,7 +13,7 @@
 | codex | simple | Codex Desktop (`inputs.codex-desktop-linux` nixosModule), CLI follows the pinned Nixpkgs via `pkgs.codex` |
 | discord | medium | Krisp audio patcher, applied to BOTH tiebe + robbin users |
 | easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |
-| firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings; ships `pkgs.firefoxpwa` as a `nativeMessagingHosts` package + force-installs the "Progressive Web Apps for Firefox" extension (`firefoxpwa@filips.si`) so sites (e.g. a self-hosted Music Assistant frontend) can be installed as standalone apps — install a site via the extension's toolbar button once logged in |
+| firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
 | frameforge | medium | Warframe tools: FrameForge (Tauri source build, ptrace memory scanner) and Profit Taker Analytics (prebuilt Flutter app with declarative `pta://` Discord OAuth handler) |
 | httptoolkit | simple | HTTP debugging proxy |
 | k3b | medium | Optical disc burning — upstream `programs.k3b` (setuid cdrdao/cdrecord wrappers) + `services.udisks2` (Solid's only OpticalDrive backend) + `sg` module + `cdrom` group; `overlays/default.nix` appends `/run/wrappers/bin` to k3b's `qtWrapperArgs` PATH so the setuid tools win |
