@@ -50,11 +50,19 @@ in {
   config = mkIf cfg.enable {
     #environment.etc."firefox/policies/policies.json".target = "firefox/policies/policies.json";
 
+    # firefoxpwa CLI + native messaging host, paired with the
+    # "Progressive Web Apps for Firefox" extension below. Lets any site
+    # (e.g. a self-hosted Music Assistant frontend) be installed as a
+    # standalone app with its own desktop entry and MPRIS session, picked
+    # up automatically by the DMS media widget and playerctl keybinds.
+    environment.systemPackages = [pkgs.firefoxpwa];
+
     programs = {
       firefox = {
         enable = true;
         package = firefoxPackage;
         #package = pkgs.librewolf;
+        nativeMessagingHosts.packages = [pkgs.firefoxpwa];
         # ---- POLICIES ----
         # Check about:policies#documentation for options.
         policies = {
@@ -87,6 +95,13 @@ in {
             # uBlock Origin:
             "uBlock0@raymondhill.net" = {
               install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+              installation_mode = "force_installed";
+            };
+            # Progressive Web Apps for Firefox (pairs with pkgs.firefoxpwa
+            # native messaging host below; installs sites, e.g. a
+            # self-hosted Music Assistant frontend, as standalone apps):
+            "firefoxpwa@filips.si" = {
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/pwas-for-firefox/latest.xpi";
               installation_mode = "force_installed";
             };
             # Bitwarden:
