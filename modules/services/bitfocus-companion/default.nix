@@ -50,8 +50,10 @@ in {
         Service = {
           Type = "simple";
           Restart = "always";
+          # --enable-shell-command-support: opt-in gate for the internal
+          # "run shell command" action; off unless explicitly passed.
           ExecStart = ''
-            ${companion}/bin/bitfocus-companion
+            ${companion}/bin/bitfocus-companion --enable-shell-command-support
           '';
         };
       };

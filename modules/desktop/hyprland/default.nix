@@ -23,17 +23,32 @@
   # on frame.copyFBPrepared, which is only set for monitor/region captures, so
   # window captures (Discord "share a specific window") never get their frame
   # copied and the toplevel-export client waits forever. Drop once upstream fixes.
+  #
+  # Second patch: powering a display off and on leaves it enabled with a 0x0 size
+  # while its modeset retries, and the next config/workspace refresh allocates its
+  # framebuffers at that size, aborting the compositor. Drop once upstream fixes.
   hyprlandPatched = hyprPkgs.hyprland.overrideAttrs (old: {
     patches =
       (old.patches or [])
       ++ [
         ./screenshare-window-commit.patch
+        ./propRefresher-zero-size-monitor.patch
       ];
   });
 in {
   options = {
     tiebe.desktop.hyprland = {
       enable = mkEnableOption "the Hyprland compositor";
+
+      # The session runs a patched build (see above); hyprctl callers and the
+      # home-manager module must use that same build, not the flake input's.
+      finalPackage = mkOption {
+        type = types.package;
+        default = hyprlandPatched;
+        readOnly = true;
+        internal = true;
+        description = "The Hyprland package this host actually runs.";
+      };
     };
   };
 
@@ -100,7 +115,7 @@ in {
       wayland.windowManager.hyprland = {
         enable = true;
         configType = "lua";
-        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+        package = hyprlandPatched;
         systemd = {
           enable = true;
           variables = ["--all"];
@@ -206,6 +221,15 @@ in {
             # Cursor
             cursor = {
               no_hardware_cursors = true;
+            };
+
+            # Disable direct scanout: fullscreen games bypassing the
+            # compositor causes an "insane stutter" when the Steam overlay
+            # (or any cursor/popup) appears on top, since Hyprland has to
+            # tear down scanout and re-enter compositing mid-session.
+            # https://github.com/hyprwm/Hyprland/discussions/14124
+            render = {
+              direct_scanout = false;
             };
           };
 

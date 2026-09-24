@@ -12,7 +12,7 @@
   quickshellCfg = config.tiebe.desktop.hyprland.programs.quickshell;
 
   # Same Hyprland build the session runs, so hyprctl matches the compositor's IPC.
-  hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
+  hyprctl = "${cfg.finalPackage}/bin/hyprctl";
 
   # The QML is shipped from the store and run with `qs --path`, so the shell
   # never depends on XDG lookup or on whatever PATH the session happens to have.

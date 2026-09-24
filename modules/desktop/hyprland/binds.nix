@@ -12,7 +12,7 @@
   monitorBrightnessCfg = config.tiebe.desktop.hyprland.binds.monitorBrightness;
 
   # Same Hyprland build the session runs, so hyprctl matches the compositor's IPC.
-  hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
+  hyprctl = "${cfg.finalPackage}/bin/hyprctl";
 
   # The session shell owns the launcher, clipboard, notification center, power
   # menu and lock screen, so those keys follow whichever shell is enabled.

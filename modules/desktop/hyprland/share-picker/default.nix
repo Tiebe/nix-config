@@ -13,7 +13,7 @@
   hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 
   # Same Hyprland build the session runs, so hyprctl talks to the compositor's IPC.
-  hyprctl = "${hyprPkgs.hyprland}/bin/hyprctl";
+  hyprctl = "${cfg.finalPackage}/bin/hyprctl";
 
   # Stock Qt picker: used whenever no game is up, so "share something else" and
   # "no game running" both behave exactly like they do today.

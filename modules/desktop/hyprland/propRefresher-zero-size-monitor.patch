@@ -1,0 +1,47 @@
+Fix Hyprland 0.56.0 aborting when a monitor is powered back on.
+
+Switching a display off with its power button drops HPD, so Hyprland tears the
+monitor down; switching it back on re-adds it, and the DRM atomic tests for
+every mode are rejected while the panel is still coming up ("REJECTED available
+mode", "has NO FALLBACK MODES"). CMonitor::applyMonitorRule() returns early on
+that path: the monitor stays enabled and listed in State::monitorState()->
+monitors(), with m_transformedSize still 0x0, while scheduleModeRetry() retries
+once per second.
+
+Anything that reloads config or renames/renumbers a workspace - both of which
+happen while workspaces are shuffled back onto the returning monitor - trips
+REFRESH_ALL, and CPropRefresher::refreshProp() then calls resources() on every
+monitor in that list. For the zero-sized one that constructs CMonitorResources
+with size 0x0, so CMonitorResources::initFB() hits
+  RASSERT((w > 0 && h > 0), "cannot alloc a FB with negative / zero size!")
+in Render::IFramebuffer::alloc() and the compositor dies with SIGABRT, taking
+the whole session with it.
+
+Skip monitors without a usable size, exactly like IHyprRenderer::renderMonitor()
+already refuses to render them. Nothing is lost: a successful modeset resets
+m_resources and sets m_blurFBDirty, so the blur FB is rebuilt at the real size.
+
+--- a/src/config/supplementary/propRefresher/PropRefresher.cpp
++++ b/src/config/supplementary/propRefresher/PropRefresher.cpp
+@@ -80,12 +80,21 @@ void CPropRefresher::refreshProp(const bool execdAsScheduled) {
+         g_pHyprRenderer->refreshBlurProvider();
+ 
+         for (auto const& m : State::monitorState()->monitors()) {
+             if (!m)
+                 continue;
+ 
++            // A monitor whose modeset failed is still enabled and listed here while
++            // CMonitor::scheduleModeRetry() retries, but has a 0x0 transformed size (e.g. a
++            // display that was just switched back on and has not published a usable mode
++            // yet). resources() would allocate its FBs at that size and RASSERT in
++            // IFramebuffer::alloc(), taking the whole compositor down. Skipping is safe: a
++            // successful modeset drops m_resources and marks the blur FB dirty anyway.
++            if (m->m_transformedSize.x < 1 || m->m_transformedSize.y < 1)
++                continue;
++
+             m->resources()->refreshBlurFB();
+ 
+             if (*PBLURENABLED) {
+                 m->m_blurFBDirty     = true;
+                 m->m_forceFullFrames = 2;
+                 m->scheduleFrame();
