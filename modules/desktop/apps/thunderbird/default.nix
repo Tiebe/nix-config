@@ -23,6 +23,8 @@ in {
         enable = true;
         profiles.main = {
           isDefault = true;
+          # Keep the secret key in GnuPG; Thunderbird uses its own public-key ring.
+          withExternalGnupg = true;
         };
       };
     };

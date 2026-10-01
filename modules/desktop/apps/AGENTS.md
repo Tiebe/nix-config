@@ -40,6 +40,7 @@
 | spotify | simple | Music |
 | steam | complex | `extraEnv.HOME` override, dual-path darlings with activation scripts, vendored `gamescope-input-holding.patch` (gamescope PR #1897 rebased onto the packaged tag) |
 | stremio | simple | Media center streaming client (`stremio-linux-shell`, QML-based) |
+| thunderbird | medium | External GnuPG secret key for Personal (`tiebe@tiebe.me`) via `withExternalGnupg` and the email account's `gpg.key`; Thunderbird still requires a one-time public-key import and acceptance in OpenPGP Key Management |
 | thunar | simple | File manager |
 | vscode | simple | VSCodium |
 | vencord | medium | nixcord (`inputs.nixcord`) home-manager module: Vencord-patched Discord + declarative plugin list. Ships the in-repo `plugins/auto-game-go-live` userplugin through `programs.nixcord.userPlugins`, switched on via `extraConfig.plugins` because userplugins are outside nixcord's typed schema. Pairs with `tiebe.desktop.hyprland.sharePicker` |

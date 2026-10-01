@@ -26,6 +26,8 @@ in {
           realName = "Tiebe Groosman";
           primary = true;
 
+          # This key's UID is tiebe@tiebe.me, not the Work address.
+          gpg.key = "53612C9FED81D4EE";
           passwordCommand = "cat ${config.age.secrets.emailTiebeAtTiebeMe.path}";
 
           imap = {
