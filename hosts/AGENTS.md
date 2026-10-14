@@ -20,6 +20,9 @@ Each host has three files: `default.nix` (hardware only), `modules.nix` (all `ti
 - **victoria-test-vm** — VM variant defined in flake.nix for testing. Uses `lib.mkForce` + `builtins.toFile` to bypass real secrets.
 - **jupiter and victoria** — `desktop.hyprland.keyring.enable` provides GNOME
   Keyring in their greetd sessions; victoria persists the encrypted keyring.
+- **jupiter** — `terminal.utils.reverse-engineering.enable` installs REA's Linux
+  analysis toolchain and exports its provider paths. REA agent registration is
+  user-managed with `npx -y rea-agents@6.4.0 setup` after a fresh login.
 
 ## JUPITER HARDWARE INVENTORY
 
