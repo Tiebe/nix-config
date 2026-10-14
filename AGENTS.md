@@ -324,6 +324,11 @@ Each shell module asserts that the ones it replaces are disabled, and
 `binds.nix` points the launcher, clipboard, lock, session-menu and
 notification keys at whichever shell is enabled.
 
+`modules/desktop/hyprland/keyring/` enables GNOME Keyring's Secret Service for
+Hyprland. greetd includes the `login` PAM stack, which unlocks the login
+keyring with the user's password. Its `darlings.nix` persists
+`~/.local/share/keyrings` on ephemeral-root hosts.
+
 `modules/desktop/hyprland/share-picker/` replaces xdg-desktop-portal-hyprland's
 Qt share picker (`screencopy:custom_picker_binary` in `~/.config/hypr/xdph.conf`)
 with a script that answers screencast requests with the running game — the

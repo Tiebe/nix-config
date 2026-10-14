@@ -10,17 +10,6 @@
   cfg = config.tiebe.desktop.apps.steam;
   evictCfg = config.tiebe.system.boot.evictDarlings;
 
-  gamescope-kbm = pkgs.gamescope.overrideAttrs (old: {
-    patches =
-      (old.patches or [])
-      ++ [
-        # ValveSoftware/gamescope PR #1897, rebased onto the 3.16.25 tag that
-        # nixpkgs packages. The upstream-generated pull/1897.diff is cut against
-        # a 2025-06 base and no longer applies; see the patch header.
-        ./gamescope-input-holding.patch
-      ];
-  });
-
   protonhax = pkgs.stdenv.mkDerivation rec {
     pname = "protonhax";
     version = "1.0.5";
@@ -102,10 +91,8 @@ in {
         else pkgs.steam;
     };
 
-    # Not `with pkgs; [gamescope ...]`: that resolves to the unpatched
-    # pkgs.gamescope and silently bypasses gamescope-kbm.
     environment.systemPackages = [
-      gamescope-kbm
+      pkgs.gamescope
       protonhax
       pkgs.gamemode
       pkgs.bubblewrap

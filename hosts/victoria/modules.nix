@@ -72,6 +72,7 @@
         windowrules.enable = true;
 
         greetd.enable = true;
+        keyring.enable = true;
 
         programs = {
           dankMaterialShell.enable = true;

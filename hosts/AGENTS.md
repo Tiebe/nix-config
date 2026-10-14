@@ -18,6 +18,8 @@ Each host has three files: `default.nix` (hardware only), `modules.nix` (all `ti
 - **victoria** — Designated test host. Full ephemeral root + two-tier home. Use for `nix build --dry-run` validation.
 - **installer/** — Not a real machine. Generates ISO with disko partitioning via `nixos-generators`.
 - **victoria-test-vm** — VM variant defined in flake.nix for testing. Uses `lib.mkForce` + `builtins.toFile` to bypass real secrets.
+- **jupiter and victoria** — `desktop.hyprland.keyring.enable` provides GNOME
+  Keyring in their greetd sessions; victoria persists the encrypted keyring.
 
 ## JUPITER HARDWARE INVENTORY
 

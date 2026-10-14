@@ -25,6 +25,12 @@ in {
     ./modules.nix
   ];
 
+  fileSystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/f1caf7db-1e19-dda4-d177-45e2f0feb0b8";
+    fsType = "btrfs";
+    options = ["noatime"];
+  };
+
   boot.kernelPackages =
     inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-latest-lto-x86_64-v3;
 

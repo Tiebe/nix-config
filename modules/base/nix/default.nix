@@ -50,7 +50,7 @@ in {
           builtins.elem (lib.getName pkg) [
             "discord"
             "discord-unwrapped"
-            "idea"
+            "intellij-idea"
             "spotify"
             "steam"
             "steam-unwrapped"
@@ -64,6 +64,7 @@ in {
             "profit-taker-analytics"
             # pluto's DisplayLink dock driver
             "displaylink"
+            "codex-desktop"
           ];
       };
     };

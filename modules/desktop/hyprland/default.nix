@@ -258,6 +258,7 @@ in {
     ./idle.nix
     ./lock.nix
     ./greetd.nix
+    ./keyring
     ./share-picker
     ./programs
   ];

@@ -77,6 +77,7 @@
           sharePicker.enable = true;
 
           greetd.enable = true;
+          keyring.enable = true;
 
           programs = {
             dankMaterialShell.enable = true;
@@ -96,6 +97,7 @@
           fusion360.enable = true;
           opencode.enable = true;
           claude-code.enable = true;
+          codex.enable = true;
           forgecode.enable = false;
           discord.enable = true;
           discord.vencord = false;
