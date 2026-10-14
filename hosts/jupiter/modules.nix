@@ -134,6 +134,7 @@
         utils = {
           basic.enable = true;
           advanced.enable = true;
+          reverse-engineering.enable = true;
 
           # neovim.enable = true;
           fastfetch.enable = true;
