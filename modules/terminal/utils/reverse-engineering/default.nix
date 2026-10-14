@@ -31,7 +31,14 @@
           hash = "sha256-NqF5A6PRl4uncwNS9j44fIV7ovlljiucvV2Msv0LK/w=";
         };
       };
-      unicorn = prev.unicorn.override {inherit unicorn;};
+      unicorn = (prev.unicorn.override {inherit unicorn;}).overridePythonAttrs {
+        build-system = [
+          final.setuptools
+          final.build
+          final.wheel
+          final.versioningit
+        ];
+      };
     };
   };
   pwntoolsPython = python.withPackages (ps: [ps.pwntools]);
@@ -97,6 +104,9 @@ in {
       REA_OBJDUMP_COMMAND = "${pkgs.binutils}/bin/objdump";
       REA_GDB_COMMAND = "${pkgs.gdb}/bin/gdb";
       REA_RIZIN_COMMAND = "${pkgs.rizin}/bin/rizin";
+      REA_ADB_PATH = "${pkgs.android-tools}/bin/adb";
+      REA_BROWSER_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
+      REA_JAVASCRIPT_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
       REA_APKTOOL_COMMAND = "${pkgs.apktool}/bin/apktool";
       REA_BINWALK_COMMAND = "${pkgs.binwalk}/bin/binwalk";
       REA_UNBLOB_COMMAND = "${pkgs.unblob}/bin/unblob";
