@@ -6,5 +6,6 @@
     ./utils/fastfetch
     ./utils/helix
     ./utils/neovim
+    ./utils/reverse-engineering
   ];
 }
