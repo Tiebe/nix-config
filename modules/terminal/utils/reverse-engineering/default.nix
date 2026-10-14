@@ -32,6 +32,13 @@
         };
       };
       unicorn = (prev.unicorn.override {inherit unicorn;}).overridePythonAttrs {
+        # The sdist carries versioningit's release metadata without a .git tree.
+        src = pkgs.fetchPypi {
+          pname = "unicorn";
+          version = "2.1.2";
+          hash = "sha256-5KnWcb3qcYBvKaOWc0z7gzF/gpQ7UtAAHTvKHcuu6JM=";
+        };
+        sourceRoot = "unicorn-2.1.2";
         build-system = [
           final.setuptools
           final.build
@@ -64,6 +71,32 @@
     url = "https://github.com/1013503897/jadx-headless-mcp/releases/download/v0.7.1/jadx-headless-mcp-0.7.1-all.jar";
     hash = "sha256-bl6s9QC2QpK/tzxJeXwZWPbuRGRuQ+hoA5rn/rVz/3U=";
   };
+  wakaru = pkgs.stdenvNoCC.mkDerivation {
+    pname = "wakaru";
+    version = "1.14.0";
+    src = pkgs.fetchurl {
+      url = "https://github.com/pionxzh/wakaru/releases/download/v1.14.0/wakaru-linux-x64.tar.gz";
+      hash = "sha256-2w5iADRyMZWrQm6U0A1V29j9AQapKK2iVj8RAxltCfo=";
+    };
+    sourceRoot = ".";
+    nativeBuildInputs = [pkgs.autoPatchelfHook];
+    buildInputs = [
+      pkgs.stdenv.cc.cc.lib
+      pkgs.openssl
+    ];
+    installPhase = ''
+      runHook preInstall
+      install -Dm755 wakaru "$out/bin/wakaru"
+      runHook postInstall
+    '';
+    meta = {
+      description = "JavaScript source recovery engine for REA";
+      homepage = "https://github.com/pionxzh/wakaru";
+      license = lib.licenses.asl20;
+      platforms = ["x86_64-linux"];
+      mainProgram = "wakaru";
+    };
+  };
 in {
   imports = [./darlings.nix];
 
@@ -92,6 +125,7 @@ in {
       chromium
       wabt
       sigrok
+      wakaru
     ];
 
     # Absolute paths also work when the MCP client has a minimal PATH.
@@ -107,6 +141,7 @@ in {
       REA_ADB_PATH = "${pkgs.android-tools}/bin/adb";
       REA_BROWSER_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
       REA_JAVASCRIPT_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
+      REA_WAKARU_COMMAND = "${wakaru}/bin/wakaru";
       REA_APKTOOL_COMMAND = "${pkgs.apktool}/bin/apktool";
       REA_BINWALK_COMMAND = "${pkgs.binwalk}/bin/binwalk";
       REA_UNBLOB_COMMAND = "${pkgs.unblob}/bin/unblob";
