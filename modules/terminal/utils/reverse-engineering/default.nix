@@ -107,7 +107,7 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       nodejs_24 # REA CLI/MCP via npx; includes npm.
-      procps # REA's Linux owned-process checks require procps ps.
+      (lib.hiPrio procps) # Override Toybox's ps; REA requires procps -axo.
       util-linux # prlimit for recorded captures and firmware.
       ghidra
       jdk21
