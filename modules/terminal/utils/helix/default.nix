@@ -22,7 +22,6 @@ in {
       # Language servers
       nil # Nix
       pyright # Python
-      typescript-language-server # TypeScript/JavaScript
       rust-analyzer # Rust
       gopls # Go
       clang-tools # C/C++ (clangd)
@@ -88,10 +87,6 @@ in {
               command = "pyright-langserver";
               args = ["--stdio"];
             };
-            typescript-language-server = {
-              command = "typescript-language-server";
-              args = ["--stdio"];
-            };
             rust-analyzer = {
               command = "rust-analyzer";
             };
@@ -142,23 +137,23 @@ in {
             }
             {
               name = "typescript";
-              auto-format = true;
-              language-servers = ["typescript-language-server"];
+              auto-format = false;
+              language-servers = [];
             }
             {
               name = "javascript";
-              auto-format = true;
-              language-servers = ["typescript-language-server"];
+              auto-format = false;
+              language-servers = [];
             }
             {
               name = "tsx";
-              auto-format = true;
-              language-servers = ["typescript-language-server"];
+              auto-format = false;
+              language-servers = [];
             }
             {
               name = "jsx";
-              auto-format = true;
-              language-servers = ["typescript-language-server"];
+              auto-format = false;
+              language-servers = [];
             }
             {
               name = "rust";
