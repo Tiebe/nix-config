@@ -318,6 +318,29 @@ type alias accepted by Qt 6.12's UI compiler, preserving the original template
 specialization. Remove this workaround once Cutter ships Qt 6.12-compatible UI
 class names.
 
+`modules/terminal/utils/reverse-engineering/` is enabled by
+`tiebe.terminal.utils.reverse-engineering.enable` (currently Jupiter only).
+It supplies REA's Linux analysis dependencies: Node.js 24/npm, procps, prlimit,
+Ghidra/JDK 21, GNU binutils, GDB, Rizin, JADX/Apktool/ADB, Binwalk/Unblob,
+mitmproxy, TShark/capinfos, Chromium, WABT, sigrok and Wakaru. Provider paths are
+exported through `environment.sessionVariables`; the pwntools Python environment
+is isolated and does not replace the user's Python. Local package overrides pin
+REA's admitted WABT 1.0.42, sigrok 0.7.2, pyelftools 0.33 and Unicorn 2.1.2
+profiles. The pinned JADX headless MCP JAR is separate from ordinary `jadx`.
+
+REA itself runs through `npx -y rea-agents@6.4.0`; the module does not modify
+agent registrations, skills or licensed Hopper/IDA/JEB installations. After
+switching and starting a fresh login session, run `npx -y rea-agents@6.4.0 setup`
+to review and apply agent registration, then restart the selected agent.
+Provider readiness can be checked with
+`npx -y rea-agents@6.4.0 doctor --provider ghidra --json`.
+REA's general host check currently does not recognize NixOS, but its scoped
+Ghidra check and native decompilation work with this toolchain.
+
+The Helix module intentionally installs no TypeScript/JavaScript language
+server; TypeScript, JavaScript, TSX and JSX retain syntax highlighting but have
+empty language-server lists and automatic formatting disabled.
+
 `modules/desktop/hyprland/programs/` holds the session shell modules, and they
 are mutually exclusive; exactly one of these three stacks is enabled per host:
 
