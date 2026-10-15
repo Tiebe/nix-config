@@ -30,7 +30,7 @@
 | forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
 | open-bamboo-networking | medium | Open-source `bambu_networking` plugin replacement for Bambu Studio / Orca Slicer — prebuilt release binaries (autoPatchelf'd), non-interactively drives the upstream `install.sh` via `home.activation` for each enabled slicer, skipped until that slicer's config dir exists |
 | opendeck | medium | Elgato Stream Deck software — local `package.nix` unpacking the upstream `.deb` (autoPatchelf + wrapGAppsHook3), ships udev rules via `services.udev.packages` |
-| orcaslicer | simple | 3D printer slicer (nixpkgs `orca-slicer`) |
+| orcaslicer | simple | 3D printer slicer (nixpkgs `orca-slicer`); extends the existing GTK wrapper to unset `WAYLAND_DISPLAY`, set `GDK_BACKEND=x11` and `mesa_glthread=false`, avoiding native Wayland/EGL plate-thumbnail crashes for terminal and desktop launches |
 | parsec | simple | Remote desktop |
 | picard | simple | MusicBrainz Picard tagger + `chromaprint` for the `fpcalc` AcoustID scanner (not in Picard's own closure) |
 | piper | simple | Mouse config (libratbag) |
