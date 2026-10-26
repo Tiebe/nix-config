@@ -23,6 +23,7 @@ Each host has three files: `default.nix` (hardware only), `modules.nix` (all `ti
 - **jupiter** — `terminal.utils.reverse-engineering.enable` installs REA's Linux
   analysis toolchain and exports its provider paths. REA agent registration is
   user-managed with `npx -y rea-agents@6.4.0 setup` after a fresh login.
+- **jupiter** — `desktop.apps.heroic.enable` installs Heroic Games Launcher.
 
 ## JUPITER HARDWARE INVENTORY
 

@@ -102,6 +102,7 @@
           discord.enable = true;
           discord.vencord = false;
           steam.enable = true;
+          heroic.enable = true;
           vencord.enable = true;
           wezterm.enable = true;
           vscode.enable = true;

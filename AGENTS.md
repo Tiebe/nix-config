@@ -318,6 +318,9 @@ type alias accepted by Qt 6.12's UI compiler, preserving the original template
 specialization. Remove this workaround once Cutter ships Qt 6.12-compatible UI
 class names.
 
+`modules/desktop/apps/heroic/` provides Heroic Games Launcher through
+`tiebe.desktop.apps.heroic.enable` (currently Jupiter only), using `pkgs.heroic`.
+
 `modules/terminal/utils/reverse-engineering/` is enabled by
 `tiebe.terminal.utils.reverse-engineering.enable` (currently Jupiter only).
 It supplies REA's Linux analysis dependencies: Node.js 24/npm, procps, prlimit,

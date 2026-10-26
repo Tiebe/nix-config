@@ -9,6 +9,7 @@
     ./forgecode
     ./frameforge
     ./fusion360
+    ./heroic
     ./httptoolkit
     ./intellij
     ./k3b

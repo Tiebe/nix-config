@@ -15,6 +15,7 @@
 | easyeffects | medium | EasyEffects daemon + Arctis EQ preset + combined mic via pipewire-pulse loopbacks |
 | firefox | complex | `overrideAttrs` + `wrapProgram --set HOME` for evict-darlings |
 | frameforge | medium | Warframe tools: FrameForge (Tauri source build, ptrace memory scanner) and Profit Taker Analytics (prebuilt Flutter app with declarative `pta://` Discord OAuth handler) |
+| heroic | simple | Heroic Games Launcher (`pkgs.heroic`), enabled on Jupiter |
 | httptoolkit | simple | HTTP debugging proxy |
 | k3b | medium | Optical disc burning — upstream `programs.k3b` (setuid cdrdao/cdrecord wrappers) + `services.udisks2` (Solid's only OpticalDrive backend) + `sg` module + `cdrom` group; `overlays/default.nix` appends `/run/wrappers/bin` to k3b's `qtWrapperArgs` PATH so the setuid tools win |
 | lmstudio | simple | LLM interface |
