@@ -59,7 +59,6 @@ in {
     environment.systemPackages = [
       pkgs.opencode
       pkgs.opencode-desktop
-      pkgs.jadx
       pkgs.uv
       pkgs.ripgrep
     ];

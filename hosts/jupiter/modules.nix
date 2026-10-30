@@ -121,6 +121,7 @@
           # DankMaterialShell's spotlight launcher replaces rofi.
           rofi.enable = false;
           quantframe.enable = true;
+          rea.enable = true;
           remanager.enable = true;
           wfinfo-ng.enable = true;
           frameforge.enable = true;

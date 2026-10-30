@@ -28,6 +28,7 @@
     ./parsec
     ./picard
     ./quantframe
+    ./rea
     ./remanager
     ./rofi
     ./steam

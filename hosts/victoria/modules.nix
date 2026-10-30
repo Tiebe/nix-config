@@ -110,6 +110,7 @@
         claude-code.enable = true;
         codex.enable = true;
         omp.enable = true;
+        rea.enable = true;
         remanager.enable = true;
         stremio.enable = true;
         frameforge.enable = true;
