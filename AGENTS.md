@@ -265,6 +265,14 @@ When `tiebe.system.boot.darlings.enable = true`:
 - SSH host keys moved to `/persist`
 - Each module handles its own persistence in `darlings.nix`
 
+Root rollback runs as the systemd initrd oneshot `darlings-rollback.service`.
+It requires and waits for the configured root filesystem's device, and
+`sysroot.mount` requires it to finish successfully before mounting the root.
+The service mounts the Btrfs top level, deletes the current `root` subvolume
+and its nested subvolumes, and restores `root` from `root-blank`; an exit trap
+unmounts the temporary mount on success or failure. Scripted initrd options
+such as `boot.initrd.postDeviceCommands` are no longer supported by NixOS.
+
 ## Evict Your Darlings (Two-Tier Home)
 
 **Concept**: Separates config files from personal data in home directory.
