@@ -19,21 +19,11 @@
   dmsCfg = config.tiebe.desktop.hyprland.programs.dankMaterialShell;
   hyprPkgs = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system};
 
-  # Hyprland 0.56.0 regression: the screenshare onOutputCommit dispatch is gated
-  # on frame.copyFBPrepared, which is only set for monitor/region captures, so
-  # window captures (Discord "share a specific window") never get their frame
-  # copied and the toplevel-export client waits forever. Drop once upstream fixes.
-  #
-  # Second patch: powering a display off and on leaves it enabled with a 0x0 size
+  # Powering a display off and on leaves it enabled with a 0x0 size
   # while its modeset retries, and the next config/workspace refresh allocates its
   # framebuffers at that size, aborting the compositor. Drop once upstream fixes.
   hyprlandPatched = hyprPkgs.hyprland.overrideAttrs (old: {
-    patches =
-      (old.patches or [])
-      ++ [
-        ./screenshare-window-commit.patch
-        ./propRefresher-zero-size-monitor.patch
-      ];
+    patches = (old.patches or []) ++ [./propRefresher-zero-size-monitor.patch];
   });
 in {
   options = {

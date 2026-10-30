@@ -349,7 +349,8 @@ Game detection is `hyprctl clients` filtered by the `sharePicker.gameClasses` /
 `$XDG_RUNTIME_DIR/xdph-manual-picker` present, the normal dialog opens. The
 companion piece is the `AutoGameGoLive` Vencord userplugin in
 `modules/desktop/apps/vencord/plugins/`, which confirms Discord's Go Live modal.
-Window capture also depends on `hyprland/screenshare-window-commit.patch`.
+Window capture uses upstream Hyprland's frame dispatch and pending-window
+framebuffer tracking; the obsolete `screenshare-window-commit.patch` is removed.
 
 ## Host Configurations
 
