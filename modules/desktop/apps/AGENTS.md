@@ -35,7 +35,7 @@
 | picard | simple | MusicBrainz Picard tagger + `chromaprint` for the `fpcalc` AcoustID scanner (not in Picard's own closure) |
 | piper | simple | Mouse config (libratbag) |
 | protonmail | simple | Email client |
-| rea | simple | Reverse-engineering toolchain that [REA](https://github.com/morluto/rea) drives from `PATH`: Ghidra, JADX, Apktool, Rizin/Cutter, GDB/binutils, Frida, Binwalk/Unblob, tshark/tcpdump/mitmdump, dtc, wabt, ilspycmd, solc, sigrok-cli, plus `nodejs`/`procps`. REA itself and its Cutter plugin are installed by the user; the module persists no state |
+| rea | medium | Reverse-engineering toolchain [REA](https://github.com/morluto/rea) drives: Ghidra, JADX, Apktool, Rizin/Cutter, GDB/binutils, Frida, Binwalk/Unblob, tshark/tcpdump/mitmdump, dtc, ilspycmd, solc, sigrok-cli, plus `nodejs`/`procps`. `packages.nix` pins the exact releases REA admits but nixpkgs does not carry (WABT 1.0.42, Wakaru 1.14.0, jadx-headless-mcp 0.7.1, and a pwntools 4.15.0 / pyelftools 0.33 / unicorn 2.1.2 Python). `environment.sessionVariables` wires the absolute `REA_*` tool paths and util-linux `prlimit` overrides, because REA defaults the limiter to `/usr/bin/prlimit`, which NixOS lacks. REA itself and its Cutter plugin are installed by the user; the module persists no state |
 | remanager | simple | reMarkable tablet mod manager (Wails/GTK app via prebuilt tarball in overlay) |
 | rofi | complex | **Most complex app** (349L) — cheatsheet PDF generation + desktop entries |
 | spotify | simple | Music |

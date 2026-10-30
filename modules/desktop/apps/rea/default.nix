@@ -8,6 +8,7 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.desktop.apps.rea;
+  reaPkgs = pkgs.callPackage ./packages.nix {};
   # Qt 6.12's uic rejects template names in promoted widgets.
   # Give the default specialization a valid identifier without changing its type.
   cutter = pkgs.cutter.overrideAttrs (old: {
@@ -61,7 +62,7 @@ in {
       gdb
       file
       dtc # device trees
-      wabt # WebAssembly
+      reaPkgs.wabt # WebAssembly; REA requires 1.0.42
       ilspycmd # .NET assemblies
       solc # EVM bytecode
       sigrok-cli # signal captures
@@ -81,5 +82,26 @@ in {
       nodejs_26
       procps
     ];
+
+    # REA accepts absolute tool paths (or exact versions) for several adapters
+    # and defaults its prlimit helpers to /usr/bin/prlimit, which NixOS lacks.
+    environment.sessionVariables = {
+      REA_BINWALK_COMMAND = "${pkgs.binwalk}/bin/binwalk";
+      REA_UNBLOB_COMMAND = "${pkgs.unblob}/bin/unblob";
+      REA_SIGROK_COMMAND = "${pkgs.sigrok-cli}/bin/sigrok-cli";
+      REA_TSHARK_COMMAND = "${pkgs.tshark}/bin/tshark";
+      REA_CAPINFOS_COMMAND = "${pkgs.tshark}/bin/capinfos";
+
+      REA_EVM_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
+      REA_FIRMWARE_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
+      REA_JAVASCRIPT_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
+      REA_SIGROK_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
+      REA_TSHARK_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
+
+      REA_JADX_MCP_JAR = "${reaPkgs.jadx-headless-mcp}/share/java/jadx-headless-mcp-0.7.1-all.jar";
+      REA_PWNTOOLS_PYTHON = "${reaPkgs.pwntools-python}/bin/python3";
+      REA_WABT_BIN_DIRECTORY = "${reaPkgs.wabt}/bin";
+      REA_WAKARU_COMMAND = "${reaPkgs.wakaru}/bin/wakaru";
+    };
   };
 }
