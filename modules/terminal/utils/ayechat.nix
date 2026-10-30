@@ -24,7 +24,10 @@ python3Packages.buildPythonApplication rec {
     keyring
     prompt-toolkit
     pathspec
-    chromadb
+    # PostHog's tests require MCP 1; nixpkgs defaults to incompatible MCP 2.
+    (chromadb.override {
+      posthog = posthog.override {mcp = mcp_1;};
+    })
     rapidfuzz
     pillow
     # Imported unguarded by aye.model.version_checker / aye.presenter.diff_presenter
