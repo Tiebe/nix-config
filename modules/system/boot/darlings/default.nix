@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  utils,
   ...
 }: let
   inherit
@@ -93,51 +94,44 @@ in {
     environment.systemPackages = [fs-diff];
 
     users.mutableUsers = false;
-    # Scripted initrd, deliberately. NixOS warns that it is deprecated and
-    # scheduled for removal in 26.11, but the rollback below uses
-    # `boot.initrd.postDeviceCommands`, which systemd stage 1 does not provide.
-    # Migrating means reimplementing this as a `boot.initrd.systemd.services`
-    # oneshot ordered Before=sysroot.mount and After the root device unit —
-    # boot-critical on an ephemeral root, so it needs a deliberate reboot test
-    # on victoria first. Revisit before 26.11.
-    boot.initrd.systemd.enable = false;
-    boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
-      mkdir -p /mnt
+    boot.initrd.systemd.services.darlings-rollback = {
+      description = "Restore the blank Btrfs root subvolume";
+      requiredBy = ["sysroot.mount"];
+      before = ["sysroot.mount"];
+      after = ["${utils.escapeSystemdPath config.fileSystems."/".device}.device"];
+      requires = ["${utils.escapeSystemdPath config.fileSystems."/".device}.device"];
+      unitConfig.DefaultDependencies = false;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      path = [
+        pkgs.btrfs-progs
+        pkgs.coreutils
+        pkgs.util-linux
+      ];
+      script = ''
+        set -euo pipefail
+        mkdir -p /mnt
 
-      # We first mount the btrfs root to /mnt
-      # so we can manipulate btrfs subvolumes.
-      mount -o subvol=/ ${config.fileSystems."/".device} /mnt
+        # Mount the top-level subvolume before systemd mounts /sysroot.
+        mount -t btrfs -o subvol=/ ${lib.escapeShellArg config.fileSystems."/".device} /mnt
+        trap 'umount /mnt' EXIT
 
-      # While we're tempted to just delete /root and create
-      # a new snapshot from /root-blank, /root is already
-      # populated at this point with a number of subvolumes,
-      # which makes `btrfs subvolume delete` fail.
-      # So, we remove them first.
-      #
-      # /root contains subvolumes:
-      # - /root/var/lib/portables
-      # - /root/var/lib/machines
-      #
-      # I suspect these are related to systemd-nspawn, but
-      # since I don't use it I'm not 100% sure.
-      # Anyhow, deleting these subvolumes hasn't resulted
-      # in any issues so far, except for fairly
-      # benign-looking errors from systemd-tmpfiles.
-      btrfs subvolume list -o /mnt/root |
-      cut -f9 -d' ' |
-      while read subvolume; do
-        echo "deleting /$subvolume subvolume..."
-        btrfs subvolume delete "/mnt/$subvolume"
-      done &&
-      echo "deleting /root subvolume..." &&
-      btrfs subvolume delete /mnt/root
+        # Remove nested subvolumes (such as var/lib/portables and machines)
+        # before replacing the root subvolume with the blank snapshot.
+        btrfs subvolume list -o /mnt/root |
+        cut -f9 -d' ' |
+        while read -r subvolume; do
+          echo "deleting /$subvolume subvolume..."
+          btrfs subvolume delete "/mnt/$subvolume"
+        done
+        echo "deleting /root subvolume..."
+        btrfs subvolume delete /mnt/root
 
-      echo "restoring blank /root subvolume..."
-      btrfs subvolume snapshot /mnt/root-blank /mnt/root
-
-      # Once we're done rolling back to a blank snapshot,
-      # we can unmount /mnt and continue on the boot process.
-      umount /mnt
-    '';
+        echo "restoring blank /root subvolume..."
+        btrfs subvolume snapshot /mnt/root-blank /mnt/root
+      '';
+    };
   };
 }
