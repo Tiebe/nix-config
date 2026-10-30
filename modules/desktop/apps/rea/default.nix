@@ -78,7 +78,7 @@ in {
       mitmproxy # mitmdump
 
       # REA's own runtime and its Linux process-ownership prerequisite.
-      nodejs
+      nodejs_26
       procps
     ];
   };

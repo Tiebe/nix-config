@@ -28,7 +28,7 @@ in {
       lmstudio
       python313Packages.playwright
       playwright-driver.browsers
-      nodejs
+      nodejs_26
     ];
 
     system.activationScripts.playwrightFirefoxSymlink.text = ''
