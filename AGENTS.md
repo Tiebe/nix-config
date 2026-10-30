@@ -313,6 +313,11 @@ modules/
 `modules/terminal/utils/advanced/` supplies Distrobox, Android tools, tmux and
 ShellGPT. AyeChat and its standalone package helper have been removed.
 
+`modules/desktop/apps/rea/` patches Cutter's promoted list widgets to use a C++
+type alias accepted by Qt 6.12's UI compiler, preserving the original template
+specialization. Remove this workaround once Cutter ships Qt 6.12-compatible UI
+class names.
+
 `modules/desktop/hyprland/programs/` holds the session shell modules, and they
 are mutually exclusive; exactly one of these three stacks is enabled per host:
 

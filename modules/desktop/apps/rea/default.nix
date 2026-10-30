@@ -8,6 +8,28 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.desktop.apps.rea;
+  # Qt 6.12's uic rejects template names in promoted widgets.
+  # Give the default specialization a valid identifier without changing its type.
+  cutter = pkgs.cutter.overrideAttrs (old: {
+    postPatch =
+      (old.postPatch or "")
+      + ''
+        for ui in \
+          src/dialogs/XrefsDialog.ui \
+          src/widgets/BreakpointWidget.ui \
+          src/widgets/FlagsWidget.ui \
+          src/widgets/GlobalsWidget.ui \
+          src/widgets/ListDockWidget.ui \
+          src/widgets/SearchWidget.ui \
+          src/widgets/StringsWidget.ui; do
+          substituteInPlace "$ui" \
+            --replace-fail 'AddressableItemList&lt;&gt;' 'DefaultAddressableItemList'
+        done
+        substituteInPlace src/widgets/AddressableItemList.h \
+          --replace-fail '#endif // ADDRESSABLE_ITEM_LIST_H' \
+            $'using DefaultAddressableItemList = AddressableItemList<>;\n\n#endif // ADDRESSABLE_ITEM_LIST_H'
+      '';
+  });
 in {
   imports = [./darlings.nix];
 
