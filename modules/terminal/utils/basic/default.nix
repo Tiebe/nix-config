@@ -8,6 +8,13 @@
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = config.tiebe.terminal.utils.basic;
+  # toybox installs ~240 applets, many of which collide with coreutils,
+  # procps and util-linux. Keep the ones nothing else provides without
+  # letting busybox-style tools shadow the full-featured implementations
+  # (e.g. toybox's ps rejects `-axo`).
+  toybox = pkgs.toybox.overrideAttrs (old: {
+    meta = (old.meta or {}) // {priority = 20;};
+  });
 in {
   imports = [./darlings.nix];
 
