@@ -310,6 +310,9 @@ modules/
 └── terminal/      # Terminal environment (zsh, utils)
 ```
 
+`modules/terminal/utils/advanced/` supplies Distrobox, Android tools, tmux and
+ShellGPT. AyeChat and its standalone package helper have been removed.
+
 `modules/desktop/hyprland/programs/` holds the session shell modules, and they
 are mutually exclusive; exactly one of these three stacks is enabled per host:
 
