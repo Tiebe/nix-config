@@ -25,7 +25,7 @@
 | music-assistant | simple | Music Assistant Companion (`pkgs.music-assistant-desktop`) — official desktop client for a self-hosted Music Assistant server |
 | obsidian | simple | Notes |
 | office | simple | LibreOffice |
-| omp | simple | Oh My Pi AI coding agent (`inputs.omp` home-manager module), declarative `~/.omp/agent/config.yml` via `programs.omp.settings` |
+| omp | simple | Oh My Pi AI coding agent (`inputs.omp` home-manager module), declarative `~/.omp/agent/config.yml` via `programs.omp.settings`, and a global always-apply NixOS rule (`config/rules/nixos.md` → `~/.omp/agent/rules/`) that reaches main sessions and task subagents |
 | opencode | complex | Tauri build from source (`inputs.opencode`), custom derivation |
 | forgecode | simple | AI coding harness (`inputs.forgecode`), TOML config |
 | open-bamboo-networking | medium | Open-source `bambu_networking` plugin replacement for Bambu Studio / Orca Slicer — prebuilt release binaries (autoPatchelf'd), non-interactively drives the upstream `install.sh` via `home.activation` for each enabled slicer, skipped until that slicer's config dir exists |
