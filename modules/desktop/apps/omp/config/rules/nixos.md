@@ -25,6 +25,9 @@ This machine runs NixOS. Packages live in the Nix store and are exposed on
   it, and report what changed. This repo's system configuration lives at
   `/persist/etc/nixos` and is applied with
   `sudo nixos-rebuild switch --flake .#<host>`.
+- Repository guidance wins over this rule. In `/persist/etc/nixos`, do not add
+  new flake inputs or system packages without explicit permission; propose the
+  change instead.
 - Some upstream tools hardcode `/usr/bin/...` helpers. On NixOS, pass a
   Nix-provided absolute path (for example `${pkgs.util-linux}/bin/prlimit`)
   rather than assuming `/usr/bin`.
