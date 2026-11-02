@@ -230,17 +230,6 @@ in {
             opacity = "0.9 0.8";
           }
 
-          # Keep Steam's untitled windows focused and allow 1x1 sizing.
-          {
-            match.title = "^()$";
-            match.class = "^(steam)$";
-            stay_focused = true;
-            min_size = [
-              1
-              1
-            ];
-          }
-
           # Picture-in-picture
           {
             match.title = "^(Picture-in-Picture)$";
