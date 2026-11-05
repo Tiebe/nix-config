@@ -9,6 +9,29 @@
   inherit (lib) mkEnableOption mkIf;
   cfg = config.tiebe.terminal.utils.reverse-engineering;
 
+  # Qt 6.12's uic rejects template names in promoted widgets.
+  # Give the default specialization a valid identifier without changing its type.
+  cutter = pkgs.cutter.overrideAttrs (old: {
+    postPatch =
+      (old.postPatch or "")
+      + ''
+        for ui in \
+          src/dialogs/XrefsDialog.ui \
+          src/widgets/BreakpointWidget.ui \
+          src/widgets/FlagsWidget.ui \
+          src/widgets/GlobalsWidget.ui \
+          src/widgets/ListDockWidget.ui \
+          src/widgets/SearchWidget.ui \
+          src/widgets/StringsWidget.ui; do
+          substituteInPlace "$ui" \
+            --replace-fail 'AddressableItemList&lt;&gt;' 'DefaultAddressableItemList'
+        done
+        substituteInPlace src/widgets/AddressableItemList.h \
+          --replace-fail '#endif // ADDRESSABLE_ITEM_LIST_H' \
+            $'using DefaultAddressableItemList = AddressableItemList<>;\n\n#endif // ADDRESSABLE_ITEM_LIST_H'
+      '';
+  });
+
   # REA's adapters admit specific upstream profiles, not arbitrary newer tools.
   # Keep these overrides local so unrelated applications retain Nixpkgs versions.
   unicorn = pkgs.unicorn.overrideAttrs {
@@ -114,14 +137,23 @@ in {
       binutils
       gdb
       rizin
+      cutter
       jadx
       apktool
       android-tools
+      aapt
+      apksigner
+      frida-tools
       binwalk
       unblob
       e2fsprogs # Firmware ext filesystem extractor (debugfs).
+      file
+      dtc
+      ilspycmd
+      solc
       mitmproxy
       wireshark-cli
+      tcpdump
       chromium
       wabt
       sigrok
@@ -145,6 +177,7 @@ in {
       REA_APKTOOL_COMMAND = "${pkgs.apktool}/bin/apktool";
       REA_BINWALK_COMMAND = "${pkgs.binwalk}/bin/binwalk";
       REA_UNBLOB_COMMAND = "${pkgs.unblob}/bin/unblob";
+      REA_EVM_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
       REA_FIRMWARE_PRLIMIT_COMMAND = "${pkgs.util-linux}/bin/prlimit";
       REA_MITMDUMP_COMMAND = "${pkgs.mitmproxy}/bin/mitmdump";
       REA_TSHARK_COMMAND = "${pkgs.wireshark-cli}/bin/tshark";

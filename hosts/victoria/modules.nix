@@ -110,7 +110,6 @@
         claude-code.enable = true;
         codex.enable = true;
         omp.enable = true;
-        rea.enable = true;
         remanager.enable = true;
         stremio.enable = true;
         frameforge.enable = true;
@@ -122,6 +121,7 @@
       utils = {
         basic.enable = true;
         advanced.enable = true;
+        reverse-engineering.enable = true;
         fastfetch.enable = true;
         helix.enable = true;
       };

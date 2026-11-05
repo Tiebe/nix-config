@@ -123,7 +123,6 @@
           rofi.enable = false;
           quantframe.enable = true;
           omp.enable = true;
-          rea.enable = true;
           remanager.enable = true;
           wfinfo-ng.enable = true;
           frameforge.enable = true;

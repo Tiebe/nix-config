@@ -313,19 +313,19 @@ modules/
 `modules/terminal/utils/advanced/` supplies Distrobox, Android tools, tmux and
 ShellGPT. AyeChat and its standalone package helper have been removed.
 
-`modules/desktop/apps/rea/` patches Cutter's promoted list widgets to use a C++
-type alias accepted by Qt 6.12's UI compiler, preserving the original template
-specialization. Remove this workaround once Cutter ships Qt 6.12-compatible UI
-class names.
-
 `modules/desktop/apps/heroic/` provides Heroic Games Launcher through
 `tiebe.desktop.apps.heroic.enable` (currently Jupiter only), using `pkgs.heroic`.
 
 `modules/terminal/utils/reverse-engineering/` is enabled by
-`tiebe.terminal.utils.reverse-engineering.enable` (currently Jupiter only).
-It supplies REA's Linux analysis dependencies: Node.js 24/npm, procps, prlimit,
+`tiebe.terminal.utils.reverse-engineering.enable` (Jupiter and Victoria).
+It owns REA's Linux analysis toolchain; the duplicate desktop `rea` module and
+its package helper have been removed. Alongside Node.js 24/npm, procps, prlimit,
 Ghidra/JDK 21, GNU binutils, GDB, Rizin, JADX/Apktool/ADB, Binwalk/Unblob,
-mitmproxy, TShark/capinfos, Chromium, WABT, sigrok and Wakaru. Provider paths are
+mitmproxy, TShark/capinfos, Chromium, WABT, sigrok and Wakaru, it supplies Cutter,
+aapt, apksigner, Frida, file, dtc, ilspycmd, solc and tcpdump. Cutter's promoted
+list widgets use a C++ type alias accepted by Qt 6.12's UI compiler, preserving
+the original template specialization; remove that workaround once Cutter ships
+compatible UI class names. Provider paths and all REA prlimit overrides are
 exported through `environment.sessionVariables`; the pwntools Python environment
 is isolated and does not replace the user's Python. Local package overrides pin
 REA's admitted WABT 1.0.42, sigrok 0.7.2, pyelftools 0.33 and Unicorn 2.1.2

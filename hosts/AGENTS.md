@@ -20,8 +20,9 @@ Each host has three files: `default.nix` (hardware only), `modules.nix` (all `ti
 - **victoria-test-vm** — VM variant defined in flake.nix for testing. Uses `lib.mkForce` + `builtins.toFile` to bypass real secrets.
 - **jupiter and victoria** — `desktop.hyprland.keyring.enable` provides GNOME
   Keyring in their greetd sessions; victoria persists the encrypted keyring.
-- **jupiter** — `terminal.utils.reverse-engineering.enable` installs REA's Linux
-  analysis toolchain and exports its provider paths. REA agent registration is
+- **jupiter and victoria** — `terminal.utils.reverse-engineering.enable` installs
+  REA's Linux analysis toolchain, including Cutter, and exports its provider paths.
+  The former `desktop.apps.rea.enable` option has been removed. REA agent registration is
   user-managed with `npx -y rea-agents@6.4.0 setup` after a fresh login.
 - **jupiter** — `desktop.apps.heroic.enable` installs Heroic Games Launcher.
 

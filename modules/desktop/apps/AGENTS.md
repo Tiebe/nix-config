@@ -36,7 +36,6 @@
 | picard | simple | MusicBrainz Picard tagger + `chromaprint` for the `fpcalc` AcoustID scanner (not in Picard's own closure) |
 | piper | simple | Mouse config (libratbag) |
 | protonmail | simple | Email client |
-| rea | medium | Reverse-engineering toolchain [REA](https://github.com/morluto/rea) drives: Ghidra, JADX, Apktool, Rizin/Cutter, GDB/binutils, Frida, Binwalk/Unblob, tshark/tcpdump/mitmdump, dtc, ilspycmd, solc, sigrok-cli, plus `nodejs`/`procps`. `packages.nix` pins the exact releases REA admits but nixpkgs does not carry (WABT 1.0.42, Wakaru 1.14.0, jadx-headless-mcp 0.7.1, and a pwntools 4.15.0 / pyelftools 0.33 / unicorn 2.1.2 Python). `environment.sessionVariables` wires the absolute `REA_*` tool paths and util-linux `prlimit` overrides, because REA defaults the limiter to `/usr/bin/prlimit`, which NixOS lacks. REA itself and its Cutter plugin are installed by the user; the module persists no state |
 | remanager | simple | reMarkable tablet mod manager (Wails/GTK app via prebuilt tarball in overlay) |
 | rofi | complex | **Most complex app** (349L) — cheatsheet PDF generation + desktop entries |
 | spotify | simple | Music |
@@ -47,6 +46,12 @@
 | vscode | simple | VSCodium |
 | vencord | medium | nixcord (`inputs.nixcord`) home-manager module: Vencord-patched Discord + declarative plugin list. Ships the in-repo `plugins/auto-game-go-live` userplugin through `programs.nixcord.userPlugins`, switched on via `extraConfig.plugins` because userplugins are outside nixcord's typed schema. Pairs with `tiebe.desktop.hyprland.sharePicker` |
 | zed | simple | Editor |
+
+REA's toolchain, including Cutter's Qt compatibility patch, is owned solely by
+`modules/terminal/utils/reverse-engineering/` through
+`tiebe.terminal.utils.reverse-engineering.enable`. The desktop `rea` module and
+its duplicate `packages.nix` have been removed; do not reintroduce provider
+paths or pinned REA packages here.
 
 ## WHERE TO LOOK
 
