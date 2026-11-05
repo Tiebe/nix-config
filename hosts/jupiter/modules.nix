@@ -95,7 +95,7 @@
           orcaslicer.enable = true;
           open-bamboo-networking.enable = true;
           fusion360.enable = true;
-          opencode.enable = true;
+          opencode.enable = false;
           claude-code.enable = true;
           codex.enable = true;
           forgecode.enable = false;
