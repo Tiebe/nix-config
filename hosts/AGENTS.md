@@ -37,6 +37,8 @@ Each host has three files: `default.nix` (hardware only), `modules.nix` (all `ti
 - 8BitDo Ultimate 2 controller
 - Stream Deck
 - Logitech Brio webcam
+- RevoScan USB scanner (`2207:110c`): Jupiter's `default.nix` grants the active
+  desktop user USB access through a device-specific udev `uaccess` rule.
 
 ## WHERE TO LOOK
 

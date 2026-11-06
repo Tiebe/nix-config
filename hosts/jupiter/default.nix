@@ -43,6 +43,11 @@ in {
     "modesetting"
   ];
 
+  # Allow the active desktop user to communicate with the RevoScan USB scanner.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="2207", ATTR{idProduct}=="110c", TAG+="uaccess"
+  '';
+
   networking.hostName = "jupiter";
   networking.hostId = "4ca1d14d";
 
