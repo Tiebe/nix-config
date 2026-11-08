@@ -90,6 +90,7 @@ in {
           showConnections.enable = true;
           showHiddenChannels.enable = true;
           showHiddenThings.enable = true;
+          showMeYourName.enable = true;
           spotifyControls.enable = true;
           typingIndicator.enable = true;
           typingTweaks.enable = true;
