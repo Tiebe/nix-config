@@ -52,6 +52,10 @@ in {
         gpgPublic.owner = "tiebe";
         gpgPrivate.file = agePath "gpg/private.age";
         gpgPrivate.owner = "tiebe";
+        gpgStudentPublic.file = agePath "gpg/student-public.age";
+        gpgStudentPublic.owner = "tiebe";
+        gpgStudentPrivate.file = agePath "gpg/student-private.age";
+        gpgStudentPrivate.owner = "tiebe";
 
         sshPrivate = {
           file = agePath "ssh/private.age";

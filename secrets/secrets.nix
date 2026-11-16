@@ -30,6 +30,8 @@ in {
 
   "gpg/public.age".publicKeys = all;
   "gpg/private.age".publicKeys = all;
+  "gpg/student-public.age".publicKeys = all;
+  "gpg/student-private.age".publicKeys = all;
   "github_pk.age".publicKeys = all;
 
   "ssh/private.age".publicKeys = all;

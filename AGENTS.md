@@ -515,3 +515,19 @@ persistence aligned with the overridden `HOME` path in the module-specific
 - DankMaterialShell comes from `inputs.dank-material-shell` (its NixOS module is imported by `modules/desktop/hyprland/programs/dank-material-shell`) and builds `dms-shell` from source
 - Home Manager follows nixpkgs
 - Secret management: https://github.com/yaxitech/ragenix
+
+## Student Mail and GPG
+
+The email module declares `Student` (`t.l.d.groosman@student.tue.nl`) with
+Microsoft 365 IMAP/SMTP and OAuth2 on both connections. Authentication and MFA
+are completed interactively in Thunderbird; there is no student password secret.
+The account selects GPG key `11DED56CA74DA0CF` (fingerprint
+`5D5CD7E2EDC3986D6FB9228A11DED56CA74DA0CF`).
+
+`secrets/gpg/student-public.age` and `student-private.age` use the existing
+secret recipients. The age module exposes them as `gpgStudentPublic` and
+`gpgStudentPrivate`, and `gpg-import-keys` imports both alongside the personal
+keypair at login. Never display plaintext key exports; stream exports directly
+into age encryption. Thunderbird's separate OpenPGP Key Manager still needs
+the student public key imported and accepted once, using the decrypted
+`gpgStudentPublic` secret after activation; never import the private key there.

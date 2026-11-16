@@ -44,7 +44,11 @@ in {
         Service = {
           Type = "oneshot";
           ExecStart = toString (pkgs.writeShellScript "import-gpg-keys" ''
-            ${pkgs.gnupg}/bin/gpg --import ${config.age.secrets.gpgPublic.path} ${config.age.secrets.gpgPrivate.path}
+            ${pkgs.gnupg}/bin/gpg --import \
+              ${config.age.secrets.gpgPublic.path} \
+              ${config.age.secrets.gpgPrivate.path} \
+              ${config.age.secrets.gpgStudentPublic.path} \
+              ${config.age.secrets.gpgStudentPrivate.path}
           '');
         };
 

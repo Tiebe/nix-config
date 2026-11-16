@@ -67,6 +67,33 @@ in {
           thunderbird.enable = true;
         };
 
+        Student = {
+          address = "t.l.d.groosman@student.tue.nl";
+          userName = "t.l.d.groosman@student.tue.nl";
+          realName = "Tiebe Groosman";
+          gpg.key = "11DED56CA74DA0CF";
+
+          # TU/e requires interactive Microsoft OAuth2/MFA, not a stored password.
+          imap = {
+            host = "outlook.office365.com";
+            port = 993;
+            authentication = "xoauth2";
+            tls.enable = true;
+          };
+
+          smtp = {
+            host = "smtp.office365.com";
+            port = 587;
+            authentication = "xoauth2";
+            tls = {
+              enable = true;
+              useStartTls = true;
+            };
+          };
+
+          thunderbird.enable = true;
+        };
+
         Gmail = {
           userName = "tiebe.groosman@gmail.com";
           address = "tiebe.groosman@gmail.com";
