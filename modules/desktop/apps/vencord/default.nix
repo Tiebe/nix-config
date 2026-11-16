@@ -90,7 +90,13 @@ in {
           showConnections.enable = true;
           showHiddenChannels.enable = true;
           showHiddenThings.enable = true;
-          showMeYourName.enable = true;
+          showMeYourName = {
+            enable = true;
+            displayNames = true;
+            friendNicknames = "always";
+            inReplies = true;
+            mode = "nick";
+          };
           spotifyControls.enable = true;
           typingIndicator.enable = true;
           typingTweaks.enable = true;
